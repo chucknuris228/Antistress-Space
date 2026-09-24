@@ -1,0 +1,867 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Antistress Space — комната ярости в Алматы</title>
+<meta name="description" content="Antistress Space — комната ярости в Алматы, Байсеитова, 49. Соберите свою сессию: тема, что разбить, музыка, время. Бронь в WhatsApp.">
+<meta name="theme-color" content="#0A0A0A">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=Manrope:wght@500;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0A0A0A; --bg-2:#141414; --bg-3:#1F1F1F;
+  --ink:#F4F1EC; --ink-2:rgba(244,241,236,.72); --ink-3:rgba(244,241,236,.45); --line:rgba(244,241,236,.12);
+  --red:#FF2B1C; --red-2:#B8150B;
+  --hit:'Dela Gothic One','Arial Black',sans-serif; --body:'Manrope',system-ui,sans-serif; --mono:'JetBrains Mono',ui-monospace,monospace;
+  color-scheme:dark; box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){ --bg:#0A0A0A; } }
+:root[data-theme="dark"],:root[data-theme="light"]{ --bg:#0A0A0A; }
+*,*::before,*::after{ box-sizing:inherit; }
+html{ scroll-padding-top:calc(70px + env(safe-area-inset-top,0px)); -webkit-text-size-adjust:100%; }
+body{ margin:0; background:var(--bg); color:var(--ink); font-family:var(--body); font-size:16px; line-height:1.5; overflow-x:clip; -webkit-font-smoothing:antialiased; }
+body::after{ content:""; position:fixed; inset:0; z-index:95; pointer-events:none; opacity:.18; mix-blend-mode:overlay;
+  background:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>"); }
+img,svg{ display:block; max-width:100%; }
+a{ color:inherit; }
+button,input{ font:inherit; color:inherit; }
+button{ background:none; border:0; padding:0; cursor:pointer; }
+h1,h2,h3{ margin:0; font-weight:400; }
+p{ margin:0; } ul{ margin:0; padding:0; list-style:none; }
+::selection{ background:var(--red); color:#fff; }
+a:focus-visible,button:focus-visible,input:focus-visible{ outline:2px solid var(--red); outline-offset:3px; }
+.sr{ position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap; }
+.wrap{ max-width:1120px; margin:0 auto; padding-inline:18px; position:relative; }
+@media (min-width:800px){ .wrap{ padding-inline:40px; } }
+.hit{ font-family:var(--hit); text-transform:uppercase; line-height:.95; letter-spacing:-.01em; }
+.mono{ font-family:var(--mono); }
+.shake{ animation:shake .42s cubic-bezier(.36,.07,.19,.97); }
+@keyframes shake{ 10%,90%{ transform:translate(-2px,1px); } 20%,80%{ transform:translate(4px,-2px); } 30%,50%,70%{ transform:translate(-7px,2px) rotate(-.4deg); } 40%,60%{ transform:translate(7px,-1px) rotate(.4deg); } }
+
+/* torn edge used on section boundaries */
+.torn-top{ position:relative; }
+.torn-top::before{ content:""; position:absolute; left:0; right:0; top:-18px; height:20px; background:inherit;
+  clip-path:polygon(0 100%,0 40%,4% 70%,9% 20%,14% 60%,19% 10%,25% 55%,31% 25%,36% 75%,42% 15%,48% 60%,53% 30%,59% 80%,64% 20%,70% 55%,76% 5%,81% 60%,87% 30%,92% 70%,96% 25%,100% 55%,100% 100%); }
+
+/* buttons */
+.btn{ display:inline-flex; align-items:center; justify-content:center; gap:10px; min-height:52px; padding:0 22px; background:var(--red); color:#fff; font-family:var(--hit); font-size:.9rem; text-transform:uppercase; text-decoration:none;
+  clip-path:polygon(0 8%,6% 0,100% 0,100% 78%,94% 100%,0 100%); transition:transform .12s, background .2s; }
+.btn:hover{ background:#FF4A3A; }
+.btn:active{ transform:scale(.96) rotate(-1deg); }
+.btn.dark{ background:var(--ink); color:var(--bg); }
+.btn.ghost{ background:var(--bg-3); color:var(--ink); }
+.tag{ display:inline-block; font-family:var(--mono); font-size:.72rem; font-weight:700; text-transform:uppercase; letter-spacing:.06em; padding:4px 8px; background:var(--red); color:#fff; transform:rotate(-2deg); }
+
+/* ============ HEADER ============ */
+.hdr{ position:fixed; top:0; left:0; right:0; z-index:60; padding-top:env(safe-area-inset-top,0px); background:linear-gradient(rgba(10,10,10,.9),rgba(10,10,10,0)); }
+.hrow{ height:64px; display:flex; align-items:center; justify-content:space-between; gap:10px; max-width:1120px; margin:0 auto; padding-inline:14px; }
+@media (min-width:800px){ .hrow{ padding-inline:40px; } }
+.logo{ font-family:var(--hit); font-size:1.02rem; line-height:.9; text-decoration:none; text-transform:uppercase; }
+.logo span{ display:block; color:var(--red); }
+.hright{ display:flex; gap:8px; align-items:center; }
+.snd{ width:46px; height:46px; display:flex; align-items:center; justify-content:center; background:var(--bg-3); }
+.snd svg{ width:20px; height:20px; }
+.hdr .btn{ min-height:46px; padding:0 16px; font-size:.78rem; }
+
+/* ============ HERO: the glass ============ */
+.hero{ position:relative; height:100svh; min-height:600px; overflow:hidden; background:radial-gradient(70% 55% at 50% 45%, #2a0906 0%, var(--bg) 70%); }
+.behind{ transition:opacity .5s .5s, filter .5s .5s; position:absolute; inset:0; display:flex; flex-direction:column; justify-content:flex-end; padding:0 18px calc(40px + env(safe-area-inset-bottom,0px)); }
+@media (min-width:800px){ .behind{ padding-inline:40px; justify-content:center; } }
+.behind h1{ font-size:clamp(2.3rem,10.4vw,7rem); }
+.behind h1 em{ font-style:normal; color:var(--red); display:block; }
+.behind p{ margin-top:16px; color:var(--ink-2); font-size:1.08rem; max-width:28em; }
+.behind .row{ display:flex; flex-wrap:wrap; gap:10px; margin-top:24px; }
+.behind .again{ margin-top:14px; font-family:var(--mono); font-size:.8rem; color:var(--ink-3); text-decoration:underline; min-height:40px; }
+#glass{ position:absolute; inset:0; width:100%; height:100%; z-index:5; cursor:crosshair; touch-action:manipulation; }
+.glass-label{ position:absolute; z-index:6; left:0; right:0; top:50%; transform:translateY(-50%); text-align:center; pointer-events:none; transition:opacity .25s; padding:0 16px; }
+.glass-label b{ display:block; font-family:var(--hit); font-size:clamp(3.4rem,17vw,10rem); line-height:.9; text-transform:uppercase; color:rgba(255,255,255,.92); text-shadow:0 4px 0 rgba(0,0,0,.35); }
+.glass-label span{ display:inline-block; margin-top:18px; font-family:var(--mono); font-size:.85rem; font-weight:700; background:var(--red); color:#fff; padding:6px 10px; animation:pulse 1.4s ease-in-out infinite; }
+@keyframes pulse{ 50%{ transform:scale(1.06); } }
+.hero:not(.done) .behind{ opacity:.12; filter:blur(3px); }
+.hero.done #glass, .hero.done .glass-label{ opacity:0; pointer-events:none; }
+.hero.done #glass{ transition:opacity .4s .9s; }
+
+/* ============ SECTIONS ============ */
+.section{ padding-block:80px; background:var(--bg); overflow-x:clip; }
+.section.alt{ background:var(--bg-2); }
+.sh{ font-size:clamp(2.1rem,10vw,4.6rem); }
+.sh em{ font-style:normal; color:var(--red); }
+.sub{ margin-top:14px; color:var(--ink-2); max-width:34em; font-size:1.05rem; }
+
+/* quiz */
+.q-opts{ display:flex; flex-wrap:wrap; gap:10px; margin-top:26px; }
+.q-opt{ min-height:52px; padding:0 18px; background:var(--bg-3); font-weight:800; font-size:1rem; transition:background .15s, transform .15s; }
+.q-opt:hover{ transform:rotate(-1.5deg); }
+.q-opt[aria-pressed="true"]{ background:var(--red); color:#fff; transform:rotate(-2deg); }
+.q-out{ margin-top:26px; min-height:120px; }
+.q-line{ font-family:var(--hit); font-size:clamp(1.5rem,6.4vw,2.6rem); line-height:1.05; text-transform:uppercase; max-width:18em; animation:slam .4s cubic-bezier(.2,1.4,.4,1); }
+@keyframes slam{ from{ opacity:0; transform:scale(1.4) rotate(-3deg); } to{ opacity:1; transform:none; } }
+.q-out .btn{ margin-top:20px; }
+
+/* builder */
+.themes{ display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:8px; margin-top:26px; }
+.theme{ min-height:74px; padding:10px; text-align:left; background:var(--bg-3); display:flex; flex-direction:column; justify-content:space-between; transition:background .15s; }
+.theme b{ font-family:var(--hit); font-size:clamp(.74rem,3.2vw,1.05rem); text-transform:uppercase; line-height:1.05; overflow-wrap:anywhere; hyphens:auto; }
+.theme span{ font-family:var(--mono); font-size:.72rem; color:var(--ink-3); }
+.theme[aria-pressed="true"]{ background:var(--red); color:#fff; }
+.theme[aria-pressed="true"] span{ color:rgba(255,255,255,.8); }
+.build{ display:grid; gap:18px; margin-top:22px; }
+@media (min-width:900px){ .build{ grid-template-columns:1.05fr .95fr; align-items:start; } }
+.room{ position:relative; min-height:250px; background:#1a0605; border:2px dashed rgba(255,43,28,.45); padding:14px; overflow:hidden; transition:border-color .2s, background .2s; }
+.room.over{ border-color:var(--red); background:#2a0907; }
+.room-head{ display:flex; justify-content:space-between; align-items:baseline; gap:10px; position:relative; z-index:1; }
+.room-head b{ font-family:var(--hit); text-transform:uppercase; font-size:1rem; }
+.room-head span{ font-family:var(--mono); font-size:.75rem; color:var(--ink-3); }
+.pile{ display:flex; flex-wrap:wrap; gap:6px; margin-top:12px; align-content:flex-start; min-height:150px; position:relative; z-index:1; }
+.pile button{ width:52px; height:52px; background:rgba(255,255,255,.06); display:flex; align-items:center; justify-content:center; transform:rotate(var(--r)); animation:drop .35s cubic-bezier(.3,1.6,.5,1); }
+.pile button svg{ width:30px; height:30px; }
+@keyframes drop{ from{ transform:translateY(-40px) rotate(0) scale(.6); opacity:0; } }
+.room-empty{ position:absolute; inset:0; display:flex; align-items:center; justify-content:center; text-align:center; color:var(--ink-3); font-family:var(--mono); font-size:.85rem; padding:30px; pointer-events:none; }
+.room-hint{ margin-top:8px; font-family:var(--mono); font-size:.72rem; color:var(--ink-3); }
+.shelf{ display:grid; grid-template-columns:repeat(3,1fr); gap:8px; }
+.item{ position:relative; background:var(--bg-3); padding:12px 8px 10px; display:flex; flex-direction:column; align-items:center; gap:6px; text-align:center; touch-action:none; user-select:none; -webkit-user-select:none; cursor:grab; transition:transform .12s; }
+.item:active{ cursor:grabbing; }
+.item svg{ width:40px; height:40px; }
+.item b{ font-weight:800; font-size:.85rem; line-height:1.1; }
+.item span{ font-family:var(--mono); font-size:.75rem; color:var(--ink-2); }
+.item .plus{ position:absolute; top:6px; right:6px; width:26px; height:26px; background:var(--red); color:#fff; font-weight:800; display:flex; align-items:center; justify-content:center; font-size:1.05rem; }
+.item .cnt{ position:absolute; top:6px; left:6px; font-family:var(--mono); font-size:.72rem; font-weight:700; background:#fff; color:#000; padding:1px 5px; }
+.item.sug{ outline:2px solid rgba(255,43,28,.55); outline-offset:-2px; }
+.ghost-drag{ position:fixed; z-index:90; width:64px; height:64px; pointer-events:none; display:flex; align-items:center; justify-content:center; background:var(--red); transform:translate(-50%,-50%) rotate(-8deg); box-shadow:0 10px 24px rgba(0,0,0,.6); }
+.ghost-drag svg{ width:40px; height:40px; }
+.opts{ display:grid; gap:18px; margin-top:22px; }
+@media (min-width:900px){ .opts{ grid-template-columns:1fr 1fr; } }
+.opt-h{ font-family:var(--mono); font-size:.78rem; font-weight:700; text-transform:uppercase; letter-spacing:.06em; color:var(--ink-3); }
+.chips{ display:flex; flex-wrap:wrap; gap:8px; margin-top:10px; }
+.chip{ min-height:46px; padding:0 14px; background:var(--bg-3); font-weight:800; font-size:.92rem; display:inline-flex; align-items:center; gap:8px; }
+.chip[aria-pressed="true"]{ background:var(--ink); color:var(--bg); }
+.chip .eq{ display:flex; gap:2px; align-items:flex-end; height:14px; }
+.chip .eq i{ width:3px; background:currentColor; height:30%; }
+.chip[aria-pressed="true"] .eq i{ animation:eq .7s ease-in-out infinite alternate; }
+.chip .eq i:nth-child(2){ animation-delay:.2s !important; } .chip .eq i:nth-child(3){ animation-delay:.4s !important; }
+@keyframes eq{ from{ height:20%; } to{ height:100%; } }
+.stepper{ display:flex; align-items:center; gap:10px; margin-top:10px; }
+.stepper button{ width:46px; height:46px; background:var(--bg-3); font-weight:800; font-size:1.3rem; }
+.stepper button:disabled{ opacity:.3; }
+.stepper b{ font-family:var(--hit); font-size:1.8rem; min-width:1.4em; text-align:center; }
+
+/* slots */
+.days{ display:flex; gap:8px; overflow-x:auto; scrollbar-width:none; margin:22px -18px 0; padding:0 18px 4px; }
+.days::-webkit-scrollbar{ display:none; }
+.day{ flex:none; width:68px; padding:10px 6px; background:var(--bg-3); text-align:center; }
+.day b{ display:block; font-family:var(--hit); font-size:1.4rem; line-height:1; }
+.day span{ font-family:var(--mono); font-size:.72rem; color:var(--ink-3); }
+.day[aria-pressed="true"]{ background:var(--red); color:#fff; }
+.day[aria-pressed="true"] span{ color:rgba(255,255,255,.8); }
+.day.off{ opacity:.4; }
+.avail{ margin-top:18px; font-family:var(--hit); text-transform:uppercase; font-size:clamp(1.1rem,5vw,1.6rem); }
+.avail em{ font-style:normal; color:var(--red); }
+.slots{ display:grid; grid-template-columns:repeat(3,1fr); gap:8px; margin-top:14px; max-width:560px; }
+@media (min-width:700px){ .slots{ grid-template-columns:repeat(6,1fr); } }
+.slot{ min-height:52px; background:var(--bg-3); font-family:var(--mono); font-weight:700; font-size:.95rem; position:relative; }
+.slot[disabled]{ opacity:.35; text-decoration:line-through; cursor:not-allowed; }
+.slot[aria-pressed="true"]{ background:var(--ink); color:var(--bg); }
+.closed{ margin-top:14px; font-family:var(--mono); color:var(--ink-3); }
+
+/* packages */
+.packs{ display:grid; gap:14px; margin-top:28px; }
+@media (min-width:760px){ .packs{ grid-template-columns:1fr 1fr; } }
+.pack{ position:relative; background:var(--ink); color:var(--bg); padding:24px 20px 22px;
+  clip-path:polygon(0 3%,5% 0,22% 2%,40% 0,63% 3%,82% 0,100% 2%,99% 50%,100% 97%,80% 100%,58% 97%,35% 100%,14% 97%,0 100%,1% 50%); }
+.pack:nth-child(odd){ transform:rotate(-.6deg); } .pack:nth-child(even){ transform:rotate(.5deg); }
+.pack.big{ background:var(--red); color:#fff; }
+@media (min-width:760px){ .pack.big{ grid-column:1 / -1; } }
+.pack .tag{ background:var(--bg); }
+.pack h3{ margin-top:12px; font-family:var(--hit); font-size:clamp(1.6rem,7vw,2.4rem); text-transform:uppercase; line-height:1; }
+.pack p{ margin-top:8px; font-weight:600; opacity:.8; }
+.pack ul{ margin-top:12px; display:grid; gap:6px; font-weight:700; }
+.pack li::before{ content:"✕ "; color:var(--red); font-weight:800; }
+.pack.big li::before{ color:var(--bg); }
+.pack .pr{ margin-top:16px; display:flex; justify-content:space-between; align-items:center; gap:12px; flex-wrap:wrap; }
+.pack .pr b{ font-family:var(--hit); font-size:1.8rem; }
+.pack .btn{ min-height:46px; }
+.pack .btn.dark{ background:var(--bg); color:var(--ink); }
+
+/* punch card */
+.punch{ margin-top:26px; max-width:560px; background:var(--ink); color:var(--bg); padding:22px; position:relative; transform:rotate(-1deg); }
+.punch::after{ content:""; position:absolute; right:-10px; top:50%; width:20px; height:20px; margin-top:-10px; border-radius:50%; background:var(--bg-2); }
+.punch h3{ font-family:var(--hit); font-size:1.4rem; text-transform:uppercase; }
+.holes{ display:grid; grid-template-columns:repeat(5,1fr); gap:10px; margin-top:16px; }
+.hole{ aspect-ratio:1; border:3px dashed var(--bg); border-radius:50%; display:flex; align-items:center; justify-content:center; font-family:var(--hit); font-size:.9rem; }
+.hole.x{ border-style:solid; background:var(--bg); color:var(--ink); }
+.hole.last{ border-color:var(--red); color:var(--red); font-size:.75rem; text-align:center; line-height:1; }
+.punch p{ margin-top:14px; font-weight:700; }
+
+/* wall */
+.wall{ display:grid; grid-template-columns:repeat(2,1fr); gap:8px; margin-top:26px; }
+@media (min-width:800px){ .wall{ grid-template-columns:repeat(4,1fr); } }
+.tile{ aspect-ratio:9/14; background:repeating-linear-gradient(135deg, #161616 0 12px, #1c1c1c 12px 24px); position:relative; display:flex; align-items:flex-end; padding:10px; overflow:hidden; }
+.tile:nth-child(3n+1){ transform:rotate(-1deg); }
+.tile .play{ position:absolute; top:50%; left:50%; width:54px; height:54px; margin:-27px 0 0 -27px; border-radius:50%; background:var(--red); display:flex; align-items:center; justify-content:center; }
+.tile .play svg{ width:20px; height:20px; margin-left:3px; }
+.tile span{ position:relative; font-family:var(--mono); font-size:.72rem; color:var(--ink-2); }
+
+/* info */
+.info{ display:grid; gap:26px; margin-top:26px; }
+@media (min-width:900px){ .info{ grid-template-columns:1fr 1fr; } }
+.addr{ font-family:var(--hit); font-size:clamp(1.6rem,7vw,2.4rem); text-transform:uppercase; line-height:1; }
+.hours{ margin-top:16px; font-family:var(--mono); display:grid; gap:4px; }
+.hours .off{ color:var(--red); }
+.bring{ background:var(--bg-3); padding:20px; }
+.bring h3{ font-family:var(--hit); text-transform:uppercase; font-size:1.2rem; }
+.bring ul{ margin-top:12px; display:grid; gap:8px; }
+.bring li{ display:grid; grid-template-columns:22px 1fr; gap:8px; font-weight:600; color:var(--ink-2); }
+.bring li::before{ content:"!"; font-family:var(--hit); color:var(--red); }
+.links{ display:flex; flex-wrap:wrap; gap:10px; margin-top:20px; }
+.quotes{ display:grid; gap:12px; margin-top:34px; }
+@media (min-width:800px){ .quotes{ grid-template-columns:repeat(3,1fr); } }
+.quote{ background:var(--bg-3); padding:18px; font-weight:700; }
+.quote small{ display:block; margin-top:10px; font-family:var(--mono); font-weight:500; color:var(--ink-3); font-size:.72rem; }
+
+.foot{ padding-block:40px calc(120px + env(safe-area-inset-bottom,0px)); color:var(--ink-3); font-size:.88rem; }
+.foot b{ display:block; font-family:var(--hit); color:var(--ink); font-size:clamp(2rem,9.4vw,5rem); line-height:.9; text-transform:uppercase; margin-bottom:14px; }
+
+/* sticky checkout */
+.bar{ position:fixed; left:0; right:0; bottom:0; z-index:70; transform:translateY(120%); transition:transform .35s cubic-bezier(.2,.8,.3,1.2); padding:0 10px calc(10px + env(safe-area-inset-bottom,0px)); pointer-events:none; }
+.bar.show{ transform:none; }
+.bar-in{ max-width:560px; margin:0 auto; background:var(--ink); color:var(--bg); padding:10px 10px 10px 16px; display:flex; align-items:center; gap:12px; pointer-events:auto; box-shadow:0 14px 30px rgba(0,0,0,.6); }
+.bar-in .t{ flex:1; min-width:0; }
+.bar-in .t b{ display:block; font-family:var(--hit); font-size:1.35rem; line-height:1; }
+.bar-in .t span{ display:block; font-family:var(--mono); font-size:.72rem; color:rgba(10,10,10,.6); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.bar-in .btn{ min-height:48px; padding:0 16px; font-size:.78rem; }
+.bump{ animation:bump .3s ease; }
+@keyframes bump{ 50%{ transform:scale(1.08); } }
+
+/* checkout sheet */
+.sheet{ position:fixed; inset:0; z-index:80; background:rgba(0,0,0,.75); display:flex; align-items:flex-end; justify-content:center; opacity:0; visibility:hidden; transition:opacity .25s, visibility .25s; }
+.sheet.open{ opacity:1; visibility:visible; }
+.sheet-in{ width:100%; max-width:560px; max-height:88svh; overflow-y:auto; background:var(--bg-2); padding:22px 18px calc(22px + env(safe-area-inset-bottom,0px)); transform:translateY(40px); transition:transform .3s; }
+.sheet.open .sheet-in{ transform:none; }
+.sheet h3{ font-family:var(--hit); text-transform:uppercase; font-size:1.8rem; }
+.receipt{ margin-top:16px; font-family:var(--mono); font-size:.88rem; display:grid; gap:6px; }
+.receipt div{ display:flex; justify-content:space-between; gap:10px; }
+.receipt .tot{ border-top:2px dashed var(--line); padding-top:10px; margin-top:6px; font-weight:700; font-size:1rem; }
+.sheet label{ display:flex; flex-direction:column; gap:8px; margin-top:16px; font-family:var(--mono); font-size:.78rem; color:var(--ink-3); text-transform:uppercase; }
+.sheet input{ min-height:52px; background:var(--bg-3); border:0; padding:0 14px; font-family:var(--body); font-size:1.05rem; color:var(--ink); text-transform:none; }
+.sheet .warn{ margin-top:12px; font-family:var(--mono); font-size:.8rem; color:var(--red); }
+.sheet-act{ display:flex; gap:10px; margin-top:18px; }
+.sheet-act .btn{ flex:1; }
+
+@media (prefers-reduced-motion: reduce){
+  *,*::before,*::after{ animation:none !important; transition:none !important; }
+}
+</style>
+</head>
+<body>
+
+<header class="hdr">
+  <div class="hrow">
+    <a class="logo" href="#top">Antistress<span>Space</span></a>
+    <div class="hright">
+      <button class="snd" id="snd" type="button" aria-pressed="true" aria-label="Звук разбития: включён">
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 9h4l5-4v14l-5-4H4z" fill="currentColor"/><path id="sndWave" d="M16 8.5a5 5 0 0 1 0 7M18.5 6a8.5 8.5 0 0 1 0 12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      </button>
+      <a class="btn" href="#build">Собрать сессию</a>
+    </div>
+  </div>
+</header>
+
+<main id="top">
+  <!-- HERO: a pane of glass. Tap to crack, tap again to shatter. -->
+  <section class="hero" id="hero" aria-label="Главный экран">
+    <div class="behind">
+      <p class="tag">Комната ярости · Алматы</p>
+      <h1 class="hit" style="margin-top:14px">Полегчало?<em>Это была разминка.</em></h1>
+      <p>Бутылки, посуда, мониторы, принтеры — и бита в руках. Выберите, что разбить, включите свою музыку и оставьте всё накопленное здесь.</p>
+      <div class="row">
+        <a class="btn" href="#build">Собрать сессию</a>
+        <a class="btn ghost" href="#quiz">Что бесит?</a>
+      </div>
+      <button class="again" id="again" type="button">разбить ещё раз ↺</button>
+    </div>
+    <canvas id="glass" aria-label="Стекло: нажмите, чтобы разбить" role="button" tabindex="0"></canvas>
+    <div class="glass-label" id="glassLabel" aria-hidden="true"><b>Разбей<br>это</b><span id="glassHint">тапни по стеклу</span></div>
+  </section>
+
+  <!-- QUIZ -->
+  <section class="section torn-top" id="quiz">
+    <div class="wrap">
+      <h2 class="sh hit">Что тебя <em>бесит?</em></h2>
+      <p class="sub">Выбери — подберём комнату.</p>
+      <div class="q-opts" id="qOpts" role="group" aria-label="Что бесит"></div>
+      <div class="q-out" id="qOut" aria-live="polite"></div>
+    </div>
+  </section>
+
+  <!-- BUILDER -->
+  <section class="section alt torn-top" id="build">
+    <div class="wrap">
+      <h2 class="sh hit">Собери свою <em>сессию</em></h2>
+      <p class="sub">Выбери комнату, накидай в неё вещи — перетащи или жми «+». Цена считается сразу.</p>
+      <div class="themes" id="themes" role="group" aria-label="Тема комнаты"></div>
+      <div class="build">
+        <div>
+          <div class="room" id="room" aria-live="polite">
+            <div class="room-head"><b id="roomName"></b><span id="roomCount"></span></div>
+            <div class="pile" id="pile"></div>
+            <div class="room-empty" id="roomEmpty">Комната пустая.<br>Перетащи сюда то, что хочешь разбить.</div>
+          </div>
+          <p class="room-hint">Нажми на вещь в комнате, чтобы убрать её.</p>
+        </div>
+        <div class="shelf" id="shelf" aria-label="Что можно разбить"></div>
+      </div>
+      <div class="opts">
+        <div><p class="opt-h">Музыка на сессии</p><div class="chips" id="music" role="group" aria-label="Музыка"></div></div>
+        <div><p class="opt-h">Сколько вас</p>
+          <div class="stepper"><button type="button" id="pMinus" aria-label="Меньше">−</button><b id="pNum">1</b><button type="button" id="pPlus" aria-label="Больше">+</button><span id="pNote" class="mono" style="font-size:.78rem;color:var(--ink-3)"></span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SLOTS -->
+  <section class="section torn-top" id="slots">
+    <div class="wrap">
+      <h2 class="sh hit">Когда <em>придёшь?</em></h2>
+      <div class="days" id="days" role="group" aria-label="День"></div>
+      <p class="avail" id="avail" aria-live="polite"></p>
+      <div class="slots" id="slotGrid" role="group" aria-label="Время"></div>
+      <p class="closed" id="closedNote" hidden>Во вторник выходной. Бить нечего — всё отдыхает.</p>
+    </div>
+  </section>
+
+  <!-- PACKAGES -->
+  <section class="section alt torn-top" id="packs">
+    <div class="wrap">
+      <h2 class="sh hit">По <em>поводу</em></h2>
+      <p class="sub">Готовые наборы для компании. Выберите — и они сразу соберутся в вашей сессии.</p>
+      <div class="packs" id="packGrid"></div>
+      <div class="punch" aria-label="Карта постоянного гостя">
+        <h3>Пятая — за полцены</h3>
+        <div class="holes"><div class="hole x">1</div><div class="hole x">2</div><div class="hole">3</div><div class="hole">4</div><div class="hole last">−50%</div></div>
+        <p>Отмечаем каждую сессию. Пятая — со скидкой 50%. Потому что тяжёлые недели бывают не одни.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- WALL -->
+  <section class="section torn-top" id="wall">
+    <div class="wrap">
+      <h2 class="sh hit">Как это <em>выглядит</em></h2>
+      <p class="sub">Настоящие сессии из нашего Instagram и TikTok.</p>
+      <div class="wall" id="wallGrid"></div>
+    </div>
+  </section>
+
+  <!-- INFO -->
+  <section class="section alt torn-top" id="info">
+    <div class="wrap">
+      <h2 class="sh hit">Где <em>бить</em></h2>
+      <div class="info">
+        <div>
+          <p class="addr">ул. Байсеитова, 49</p>
+          <div class="hours">
+            <span>ПН 11:00–21:00</span><span class="off">ВТ выходной</span><span>СР–ВС 11:00–21:00</span>
+          </div>
+          <div class="links">
+            <a class="btn" href="https://2gis.kz/almaty/firm/70000001067866712" target="_blank" rel="noopener">Маршрут в 2ГИС</a>
+            <a class="btn ghost" href="https://www.tiktok.com/@antistress_space" target="_blank" rel="noopener">TikTok</a>
+          </div>
+        </div>
+        <div class="bring">
+          <h3>Перед сессией</h3>
+          <ul>
+            <li>Возьмите сменную одежду — выйдете мокрыми, это нормально.</li>
+            <li>И полотенце. Гости просили передать.</li>
+            <li>Перед началом — инструктаж: как держать биту и куда не бить.</li>
+            <li>Хотите разбить что-то своё — фото начальника, чашку бывшего? Спросите заранее, что можно принести.</li>
+          </ul>
+        </div>
+      </div>
+      <div class="quotes">
+        <p class="quote">«Единственное место, где реально можно избавиться от стресса.»<small>отзыв в Google</small></p>
+        <p class="quote">«Искала подарок — нашла вас в Instagram. Сертификат оформили быстро, именинница в восторге.»<small>отзыв в Google, пересказ</small></p>
+        <p class="quote">«Не забудьте полотенце. Выйдете мокрыми — гарантирую.»<small>отзыв в Google, пересказ</small></p>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="foot">
+  <div class="wrap">
+    <b>Antistress<br>Space</b>
+    <p>Комната ярости в Алматы · ул. Байсеитова, 49 · <a href="tel:+77760059959">+7 776 005 99 59</a></p>
+  </div>
+</footer>
+
+<!-- sticky total -->
+<div class="bar" id="bar">
+  <div class="bar-in">
+    <div class="t"><b id="barTotal">0 ₸</b><span id="barMeta"></span></div>
+    <button class="btn" type="button" id="checkout">Забронировать</button>
+  </div>
+</div>
+
+<!-- checkout sheet -->
+<div class="sheet" id="sheet" aria-hidden="true">
+  <div class="sheet-in" role="dialog" aria-modal="true" aria-labelledby="sheetH">
+    <h3 id="sheetH">Твоя сессия</h3>
+    <div class="receipt" id="receipt"></div>
+    <label>Как тебя зовут<input type="text" id="name" placeholder="Имя" autocomplete="given-name"></label>
+    <p class="warn" id="warn" hidden>Выбери день и время — секция «Когда придёшь?».</p>
+    <div class="sheet-act">
+      <button class="btn ghost" type="button" id="sheetClose">Назад</button>
+      <a class="btn" id="send" href="#" target="_blank" rel="noopener">В WhatsApp</a>
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+  "use strict";
+
+  /* ======================== EDIT HERE ========================
+     Адрес, часы и телефон — из 2ГИС/Google (сентябрь 2026).
+     ВСЕ ЦЕНЫ, ВЕЩИ, ПАКЕТЫ И СКИДКА — ЗАГЛУШКИ: заменить на реальные.
+     SLOTS — демо-расписание. Перед запуском подключить к реальной
+     записи или убрать: показывать выдуманную «занятость» нельзя. */
+  var PHONE = "77760059959";
+
+  var THEMES = [
+    { id:"office",  name:"Офисный гнев",   base:12000, note:"принтер, клавиатура, монитор", sug:["printer","keyboard","monitor"] },
+    { id:"breakup", name:"Бывшие",    base:12000, note:"посуда, бокалы, ваза",        sug:["plate","glass","vase"] },
+    { id:"gamer",   name:"Геймер", base:12000, note:"монитор, телевизор, клава",  sug:["monitor","tv","keyboard"] }
+  ];
+  var EXTRA_PERSON = 5000;   // за каждого, начиная со второго
+  var MAX_PEOPLE = 4;
+
+  var ITEMS = [
+    { id:"bottle",   name:"Бутылка",    price:500 },
+    { id:"glass",    name:"Бокал",      price:400 },
+    { id:"plate",    name:"Тарелка",    price:400 },
+    { id:"vase",     name:"Ваза",       price:1500 },
+    { id:"keyboard", name:"Клавиатура", price:2000 },
+    { id:"chair",    name:"Стул",       price:3000 },
+    { id:"monitor",  name:"Монитор",    price:5000 },
+    { id:"printer",  name:"Принтер",    price:6000 },
+    { id:"tv",       name:"Телевизор",  price:8000 }
+  ];
+
+  var MUSIC = ["Метал","Фонк","EDM","Рок","Своя — скажу на месте"];
+
+  var QUIZ = [
+    { t:"Работа",      line:"Дедлайн не разобьёшь. А вот принтер — вполне.",               theme:"office" },
+    { t:"Отношения",   line:"Посуда ни в чём не виновата. Но она не против.",               theme:"breakup" },
+    { t:"Проиграл",    line:"Проиграл катку? Монитор ответит за всё.",                      theme:"gamer" },
+    { t:"Пробки",      line:"Аль-Фараби не рассосётся. А вот бутылки — да.",                theme:"office" },
+    { t:"Экзамены",    line:"ЕНТ сдашь. А пока сдай нам пару тарелок.",                     theme:"breakup" },
+    { t:"Всё сразу",   line:"Понимаем. Берите телевизор — он большой.",                      theme:"gamer" }
+  ];
+
+  var PACKS = [
+    { id:"bday",  tag:"День рождения", name:"Подарок-разгром", desc:"Лучший подарок для того, у кого «всё есть».", price:25000, theme:"breakup", people:2, items:{bottle:6,plate:6,glass:4,vase:1}, big:false },
+    { id:"break", tag:"Расставание",   name:"Бывший — в прошлом", desc:"Вся посуда, которую вы давно хотели разбить.", price:20000, theme:"breakup", people:1, items:{plate:8,glass:6,vase:2}, big:false },
+    { id:"corp",  tag:"Корпоратив",    name:"Тимбилдинг без тренинга", desc:"Вся офисная техника, которая месяцами зависала. До 4 человек в комнате.", price:60000, theme:"office", people:4, items:{printer:2,monitor:2,keyboard:4,chair:2,bottle:10}, big:true },
+    { id:"party", tag:"Мальчишник / девичник", name:"Последний вечер свободы", desc:"Бутылки, бокалы и всё, что звенит.", price:35000, theme:"gamer", people:4, items:{bottle:12,glass:8,tv:1}, big:false }
+  ];
+
+  var HOURS = { start:11, end:21, closedDay:2 }; // 2 = вторник
+  var SLOT_TIMES = ["11:00","12:30","14:00","15:30","17:00","18:30","19:30"];
+  /* =========================================================== */
+
+  var reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var $ = function(id){ return document.getElementById(id); };
+  var num = function(n){ return n.toLocaleString("ru-RU").replace(/\u00a0/g," "); };
+  function el(t, c, x){ var e = document.createElement(t); if(c) e.className = c; if(x != null) e.textContent = x; return e; }
+  function byId(list, id){ for(var i = 0; i < list.length; i++) if(list[i].id === id) return list[i]; return null; }
+  function plural(n, a, b, c){ var x = n % 10, y = n % 100; if(x === 1 && y !== 11) return a; if(x >= 2 && x <= 4 && (y < 12 || y > 14)) return b; return c; }
+  function dkey(d){ var p = function(n){ return (n < 10 ? "0" : "") + n; }; return d.getFullYear() + "-" + p(d.getMonth() + 1) + "-" + p(d.getDate()); }
+  function shakeEl(e){ if(reduce) return; e.classList.remove("shake"); void e.offsetWidth; e.classList.add("shake"); }
+
+  /* ---------- original line icons ---------- */
+  var ICON = {
+    bottle:'<path d="M13 3h6v5c0 1 2 2 2 5v14a2 2 0 0 1-2 2h-6a2 2 0 0 1-2-2V13c0-3 2-4 2-5z"/><path d="M13 6h6M11 17h10"/>',
+    glass:'<path d="M9 4h14l-2 11a5 5 0 0 1-10 0z"/><path d="M16 20v8M11 28h10"/>',
+    plate:'<ellipse cx="16" cy="16" rx="13" ry="13"/><ellipse cx="16" cy="16" rx="7" ry="7"/>',
+    vase:'<path d="M12 4h8M13 4c0 4-6 6-6 13s4 11 9 11 9-4 9-11-6-9-6-13"/><path d="M9 16c4 2 10 2 14 0"/>',
+    keyboard:'<rect x="3" y="10" width="26" height="13" rx="2"/><path d="M7 14h2M11 14h2M15 14h2M19 14h2M23 14h2M7 18h2M11 18h10M23 18h2"/>',
+    chair:'<path d="M9 3v14M23 3v14M9 8h14M7 17h18M9 17v12M23 17v12"/>',
+    monitor:'<rect x="3" y="5" width="26" height="17" rx="2"/><path d="M16 22v5M10 28h12"/><path d="M8 10l5 4 3-3" />',
+    printer:'<rect x="4" y="12" width="24" height="11" rx="2"/><path d="M9 12V4h14v8M9 19h14v9H9z"/><circle cx="24" cy="16" r="1"/>',
+    tv:'<rect x="3" y="7" width="26" height="18" rx="2"/><path d="M11 3l5 4 5-4M9 25l-2 4M23 25l2 4"/>'
+  };
+  function icon(id){ return '<svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true">' + ICON[id] + '</svg>'; }
+
+  /* ---------- state ---------- */
+  var S = { theme:"office", cart:{}, order:[], music:0, people:1, day:null, slot:null };
+
+  /* ---------- sound: synthesized glass crack (no files) ---------- */
+  var soundOn = true, actx = null;
+  function crackSound(big){
+    if(!soundOn) return;
+    try{
+      actx = actx || new (window.AudioContext || window.webkitAudioContext)();
+      var dur = big ? .9 : .25, len = Math.floor(actx.sampleRate * dur);
+      var buf = actx.createBuffer(1, len, actx.sampleRate), d = buf.getChannelData(0);
+      for(var i = 0; i < len; i++){ var t = i / len; d[i] = (Math.random() * 2 - 1) * Math.pow(1 - t, big ? 2.2 : 5) * (Math.random() < (big ? .35 : .6) ? 1 : .15); }
+      var src = actx.createBufferSource(); src.buffer = buf;
+      var hp = actx.createBiquadFilter(); hp.type = "highpass"; hp.frequency.value = big ? 1800 : 2600;
+      var g = actx.createGain(); g.gain.value = big ? .55 : .4;
+      src.connect(hp); hp.connect(g); g.connect(actx.destination); src.start();
+      if(big){ var o = actx.createOscillator(), og = actx.createGain(); o.frequency.value = 70; og.gain.setValueAtTime(.35, actx.currentTime); og.gain.exponentialRampToValueAtTime(.001, actx.currentTime + .25); o.connect(og); og.connect(actx.destination); o.start(); o.stop(actx.currentTime + .3); }
+    }catch(e){}
+  }
+  $("snd").addEventListener("click", function(){
+    soundOn = !soundOn;
+    this.setAttribute("aria-pressed", soundOn ? "true" : "false");
+    this.setAttribute("aria-label", "Звук разбития: " + (soundOn ? "включён" : "выключен"));
+    $("sndWave").style.opacity = soundOn ? "1" : ".15";
+  });
+
+  /* ---------- HERO: crack & shatter ---------- */
+  (function(){
+    var hero = $("hero"), c = $("glass"), ctx = c.getContext("2d"), W, H, dpr;
+    var cracks = [], hits = 0, shards = null, raf = null;
+    function size(){ dpr = Math.min(2, devicePixelRatio || 1); W = c.clientWidth; H = c.clientHeight; c.width = W * dpr; c.height = H * dpr; ctx.setTransform(dpr,0,0,dpr,0,0); drawPane(); }
+    function paneFill(){
+      var g = ctx.createLinearGradient(0, 0, W, H);
+      g.addColorStop(0, "rgba(200,225,235,.22)"); g.addColorStop(.45, "rgba(160,190,205,.12)"); g.addColorStop(.5, "rgba(255,255,255,.28)"); g.addColorStop(.56, "rgba(160,190,205,.1)"); g.addColorStop(1, "rgba(200,225,235,.2)");
+      return g;
+    }
+    function drawPane(){
+      ctx.clearRect(0,0,W,H);
+      if(shards) return;
+      ctx.fillStyle = "rgba(10,10,10,.55)"; ctx.fillRect(0,0,W,H);
+      ctx.fillStyle = paneFill(); ctx.fillRect(0,0,W,H);
+      cracks.forEach(drawCrack);
+    }
+    function makeCrack(x, y){
+      var rays = [], n = 11 + Math.floor(Math.random() * 5), reach = Math.hypot(W, H);
+      for(var i = 0; i < n; i++){
+        var a = (i / n) * Math.PI * 2 + (Math.random() - .5) * .35, pts = [[x,y]], r = 0;
+        while(r < reach){ r += 18 + Math.random() * 40; var aa = a + (Math.random() - .5) * .25; pts.push([x + Math.cos(aa) * r, y + Math.sin(aa) * r]); }
+        rays.push({ a:a, pts:pts });
+      }
+      var rings = [26, 60, 110, 180, 270].map(function(r){ return r * (.8 + Math.random() * .4); });
+      return { x:x, y:y, rays:rays, rings:rings };
+    }
+    function drawCrack(k){
+      ctx.strokeStyle = "rgba(255,255,255,.85)"; ctx.lineWidth = 1.2;
+      k.rays.forEach(function(r){ ctx.beginPath(); r.pts.forEach(function(p, i){ i ? ctx.lineTo(p[0], p[1]) : ctx.moveTo(p[0], p[1]); }); ctx.stroke(); });
+      ctx.strokeStyle = "rgba(255,255,255,.55)"; ctx.lineWidth = .9;
+      k.rings.forEach(function(R){
+        ctx.beginPath();
+        k.rays.forEach(function(r, i){ var p = pointAt(r, R); i ? ctx.lineTo(p[0], p[1]) : ctx.moveTo(p[0], p[1]); });
+        ctx.closePath(); ctx.stroke();
+      });
+      ctx.fillStyle = "rgba(255,255,255,.9)"; ctx.beginPath(); ctx.arc(k.x, k.y, 3, 0, 6.283); ctx.fill();
+    }
+    function pointAt(ray, R){ return [ray.pts[0][0] + Math.cos(ray.a) * R, ray.pts[0][1] + Math.sin(ray.a) * R]; }
+    function shatter(k){
+      shards = [];
+      var rings = [0].concat(k.rings, [Math.hypot(W, H)]);
+      for(var i = 0; i < k.rays.length; i++){
+        var r1 = k.rays[i], r2 = k.rays[(i + 1) % k.rays.length];
+        for(var j = 0; j < rings.length - 1; j++){
+          var p = [pointAt(r1, rings[j]), pointAt(r1, rings[j+1]), pointAt(r2, rings[j+1]), pointAt(r2, rings[j])];
+          var cx = (p[0][0] + p[1][0] + p[2][0] + p[3][0]) / 4, cy = (p[0][1] + p[1][1] + p[2][1] + p[3][1]) / 4;
+          var dx = cx - k.x, dy = cy - k.y, dist = Math.hypot(dx, dy) || 1, f = 6 + Math.random() * 10 - j;
+          shards.push({ p:p.map(function(q){ return [q[0] - cx, q[1] - cy]; }), x:cx, y:cy, vx:dx / dist * f, vy:dy / dist * f - 4, vr:(Math.random() - .5) * .3, r:0, a:1 });
+        }
+      }
+      var t0 = performance.now(), fill = paneFill();
+      (function frame(now){
+        var t = (now - t0) / 1000;
+        ctx.clearRect(0,0,W,H);
+        shards.forEach(function(s){
+          s.vy += .9; s.x += s.vx; s.y += s.vy; s.r += s.vr; s.a = Math.max(0, 1 - t * .9);
+          ctx.save(); ctx.globalAlpha = s.a; ctx.translate(s.x, s.y); ctx.rotate(s.r);
+          ctx.beginPath(); s.p.forEach(function(q, i){ i ? ctx.lineTo(q[0], q[1]) : ctx.moveTo(q[0], q[1]); }); ctx.closePath();
+          ctx.fillStyle = "rgba(190,215,225,.28)"; ctx.fill(); ctx.strokeStyle = "rgba(255,255,255,.8)"; ctx.lineWidth = 1; ctx.stroke(); ctx.restore();
+        });
+        if(t < 1.3) raf = requestAnimationFrame(frame); else { ctx.clearRect(0,0,W,H); }
+      })(t0);
+    }
+    function hit(x, y){
+      if(hero.classList.contains("done")) return;
+      hits++;
+      if(reduce){ crackSound(true); hero.classList.add("done"); return; }
+      if(hits < 2){
+        cracks.push(makeCrack(x, y)); drawPane(); crackSound(false); shakeEl(hero);
+        $("glassHint").textContent = "ещё раз. сильнее.";
+      } else {
+        crackSound(true); shakeEl(document.body);
+        shatter(cracks[cracks.length - 1] || makeCrack(x, y));
+        hero.classList.add("done");
+      }
+    }
+    c.addEventListener("pointerdown", function(e){ var r = c.getBoundingClientRect(); hit(e.clientX - r.left, e.clientY - r.top); });
+    c.addEventListener("keydown", function(e){ if(e.key === "Enter" || e.key === " "){ e.preventDefault(); hit(W / 2, H / 2); } });
+    $("again").addEventListener("click", function(){ cancelAnimationFrame(raf); cracks = []; shards = null; hits = 0; hero.classList.remove("done"); $("glassHint").textContent = "тапни по стеклу"; drawPane(); });
+    addEventListener("resize", size);
+    size();
+  })();
+
+  /* ---------- quiz ---------- */
+  (function(){
+    var box = $("qOpts");
+    QUIZ.forEach(function(q){
+      var b = el("button","q-opt",q.t); b.type = "button"; b.setAttribute("aria-pressed","false");
+      b.addEventListener("click", function(){
+        box.querySelectorAll(".q-opt").forEach(function(x){ x.setAttribute("aria-pressed","false"); });
+        b.setAttribute("aria-pressed","true");
+        var out = $("qOut"); out.innerHTML = "";
+        out.appendChild(el("p","q-line",q.line));
+        var th = byId(THEMES, q.theme);
+        var go = el("a","btn","Комната «" + th.name + "» →"); go.href = "#build";
+        go.addEventListener("click", function(){ setTheme(q.theme); });
+        out.appendChild(go);
+        crackSound(false);
+      });
+      box.appendChild(b);
+    });
+  })();
+
+  /* ---------- builder ---------- */
+  function setTheme(id){ S.pack = null; S.theme = id; renderThemes(); renderShelf(); renderRoom(); renderBar(); }
+  function renderThemes(){
+    var box = $("themes"); box.innerHTML = "";
+    THEMES.forEach(function(t){
+      var b = el("button","theme"); b.type = "button"; b.setAttribute("aria-pressed", t.id === S.theme ? "true" : "false");
+      b.appendChild(el("b","",t.name)); b.appendChild(el("span","","от " + num(t.base) + " ₸"));
+      b.addEventListener("click", function(){ setTheme(t.id); });
+      box.appendChild(b);
+    });
+    $("roomName").textContent = byId(THEMES, S.theme).name;
+  }
+  function add(id, n){
+    S.pack = null;
+    if(!S.cart[id]){ S.cart[id] = 0; S.order.push(id); }
+    S.cart[id] += (n || 1);
+    renderRoom(); renderShelf(); renderBar(true);
+  }
+  function removeOne(id){
+    if(!S.cart[id]) return;
+    S.pack = null;
+    S.cart[id]--; if(S.cart[id] <= 0){ delete S.cart[id]; S.order = S.order.filter(function(x){ return x !== id; }); }
+    crackSound(false);
+    renderRoom(); renderShelf(); renderBar();
+  }
+  function renderShelf(){
+    var box = $("shelf"), sug = byId(THEMES, S.theme).sug; box.innerHTML = "";
+    ITEMS.forEach(function(it){
+      var d = el("div","item" + (sug.indexOf(it.id) > -1 ? " sug" : "")); d.dataset.id = it.id;
+      d.innerHTML = icon(it.id);
+      d.appendChild(el("b","",it.name)); d.appendChild(el("span","",num(it.price) + " ₸"));
+      var p = el("button","plus","+"); p.type = "button"; p.setAttribute("aria-label","Добавить: " + it.name + ", " + it.price + " тенге");
+      p.addEventListener("click", function(e){ e.stopPropagation(); add(it.id); pop(p); });
+      d.appendChild(p);
+      if(S.cart[it.id]) d.appendChild(el("span","cnt","×" + S.cart[it.id]));
+      enableDrag(d, it.id);
+      box.appendChild(d);
+    });
+  }
+  function pop(e){ if(reduce) return; e.classList.remove("bump"); void e.offsetWidth; e.classList.add("bump"); }
+  function renderRoom(){
+    var pile = $("pile"); pile.innerHTML = ""; var n = 0;
+    S.order.forEach(function(id){
+      for(var i = 0; i < S.cart[id]; i++){
+        n++;
+        var b = el("button",""); b.type = "button"; b.innerHTML = icon(id);
+        b.style.setProperty("--r", ((id.length * 37 + i * 53) % 30 - 15) + "deg");
+        b.setAttribute("aria-label","Убрать: " + byId(ITEMS, id).name);
+        b.addEventListener("click", function(){ removeOne(this.dataset.id); });
+        b.dataset.id = id;
+        if(i > 0 || n > 1) b.style.animation = "none";
+        pile.appendChild(b);
+      }
+    });
+    var last = pile.lastElementChild; if(last) last.style.animation = "";
+    $("roomEmpty").style.display = n ? "none" : "";
+    $("roomCount").textContent = n ? n + " " + plural(n,"вещь","вещи","вещей") : "";
+  }
+  // drag from shelf into the room (mouse + touch)
+  function enableDrag(card, id){
+    var sx, sy, drag = null, room = $("room");
+    card.addEventListener("pointerdown", function(e){
+      if(e.target.closest(".plus")) return;
+      sx = e.clientX; sy = e.clientY; card.setPointerCapture(e.pointerId);
+    });
+    card.addEventListener("pointermove", function(e){
+      if(sx == null) return;
+      if(!drag && Math.hypot(e.clientX - sx, e.clientY - sy) > 8){ drag = el("div","ghost-drag"); drag.innerHTML = icon(id); document.body.appendChild(drag); }
+      if(drag){
+        drag.style.left = e.clientX + "px"; drag.style.top = e.clientY + "px";
+        var r = room.getBoundingClientRect();
+        room.classList.toggle("over", e.clientX > r.left && e.clientX < r.right && e.clientY > r.top && e.clientY < r.bottom);
+      }
+    });
+    function end(e){
+      if(sx == null) return;
+      var r = room.getBoundingClientRect();
+      if(drag){
+        if(e.clientX > r.left && e.clientX < r.right && e.clientY > r.top && e.clientY < r.bottom){ add(id); crackSound(false); shakeEl(room); }
+        drag.remove(); drag = null;
+      } else { add(id); pop(card); } // simple tap also adds
+      room.classList.remove("over"); sx = null;
+    }
+    card.addEventListener("pointerup", end);
+    card.addEventListener("pointercancel", function(){ if(drag){ drag.remove(); drag = null; } $("room").classList.remove("over"); sx = null; });
+  }
+  // music + people
+  (function(){
+    var box = $("music");
+    MUSIC.forEach(function(m, i){
+      var b = el("button","chip"); b.type = "button"; b.setAttribute("aria-pressed", i === S.music ? "true" : "false");
+      if(i < MUSIC.length - 1){ var eq = el("span","eq"); eq.innerHTML = "<i></i><i></i><i></i>"; b.appendChild(eq); }
+      b.appendChild(document.createTextNode(m));
+      b.addEventListener("click", function(){ S.music = i; box.querySelectorAll(".chip").forEach(function(x, j){ x.setAttribute("aria-pressed", j === i ? "true" : "false"); }); renderBar(); });
+      box.appendChild(b);
+    });
+  })();
+  function renderPeople(){
+    $("pNum").textContent = S.people;
+    $("pMinus").disabled = S.people <= 1; $("pPlus").disabled = S.people >= MAX_PEOPLE;
+    $("pNote").textContent = S.people > 1 ? "+" + num(EXTRA_PERSON * (S.people - 1)) + " ₸" : "";
+  }
+  $("pMinus").addEventListener("click", function(){ if(S.people > 1){ S.pack = null; S.people--; renderPeople(); renderBar(); } });
+  $("pPlus").addEventListener("click", function(){ if(S.people < MAX_PEOPLE){ S.pack = null; S.people++; renderPeople(); renderBar(); } });
+
+  /* ---------- slots (DEMO schedule) ---------- */
+  var DAYS = ["ВС","ПН","ВТ","СР","ЧТ","ПТ","СБ"];
+  function taken(date, i){ var h = date.getDate() * 31 + date.getMonth() * 7 + i * 13; return (h % 7) < 3; } // demo only
+  function renderDays(){
+    var box = $("days"); box.innerHTML = "";
+    for(var k = 0; k < 10; k++){ (function(k){
+      var d = new Date(); d.setHours(0,0,0,0); d.setDate(d.getDate() + k);
+      var b = el("button","day" + (d.getDay() === HOURS.closedDay ? " off" : "")); b.type = "button";
+      b.appendChild(el("b","",String(d.getDate()))); b.appendChild(el("span","", k === 0 ? "сегодня" : DAYS[d.getDay()]));
+      var key = dkey(d);
+      b.setAttribute("aria-pressed", S.day === key ? "true" : "false");
+      b.addEventListener("click", function(){ S.day = key; S.slot = null; renderDays(); renderSlots(); renderBar(); });
+      box.appendChild(b);
+    })(k); }
+  }
+  function renderSlots(){
+    var grid = $("slotGrid"); grid.innerHTML = "";
+    var d = new Date(S.day + "T00:00:00"), closed = d.getDay() === HOURS.closedDay;
+    $("closedNote").hidden = !closed;
+    if(closed){ $("avail").textContent = ""; return; }
+    var now = new Date(), isToday = S.day === dkey(now), free = 0;
+    SLOT_TIMES.forEach(function(t, i){
+      var hh = parseInt(t, 10), mm = parseInt(t.slice(3), 10);
+      var past = isToday && (hh * 60 + mm) <= (now.getHours() * 60 + now.getMinutes());
+      var busy = past || taken(d, i);
+      if(!busy) free++;
+      var b = el("button","slot",t); b.type = "button"; b.disabled = busy;
+      b.setAttribute("aria-pressed", S.slot === t ? "true" : "false");
+      if(busy) b.setAttribute("aria-label", t + " — занято");
+      b.addEventListener("click", function(){ S.slot = t; renderSlots(); renderBar(true); });
+      grid.appendChild(b);
+    });
+    var av = $("avail"); av.innerHTML = "";
+    av.appendChild(document.createTextNode((isToday ? "Сегодня" : "В этот день") + " свободно "));
+    av.appendChild(el("em","",free + " из " + SLOT_TIMES.length));
+    av.appendChild(document.createTextNode(" " + plural(SLOT_TIMES.length,"слота","слотов","слотов")));
+  }
+
+  /* ---------- packages ---------- */
+  (function(){
+    var box = $("packGrid");
+    PACKS.forEach(function(p){
+      var c = el("article","pack" + (p.big ? " big" : ""));
+      c.appendChild(el("span","tag",p.tag));
+      c.appendChild(el("h3","",p.name));
+      c.appendChild(el("p","",p.desc));
+      var ul = el("ul");
+      Object.keys(p.items).forEach(function(id){ ul.appendChild(el("li","",byId(ITEMS, id).name + " × " + p.items[id])); });
+      ul.appendChild(el("li","","до " + p.people + " " + plural(p.people,"человека","человек","человек")));
+      c.appendChild(ul);
+      var pr = el("div","pr"); pr.appendChild(el("b","",num(p.price) + " ₸"));
+      var b = el("a","btn" + (p.big ? " dark" : ""),"Выбрать"); b.href = "#build";
+      b.addEventListener("click", function(){
+        S.theme = p.theme; S.cart = {}; S.order = []; S.people = Math.min(p.people, MAX_PEOPLE); S.pack = p.id;
+        Object.keys(p.items).forEach(function(id){ S.cart[id] = p.items[id]; S.order.push(id); });
+        renderThemes(); renderShelf(); renderRoom(); renderPeople(); renderBar(true);
+      });
+      pr.appendChild(b); c.appendChild(pr); box.appendChild(c);
+    });
+  })();
+
+  /* ---------- wall placeholders ---------- */
+  (function(){
+    var box = $("wallGrid");
+    ["Офис: принтер против биты","Посуда, 30 секунд","Монитор. Без шансов","Корпоратив в каске"].forEach(function(t){
+      var d = el("div","tile"); d.innerHTML = '<span class="play"><svg viewBox="0 0 20 20"><path d="M4 2l14 8-14 8z" fill="#fff"/></svg></span>';
+      d.appendChild(el("span","","заглушка · видео из Instagram/TikTok — " + t));
+      box.appendChild(d);
+    });
+  })();
+
+  /* ---------- totals, bar, checkout ---------- */
+  function totals(){
+    var pack = S.pack ? byId(PACKS, S.pack) : null;
+    var itemsSum = S.order.reduce(function(s, id){ return s + byId(ITEMS, id).price * S.cart[id]; }, 0);
+    var base = byId(THEMES, S.theme).base, extra = EXTRA_PERSON * (S.people - 1);
+    var total = pack ? pack.price : base + extra + itemsSum;
+    return { pack:pack, base:base, extra:extra, items:itemsSum, total:total, count:S.order.reduce(function(s, id){ return s + S.cart[id]; }, 0) };
+  }
+  function renderBar(bump){
+    // a package is only "as sold" until the guest changes something
+    var T = totals();
+    $("barTotal").textContent = num(T.total) + " ₸";
+    var meta = [T.pack ? "Пакет «" + T.pack.name + "»" : byId(THEMES, S.theme).name, T.count + " " + plural(T.count,"вещь","вещи","вещей")];
+    if(S.slot) meta.push(S.day.split("-").reverse().slice(0,2).join(".") + " " + S.slot);
+    $("barMeta").textContent = meta.join(" · ");
+    $("bar").classList.toggle("show", T.count > 0 || !!S.slot);
+    if(bump) pop($("barTotal"));
+  }
+  function openSheet(){
+    var T = totals(), r = $("receipt"); r.innerHTML = "";
+    function line(a, b, cls){ var d = el("div", cls || ""); d.appendChild(el("span","",a)); d.appendChild(el("span","",b)); r.appendChild(d); }
+    if(T.pack){
+      line("Пакет «" + T.pack.name + "»", num(T.pack.price) + " ₸");
+      S.order.forEach(function(id){ line("· " + byId(ITEMS, id).name + " × " + S.cart[id], "в пакете"); });
+      line("Человек", String(S.people));
+    } else {
+      line("Комната «" + byId(THEMES, S.theme).name + "»", num(T.base) + " ₸");
+      if(T.extra) line("Ещё " + (S.people - 1) + " " + plural(S.people - 1,"человек","человека","человек"), num(T.extra) + " ₸");
+      S.order.forEach(function(id){ var it = byId(ITEMS, id); line(it.name + " × " + S.cart[id], num(it.price * S.cart[id]) + " ₸"); });
+    }
+    line("Музыка", MUSIC[S.music]);
+    line("Когда", S.slot ? S.day.split("-").reverse().join(".") + ", " + S.slot : "не выбрано");
+    line("Итого", num(T.total) + " ₸", "tot");
+    $("warn").hidden = !!S.slot;
+    renderLink();
+    $("sheet").classList.add("open"); $("sheet").setAttribute("aria-hidden","false");
+  }
+  function renderLink(){
+    var T = totals();
+    var msg = "Здравствуйте! Хочу забронировать сессию в Antistress Space.\n" +
+      (T.pack ? "Пакет: " + T.pack.name + "\n" : "") +
+      "Комната: " + byId(THEMES, S.theme).name + "\n" +
+      "Человек: " + S.people + "\n" +
+      (S.order.length ? "Разбить: " + S.order.map(function(id){ return byId(ITEMS, id).name + " × " + S.cart[id]; }).join(", ") + "\n" : "") +
+      "Музыка: " + MUSIC[S.music] + "\n" +
+      "Когда: " + (S.slot ? S.day.split("-").reverse().join(".") + ", " + S.slot : "подскажите свободное время") + "\n" +
+      "Итого по сайту: " + num(T.total) + " ₸" +
+      ($("name").value.trim() ? "\nИмя: " + $("name").value.trim() : "");
+    $("send").href = "https://wa.me/" + PHONE + "?text=" + encodeURIComponent(msg);
+  }
+  $("name").addEventListener("input", renderLink);
+  $("checkout").addEventListener("click", openSheet);
+  $("sheetClose").addEventListener("click", function(){ $("sheet").classList.remove("open"); $("sheet").setAttribute("aria-hidden","true"); });
+  $("sheet").addEventListener("click", function(e){ if(e.target === this) $("sheetClose").click(); });
+  document.addEventListener("keydown", function(e){ if(e.key === "Escape") $("sheetClose").click(); });
+  $("send").addEventListener("click", function(){ crackSound(true); });
+
+  /* ---------- boot ---------- */
+  S.day = dkey(new Date());
+  renderThemes(); renderShelf(); renderRoom(); renderPeople(); renderDays(); renderSlots(); renderBar();
+})();
+</script>
+</body>
+</html>
