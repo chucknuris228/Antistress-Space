@@ -147,6 +147,12 @@ a:focus-visible,button:focus-visible{ outline:2px solid var(--accent); outline-o
 .q-opt:hover{ border-color:var(--accent); }
 .q-opt:active{ transform:scale(.98); }
 .q-opt small{ font-family:var(--mono); font-weight:500; color:var(--ink-3); font-size:.74rem; }
+.q-start[hidden], .q-prog[hidden]{ display:none !important; }
+.q-start{ display:flex; flex-wrap:wrap; align-items:center; gap:14px 18px; }
+.q-rhead{ display:flex; align-items:center; gap:16px; }
+.q-ico{ width:62px; height:62px; flex:none; display:grid; place-items:center; background:#FBF7EE; border-radius:14px; transform:rotate(-5deg); box-shadow:4px 4px 0 rgba(0,0,0,.55); }
+.q-ico svg{ width:48px; height:48px; }
+.q-opt span{ font-weight:600; }
 .q-res{ display:none; }
 .q-res.on{ display:block; animation:viewIn .4s; }
 .q-res h3{ font-family:var(--hit); text-transform:uppercase; font-size:clamp(1.8rem,6vw,2.6rem); line-height:1; margin:6px 0 10px; }
@@ -667,19 +673,23 @@ body[data-room="ps"] .section.alt{ background:rgba(7,11,38,.7); }
   <!-- КВИЗ -->
   <section class="section alt" id="quiz">
     <div class="wrap">
-      <span class="kicker">Тест на 20 секунд</span>
-      <h2 class="sh hit">Какая комната <span class="y">тебе нужна?</span></h2>
-      <p class="sub">Три вопроса — и мы подскажем, куда идти сегодня.</p>
+      <span class="kicker">5 вопросов · 30 секунд</span>
+      <h2 class="sh hit">Какой отдых <span class="y">тебе нужен?</span></h2>
+      <p class="sub">Ответь на 5 вопросов, а мы подберём комнату или услугу, которая подходит именно под твой настрой.</p>
       <div class="quiz" id="quizBox">
-        <div class="q-prog" id="qProg"></div>
-        <div id="qStage">
+        <div class="q-start" id="qStart">
+          <button class="btn" type="button" id="qGo">Узнать свой формат</button>
+          <span class="q-num">5 вопросов · 30 секунд</span>
+        </div>
+        <div class="q-prog" id="qProg" hidden></div>
+        <div id="qStage" hidden>
           <p class="q-num" id="qNum"></p>
           <p class="q-text" id="qText"></p>
           <div class="q-opts" id="qOpts" role="group"></div>
         </div>
         <div class="q-res" id="qRes" aria-live="polite">
-          <p class="q-num">Твоя комната</p>
-          <h3 id="rName"></h3>
+          <p class="q-num">Твой формат</p>
+          <div class="q-rhead"><span class="q-ico" id="rIcoQ"></span><h3 id="rName"></h3></div>
           <p class="sub" id="rWhy"></p>
           <div class="row">
             <a class="btn" id="rGo" href="#/">Открыть комнату →</a>
@@ -1477,69 +1487,86 @@ body[data-room="ps"] .section.alt{ background:rgba(7,11,38,.7); }
     size();
   })();
 
-  /* ---------- квиз [ЗАГЛУШКА: вопросы уточнить по скрипту оператора] ---------- */
+  /* ---------- квиз «Какой отдых тебе нужен?» — тексты Antistress Space (присланы 12.10) ----------
+     В каждом вопросе 5 ответов, по одному на формат. Порядок ответов на экране перемешивается. */
   var QUIZ = [
-    { q:"Как хочешь отдохнуть?", o:[
-      ["Драйвово — выплеснуть всё, с грохотом", { antistress:3, combo:1 }],
-      ["Спокойно — уютно, без суеты", { relax:3, combo:1 }],
-      ["Творчески — руками и красками", { glowbear:3 }],
-      ["С друзьями и азартом", { ps:3 }]
-    ]},
-    { q:"Какая музыка сейчас в голове?", o:[
-      ["Агрессивная — рок, металл", { antistress:2 }],
-      ["Позитивная, энергичная", { glowbear:2, ps:1 }],
-      ["Спокойная, классика", { relax:2 }],
-      ["Динамичная, драйвовая", { ps:2, antistress:1 }]
-    ]},
-    { q:"Сколько у тебя времени?", o:[
-      ["Около часа", { antistress:1, glowbear:1, ps:1 }],
-      ["Пара часов — хочу перезагрузку целиком", { combo:3 }],
-      ["Не важно, главное — отдохнуть", { relax:1 }]
-    ]}
+    { q:"Что тебе сейчас нужнее всего?", o:{
+      relax:"Чтобы меня никто не трогал. Чай, уют и покой.",
+      antistress:"Выпустить пар. Желательно с громким звуком.",
+      combo:"Сначала избавиться от напряжения, потом спокойно выдохнуть.",
+      glowbear:"Заняться творчеством и сделать что-то своими руками.",
+      ps:"Поиграть, посоревноваться и повеселиться." } },
+    { q:"Выбирай свою суперспособность", o:{
+      relax:"Останавливать время и наконец-то высыпаться.",
+      antistress:"Выпускать весь стресс одним мощным ударом.",
+      combo:"Перезагружаться за три часа так, будто я уехал в недельный отпуск.",
+      glowbear:"Превращать обычные вещи в произведения искусства.",
+      ps:"Побеждать во всём, даже если это дружеский матч в FIFA." } },
+    { q:"Как выглядит твой идеальный вечер?", o:{
+      relax:"Плед, вкусный чай, любимый фильм и никаких забот.",
+      antistress:"Разнести всё к чертям. В переносном смысле… или не совсем.",
+      combo:"Хочу насыщенный вечер: сначала движ, потом отдых.",
+      glowbear:"Залипнуть в творчестве и уйти домой с чем-то необычным.",
+      ps:"Контроллер в руках, друзья рядом и любимые игры." } },
+    { q:"Как ты обычно справляешься с накопившимися эмоциями?", o:{
+      relax:"Ухожу в тишину и восстанавливаюсь наедине с собой.",
+      antistress:"Мне нужно физически выпустить накопившуюся энергию.",
+      combo:"Мне мало просто отвлечься. Хочу сначала перезагрузиться, а потом успокоиться.",
+      glowbear:"Переключаюсь на что-то творческое — руками, красками, фантазией.",
+      ps:"Иду играть и отвлекаться от реальности." } },
+    { q:"Ты пришёл в Antistress Space с другом / подругой, друзьями или второй половинкой. Что предложишь?", o:{
+      relax:"Устроим уютное свидание с чаем и творчеством.",
+      antistress:"Кто проиграл в споре — тот первым идёт крушить посуду!",
+      combo:"Давай устроим целое приключение: сначала адреналин, потом творческий отдых.",
+      glowbear:"Давай распишем фигурку и сделаем друг другу необычные подарки.",
+      ps:"Сделать фаталити в Mortal Kombat, а там дальше будет видно." } }
   ];
   var WHY = {
-    antistress:"Тебе нужно выплеснуть. 40 минут, кувалда и стекло — после этого правда легче.",
-    relax:"Тебе нужно замедлиться. Тёплый свет, тишина и чай — без всяких «надо».",
-    glowbear:"Тебе нужно переключить голову. Краски, неон и мишка, которого заберёшь домой.",
-    ps:"Тебе нужна компания и азарт. Берите друзей — экран большой.",
-    combo:"Тебе нужно всё и сразу: сначала разнести, потом выдохнуть. Три часа полной перезагрузки."
+    relax:"Тебе нужно замедлиться. Плед, чай, кино и неоновые стены — 2 часа, когда можно официально ничего не решать.",
+    antistress:"Тебе нужно выпустить пар. Кувалда, стекло и громкий звук — после этого правда легче.",
+    combo:"Тебе нужно всё и сразу: сначала разнести, потом выдохнуть. Три часа перезагрузки, как будто съездил в отпуск.",
+    glowbear:"Тебе нужно творить. Неон, краски и светящийся мишка, которого заберёшь домой.",
+    ps:"Тебе нужны азарт и компания. Контроллер в руки, друзей рядом — и вперёд за победой."
   };
   (function(){
-    var step = 0, score = {};
+    var step = 0, score = {}, first = null, ORDER = ["relax","combo","antistress","glowbear","ps"];
     var prog = $("qProg");
     QUIZ.forEach(function(){ prog.appendChild(el("i")); });
+    function shuffle(a){ a = a.slice(); for(var i = a.length - 1; i > 0; i--){ var j = Math.floor(Math.random() * (i + 1)), t = a[i]; a[i] = a[j]; a[j] = t; } return a; }
     function render(){
       var bars = prog.children;
       for(var i = 0; i < bars.length; i++) bars[i].className = i <= step ? "on" : "";
       if(step >= QUIZ.length){ return finish(); }
-      $("qStage").style.display = "";
-      $("qRes").classList.remove("on");
+      $("qStage").hidden = false; $("qRes").classList.remove("on");
       var cur = QUIZ[step];
       $("qNum").textContent = "Вопрос " + (step + 1) + " из " + QUIZ.length;
       $("qText").textContent = cur.q;
       var box = $("qOpts"); box.innerHTML = ""; box.setAttribute("aria-label", cur.q);
-      cur.o.forEach(function(opt){
+      shuffle(ORDER).forEach(function(id){
         var b = el("button", "q-opt"); b.type = "button";
-        b.appendChild(el("span", "", opt[0])); b.appendChild(el("small", "", "→"));
+        b.appendChild(el("span", "", cur.o[id])); b.appendChild(el("small", "", "→"));
         b.addEventListener("click", function(){
-          Object.keys(opt[1]).forEach(function(k){ score[k] = (score[k] || 0) + opt[1][k]; });
+          score[id] = (score[id] || 0) + 1; if(step === 0) first = id;
           step++; crackSound(false); render();
         });
         box.appendChild(b);
       });
     }
     function finish(){
-      var best = "antistress", max = -1;
-      ROOMS.forEach(function(r){ if((score[r.id] || 0) > max){ max = score[r.id] || 0; best = r.id; } });
+      /* больше всего совпадений; при ничьей — ответ на первый вопрос */
+      var best = first || "relax", max = -1;
+      ORDER.forEach(function(id){ var v = score[id] || 0; if(v > max || (v === max && id === first)){ max = v; best = id; } });
       var r = room(best);
-      $("qStage").style.display = "none";
+      $("qStage").hidden = true;
       $("rName").textContent = r.name; $("rName").style.color = r.accent;
+      $("rIcoQ").innerHTML = roomIcon(best);
       $("rWhy").textContent = WHY[best];
       $("rGo").href = "#" + best;
       $("qRes").classList.add("on");
     }
-    $("qAgain").addEventListener("click", function(){ step = 0; score = {}; render(); });
-    render();
+    function start(){ step = 0; score = {}; first = null; $("qStart").hidden = true; prog.hidden = false; render(); }
+    $("qGo").addEventListener("click", start);
+    $("qAgain").addEventListener("click", start);
   })();
 
   /* ---------- FAQ [ЗАГЛУШКА: финальные ответы пришлёт клиент] ---------- */
