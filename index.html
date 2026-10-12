@@ -8,7 +8,7 @@
 <meta name="theme-color" content="#0B0B0B">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=Manrope:wght@500;600;700;800&family=JetBrains+Mono:wght@500;700&family=Cormorant+Garamond:ital,wght@1,600;1,700&family=Unbounded:wght@600;800&family=Press+Start+2P&family=Russo+One&family=Caveat:wght@700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=Manrope:wght@500;600;700;800&family=JetBrains+Mono:wght@500;700&family=Unbounded:wght@600;800&family=Press+Start+2P&family=Russo+One&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
 <style>
 /* =========================================================
    ЧЕРНОВИК ГЛАВНОЙ · Antistress Space
@@ -121,14 +121,16 @@ a:focus-visible,button:focus-visible{ outline:2px solid var(--accent); outline-o
 .room-card:active{ transform:scale(.98); border-color:var(--c); }
 .room-card .ph{ position:absolute; inset:0; z-index:-2; opacity:.55; }
 .room-card::before{ content:""; position:absolute; inset:0; z-index:-1; background:linear-gradient(90deg, rgba(11,11,11,.94) 30%, rgba(11,11,11,.55) 100%); }
-.room-card .ico{ width:60px; height:60px; flex:none; display:grid; place-items:center; background:var(--c); color:#000; clip-path:polygon(0 12%,12% 0,100% 0,100% 88%,88% 100%,0 100%); }
-.room-card .ico svg{ width:32px; height:32px; }
+.room-card .ico{ width:70px; height:70px; flex:none; display:grid; place-items:center; background:#FBF7EE; border-radius:16px; transform:rotate(-5deg); box-shadow:4px 4px 0 rgba(0,0,0,.55); transition:transform .25s; }
+.room-card:nth-child(even) .ico{ transform:rotate(4deg); }
+.room-card:hover .ico{ transform:rotate(0) scale(1.06); }
+.room-card .ico svg{ width:54px; height:54px; }
 .room-card .txt{ flex:1; min-width:0; }
 .room-card h3{ font-family:var(--hit); text-transform:uppercase; font-size:clamp(1.5rem,6vw,2.1rem); line-height:1; }
 .room-card:first-child h3{ font-size:clamp(1.8rem,7vw,3rem); }
 .room-card p{ color:var(--ink-2); font-size:.92rem; margin-top:6px; }
 .room-card .go{ flex:none; width:48px; height:48px; display:grid; place-items:center; background:var(--c); color:#000; font-family:var(--hit); font-size:1.3rem; clip-path:polygon(0 0,100% 0,100% 80%,80% 100%,0 100%); }
-.room-card[data-room="glowbear"] .ico, .room-card[data-room="glowbear"] .go{ background:linear-gradient(135deg,#FF2BD6,#2BFFE4 55%,#FFE600); }
+.room-card[data-room="glowbear"] .go{ background:linear-gradient(135deg,#FF2BD6,#2BFFE4 55%,#FFE600); }
 .choose-hint{ display:flex; align-items:center; gap:10px; margin-top:16px; font-family:var(--mono); font-size:.8rem; color:var(--ink-3); }
 .choose-hint i{ width:22px; height:2px; background:var(--accent); display:block; }
 
@@ -411,8 +413,8 @@ a:focus-visible,button:focus-visible{ outline:2px solid var(--accent); outline-o
 .bits{ position:fixed; width:10px; height:14px; z-index:85; pointer-events:none; background:linear-gradient(135deg, rgba(200,255,220,.9), rgba(47,125,74,.7)); clip-path:polygon(50% 0,100% 70%,30% 100%,0 40%); }
 .vinyl.scroll{ animation:none; right:-120px; top:auto; bottom:-60px; width:300px; height:300px; }
 /* мишка, который раскрашивается при прокрутке */
-.bearfill{ position:fixed; right:12px; bottom:calc(14px + env(safe-area-inset-bottom,0px)); z-index:50; width:84px; display:none; text-align:center; pointer-events:none; filter:drop-shadow(0 8px 14px rgba(0,0,0,.55)); }
-@media (min-width:900px){ .bearfill{ width:110px; right:24px; } }
+.bearfill{ position:fixed; right:10px; bottom:calc(10px + env(safe-area-inset-bottom,0px)); z-index:50; width:104px; display:none; text-align:center; pointer-events:none; filter:drop-shadow(0 8px 14px rgba(0,0,0,.55)); }
+@media (min-width:900px){ .bearfill{ width:150px; right:24px; } }
 .bearfill.on{ display:block; }
 .bearfill small{ display:block; font-family:var(--mono); font-size:.6rem; color:var(--ink-3); margin-top:4px; }
 .bearfill.full svg{ filter:drop-shadow(0 0 8px #FF2BD6) drop-shadow(0 0 16px #2BFFE4); transition:filter .6s; }
@@ -458,21 +460,34 @@ a:focus-visible,button:focus-visible{ outline:2px solid var(--accent); outline-o
    ========================================================= */
 body{ transition:background-color .6s; }
 
-/* ---------- РЕЛАКС: тёплый вечер, кино, свечи, бархат ---------- */
-body[data-room="relax"]{ --bg:#140C0A; --bg-2:#1B110D; --bg-3:#2A1A14; --ink:#F7EBDD; --ink-2:rgba(247,235,221,.76); --ink-3:rgba(247,235,221,.5); --line:rgba(247,235,221,.12); --hit:'Cormorant Garamond',Georgia,serif;
-  background:radial-gradient(70% 50% at 85% 10%, rgba(242,185,91,.10), transparent 60%), radial-gradient(60% 50% at 0% 80%, rgba(170,60,40,.12), transparent 60%), #140C0A; }
-body[data-room="relax"] .hit{ text-transform:none; font-style:italic; font-weight:700; letter-spacing:-.005em; line-height:.95; }
-body[data-room="relax"] .r-hero h1{ font-size:clamp(3.6rem,17vw,9rem); }
+.r-ico{ display:grid; place-items:center; width:78px; height:78px; background:#FBF7EE; border-radius:18px; transform:rotate(-6deg); box-shadow:5px 5px 0 rgba(0,0,0,.5); margin-bottom:20px; }
+.r-ico svg{ width:60px; height:60px; }
+body[data-room="relax"] .r-ico{ margin-inline:auto; }
+
+/* ---------- РЕЛАКС: тёплый вечер, кино, чай. Рукописные заголовки — как надписи неоном на их стенах ---------- */
+body[data-room="relax"]{ --bg:#140C0A; --bg-2:#1B110D; --bg-3:#2A1A14; --ink:#F7EBDD; --ink-2:rgba(247,235,221,.78); --ink-3:rgba(247,235,221,.52); --line:rgba(247,235,221,.14); --hit:'Caveat','Comic Sans MS',cursive;
+  background:#140C0A; }
+body[data-room="relax"] .hit{ text-transform:none; font-weight:700; letter-spacing:0; line-height:.9; }
+body[data-room="relax"] .sh{ font-size:clamp(2.6rem,10vw,4.4rem); }
+body[data-room="relax"] .r-hero h1{ font-size:clamp(4.4rem,22vw,10rem); transform:rotate(-3deg); display:inline-block; position:relative; }
+body[data-room="relax"] .r-hero h1::after{ content:""; position:absolute; left:4%; right:2%; bottom:-.08em; height:.22em; background:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 24' preserveAspectRatio='none'><path d='M4 16 C60 4 110 22 160 12 S250 6 296 14' fill='none' stroke='%23F2B95B' stroke-width='6' stroke-linecap='round'/></svg>") no-repeat center/100% 100%; }
 body[data-room="relax"] .r-hero .wrap{ text-align:center; } body[data-room="relax"] .r-hero .lead{ margin-inline:auto; } body[data-room="relax"] .r-hero .wrap > div{ justify-content:center; }
-body[data-room="relax"] .kicker{ font-family:var(--body); letter-spacing:.24em; font-weight:600; }
-body[data-room="relax"] .btn{ clip-path:none; border-radius:999px; font-family:var(--body); font-weight:800; letter-spacing:.06em; box-shadow:0 10px 30px rgba(242,185,91,.18); }
-body[data-room="relax"] .pack, body[data-room="relax"] .wz, body[data-room="relax"] .incl, body[data-room="relax"] .toggle-card, body[data-room="relax"] .gal .gimg, body[data-room="relax"] .rad label, body[data-room="relax"] .prepay{ border-radius:22px; overflow:hidden; }
-body[data-room="relax"] .chip, body[data-room="relax"] .r-tabs a, body[data-room="relax"] .carousel-nav button, body[data-room="relax"] .stepper button, body[data-room="relax"] .mus-row .play{ border-radius:999px; }
-body[data-room="relax"] .wz input, body[data-room="relax"] .wz select{ border-radius:14px; }
-body[data-room="relax"] .section.alt{ background:transparent; }
-body[data-room="relax"] .r-hero::after{ background:radial-gradient(80% 70% at 50% 40%, rgba(20,12,10,.2), rgba(20,12,10,.95)); }
-body[data-room="relax"] .r-tabs{ background:rgba(20,12,10,.9); }
-body[data-room="relax"] .pack .tag{ font-family:'Cormorant Garamond',serif; font-size:1.15rem; }
+body[data-room="relax"] .btn{ clip-path:none; border-radius:6px; background:#FBF3E6; color:#1A120E; border:2px solid #1A120E; box-shadow:4px 4px 0 #F2B95B; transform:rotate(-1deg); font-family:var(--body); font-weight:800; letter-spacing:.04em; }
+body[data-room="relax"] .btn:hover{ transform:rotate(0) translate(-1px,-1px); box-shadow:5px 5px 0 #F2B95B; }
+body[data-room="relax"] .btn.ghost{ background:transparent; color:var(--ink); border:2px dashed rgba(247,235,221,.55); box-shadow:none; transform:rotate(1deg); }
+body[data-room="relax"] .btn.wa{ background:#25D366; color:#062b14; }
+body[data-room="relax"] .pack, body[data-room="relax"] .wz, body[data-room="relax"] .incl, body[data-room="relax"] .toggle-card, body[data-room="relax"] .gal .gimg, body[data-room="relax"] .rad label, body[data-room="relax"] .prepay{ border-radius:4px; }
+body[data-room="relax"] .pack{ box-shadow:6px 6px 0 rgba(0,0,0,.35); }
+body[data-room="relax"] .pack:nth-child(odd){ transform:rotate(-.6deg); } body[data-room="relax"] .pack:nth-child(even){ transform:rotate(.5deg); }
+body[data-room="relax"] .gal .gimg{ background:#FBF3E6; padding:8px 8px 26px; box-shadow:4px 4px 0 rgba(0,0,0,.4); }
+body[data-room="relax"] .gal .gimg:nth-child(odd){ transform:rotate(-1.4deg); } body[data-room="relax"] .gal .gimg:nth-child(even){ transform:rotate(1.2deg); }
+body[data-room="relax"] .chip, body[data-room="relax"] .r-tabs a, body[data-room="relax"] .carousel-nav button, body[data-room="relax"] .stepper button, body[data-room="relax"] .mus-row .play{ border-radius:4px; }
+body[data-room="relax"] .chip.on{ background:#FBF3E6; color:#1A120E; border-color:#FBF3E6; }
+body[data-room="relax"] .section.alt{ background:#1B110D; }
+body[data-room="relax"] .r-hero::after{ background:linear-gradient(180deg, rgba(20,12,10,.35), rgba(20,12,10,.95)); }
+body[data-room="relax"] .r-tabs{ background:rgba(20,12,10,.94); }
+body[data-room="relax"] .pack .tag{ font-family:'Caveat',cursive; font-size:1.35rem; font-style:normal; color:#F2B95B; }
+body[data-room="relax"] .kicker{ color:#F2B95B; }
 
 /* выключенный свет: неон на стенах */
 body.uv[data-room="relax"]{ --bg:#06030F; --accent:#C6FF3D; background:#06030F; }
@@ -490,7 +505,7 @@ body.uv .light-sw i{ background:#2a1f55; } body.uv .light-sw i::after{ transform
 /* ---------- КОМБО: две половины — индустриальный жёлтый и тёплый лаунж ---------- */
 body[data-room="combo"]{ background:linear-gradient(100deg, #0F0E07 0 50%, #160D0A 50% 100%); }
 body[data-room="combo"] .r-hero h1{ background:linear-gradient(100deg, #FFD400 0 48%, #F2B95B 52% 100%); -webkit-background-clip:text; background-clip:text; color:transparent; }
-body[data-room="combo"] .sh .y{ font-family:'Cormorant Garamond',serif; font-style:italic; text-transform:none; color:#F2B95B; }
+body[data-room="combo"] .sh .y{ font-family:'Caveat',cursive; text-transform:none; color:#F2B95B; font-size:1.25em; }
 body[data-room="combo"] .pack{ border-image:linear-gradient(100deg,#FFD400,#F2B95B) 1; }
 body[data-room="combo"] .r-hero::before{ content:""; position:absolute; top:0; bottom:0; left:50%; width:2px; background:linear-gradient(transparent, rgba(255,212,0,.5), transparent); z-index:0; transform:skewX(-8deg); }
 
@@ -498,9 +513,13 @@ body[data-room="combo"] .r-hero::before{ content:""; position:absolute; top:0; b
 body[data-room="glowbear"]{ --bg:#0A0418; --bg-2:#110726; --bg-3:#1B0D38; --ink:#F4EEFF; --ink-2:rgba(244,238,255,.78); --ink-3:rgba(244,238,255,.52); --line:rgba(190,150,255,.2); --hit:'Unbounded','Arial Black',sans-serif;
   background:radial-gradient(40% 30% at 10% 20%, rgba(255,43,214,.16), transparent 70%), radial-gradient(40% 30% at 90% 50%, rgba(43,255,228,.12), transparent 70%), radial-gradient(40% 30% at 30% 90%, rgba(198,255,61,.08), transparent 70%), #0A0418; background-attachment:fixed; }
 body[data-room="glowbear"] .hit{ font-weight:800; letter-spacing:-.02em; }
-body[data-room="glowbear"] .r-hero h1{ background:linear-gradient(90deg,#FF2BD6,#B14BFF,#2BFFE4,#C6FF3D); -webkit-background-clip:text; background-clip:text; color:transparent; filter:drop-shadow(0 0 18px rgba(255,43,214,.45)); }
-body[data-room="glowbear"] .btn{ clip-path:none; border-radius:18px; box-shadow:0 0 0 1px rgba(255,255,255,.2), 0 0 24px var(--accent); }
-body[data-room="glowbear"] .pack, body[data-room="glowbear"] .wz, body[data-room="glowbear"] .incl, body[data-room="glowbear"] .gal .gimg, body[data-room="glowbear"] .toggle-card, body[data-room="glowbear"] .rad label{ border-radius:26px; overflow:hidden; border-color:rgba(43,255,228,.28); box-shadow:0 0 30px rgba(177,75,255,.12); }
+body[data-room="glowbear"] .r-hero h1{ color:#C6FF3D; text-shadow:4px 4px 0 #FF2BD6, 8px 8px 0 #2BFFE4; transform:rotate(-2deg); display:inline-block; }
+body[data-room="glowbear"] .btn{ clip-path:none; border-radius:8px; background:#C6FF3D; color:#12051f; border:2px solid #12051f; box-shadow:4px 4px 0 #FF2BD6; transform:rotate(-1deg); }
+body[data-room="glowbear"] .btn:hover{ transform:rotate(0) translate(-1px,-1px); box-shadow:5px 5px 0 #FF2BD6; }
+body[data-room="glowbear"] .btn.ghost{ background:transparent; color:var(--ink); border:2px dashed rgba(43,255,228,.6); box-shadow:none; }
+body[data-room="glowbear"] .btn.wa{ background:#25D366; }
+body[data-room="glowbear"] .pack, body[data-room="glowbear"] .wz, body[data-room="glowbear"] .incl, body[data-room="glowbear"] .gal .gimg, body[data-room="glowbear"] .toggle-card, body[data-room="glowbear"] .rad label{ border-radius:10px; overflow:hidden; border-color:rgba(43,255,228,.3); }
+body[data-room="glowbear"] .pack{ box-shadow:6px 6px 0 rgba(255,43,214,.35); }
 body[data-room="glowbear"] .chip, body[data-room="glowbear"] .r-tabs a{ border-radius:14px; }
 body[data-room="glowbear"] .section.alt{ background:rgba(17,7,38,.6); }
 .splat{ position:absolute; z-index:1; pointer-events:none; border-radius:50%; filter:drop-shadow(0 0 10px var(--c)) drop-shadow(0 0 22px var(--c)); animation:splatIn .25s cubic-bezier(.2,1.6,.4,1) both; }
@@ -570,7 +589,9 @@ body[data-room="ps"] .section.alt{ background:rgba(7,11,38,.7); }
 
 /* мишка в углу — канвас */
 .bearfill canvas{ width:100%; display:block; }
-.bearfill.full canvas{ filter:drop-shadow(0 0 10px #B14BFF) drop-shadow(0 0 22px #FF2BD6); transition:filter .6s; }
+.bearfill #bear3d{ aspect-ratio:2/3; }
+.bearfill canvas[hidden]{ display:none; }
+.bearfill.full canvas{ filter:drop-shadow(0 0 12px rgba(177,75,255,.8)); transition:filter .6s; }
 
 .r-hero .wrap{ position:relative; z-index:2; pointer-events:none; }
 .r-hero .wrap a, .r-hero .wrap button{ pointer-events:auto; }
@@ -585,7 +606,8 @@ body[data-room="ps"] .section.alt{ background:rgba(7,11,38,.7); }
 <div class="paintbar" id="paintbar" aria-hidden="true"></div>
 <div class="draft">ЧЕРНОВИК · на согласование</div>
 <div class="bearfill" id="bearfill" aria-hidden="true">
-  <canvas id="bearCv"></canvas>
+  <canvas id="bear3d"></canvas>
+  <canvas id="bearCv" hidden></canvas>
   <small id="bearTxt">листай — краска потечёт</small>
 </div>
 
@@ -793,6 +815,7 @@ body[data-room="ps"] .section.alt{ background:rgba(7,11,38,.7); }
     <div class="fx" id="rFx" aria-hidden="true"></div>
     <div class="wrap">
       <a class="back" href="#/">← все комнаты</a>
+      <span class="r-ico" id="rIco" aria-hidden="true"></span>
       <span class="kicker" id="rKicker"></span>
       <h1 class="hit" id="rTitle"></h1>
       <p class="lead" id="rLead"></p>
@@ -918,6 +941,43 @@ body[data-room="ps"] .section.alt{ background:rgba(7,11,38,.7); }
     pad:'<path d="M6 8h12a4 4 0 0 1 4 4v2a4 4 0 0 1-7 2.6L14 15h-4l-1 1.6A4 4 0 0 1 2 14v-2a4 4 0 0 1 4-4z"/><path d="M7 11v3M5.5 12.5h3"/><circle cx="16" cy="11.5" r=".9" fill="currentColor"/><circle cx="18" cy="13.5" r=".9" fill="currentColor"/>',
     combo:'<path d="M14 4l6 6-3 3-6-6z"/><path d="M11 7 6 12"/><path d="M15 20a5 5 0 0 1-4-8 5 5 0 1 0 4 8z"/>'
   };
+  /* иконки-стикеры комнат (перерисованы вручную по референсам: чашка, кувалда, мишка, геймпад, кувалда бьёт чашку) */
+  var ROOM_ICON = {
+    relax:'<svg viewBox="0 0 64 64" aria-hidden="true"><g fill="none" stroke="#C9822E" stroke-width="2.6" stroke-linecap="round"><path d="M26 4c-5 4 3 7-1 12s2 6 0 9"/><path d="M35 8c-3 3 2 5 -1 8"/></g>'
+      + '<path d="M9 29h40c0 13-9 21-20 21S9 42 9 29z" fill="#FBF3E6" stroke="#1A120E" stroke-width="3.2" stroke-linejoin="round"/>'
+      + '<ellipse cx="29" cy="29" rx="20" ry="4.6" fill="#7A3E17" stroke="#1A120E" stroke-width="3.2"/>'
+      + '<path d="M48.5 33c7-1.5 9.5 8 1 10.5" fill="none" stroke="#1A120E" stroke-width="3.2" stroke-linecap="round"/>'
+      + '<path d="M35 30v8" stroke="#1A120E" stroke-width="1.6"/><rect x="31.5" y="37.5" width="7" height="8" rx="1.2" fill="#F2B95B" stroke="#1A120E" stroke-width="1.8"/>'
+      + '<path d="M6 55c8 4 38 4 46 0" fill="none" stroke="#1A120E" stroke-width="3.2" stroke-linecap="round"/></svg>',
+    antistress:'<svg viewBox="0 0 64 64" aria-hidden="true"><g transform="rotate(-42 32 32)">'
+      + '<rect x="28.3" y="20" width="7.4" height="40" rx="3.7" fill="#C97B45" stroke="#111" stroke-width="3"/>'
+      + '<rect x="14" y="5" width="36" height="19" rx="4.5" fill="#343B57" stroke="#111" stroke-width="3"/>'
+      + '<path d="M19 10h8" stroke="#5C6690" stroke-width="2.4" stroke-linecap="round"/></g></svg>',
+    glowbear:'<svg viewBox="0 0 64 64" aria-hidden="true"><defs><linearGradient id="gbIcon" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FF2BD6"/><stop offset=".55" stop-color="#9B3DFF"/><stop offset="1" stop-color="#14C9C9"/></linearGradient></defs>'
+      + '<g fill="none" stroke="url(#gbIcon)" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round">'
+      + '<path d="M22 35c-7 5-9 13-5 19M42 35c7 5 9 13 5 19"/>'
+      + '<circle cx="20" cy="12" r="6.2" fill="#FBF7EE"/><circle cx="44" cy="12" r="6.2" fill="#FBF7EE"/><path d="M18 12.5a2.4 2.4 0 0 1 3.4-2.4M46 12.5a2.4 2.4 0 0 0-3.4-2.4"/>'
+      + '<circle cx="32" cy="22.5" r="13.5" fill="#FBF7EE"/>'
+      + '<circle cx="20" cy="52" r="7.4" fill="#FBF7EE"/><circle cx="44" cy="52" r="7.4" fill="#FBF7EE"/><path d="M17.6 50.5a2.4 3 0 0 0 4.8 0M41.6 50.5a2.4 3 0 0 0 4.8 0"/>'
+      + '<path d="M29.5 43.5q2.5 1.6 5 0"/><path d="M32 28.6v2.2"/></g>'
+      + '<circle cx="27" cy="21" r="1.9" fill="#2A1640"/><circle cx="37" cy="21" r="1.9" fill="#2A1640"/><ellipse cx="32" cy="27" rx="2.6" ry="2" fill="#2A1640"/></svg>',
+    ps:'<svg viewBox="0 0 64 64" aria-hidden="true"><path d="M17 20h7l2.6-2.6h10.8L40 20h7c6.6 0 10 7.5 10 16.5 0 9.5-3.4 15.5-8.4 15.5-4 0-6.2-3.6-8.7-7.4H24.1c-2.5 3.8-4.7 7.4-8.7 7.4C10.4 52 7 46 7 36.5 7 27.5 10.4 20 17 20z" fill="#1C2250" stroke="#0B0F2A" stroke-width="2.4" stroke-linejoin="round"/>'
+      + '<rect x="26" y="21" width="12" height="9" rx="1.6" fill="#2B3576" stroke="#FBF7EE" stroke-width="1.6"/>'
+      + '<path d="M17.5 31.5v8M13.5 35.5h8" stroke="#FBF7EE" stroke-width="3.2" stroke-linecap="round"/>'
+      + '<circle cx="46" cy="31" r="2.2" fill="#2BFFE4"/><circle cx="50.5" cy="35.5" r="2.2" fill="#FF2BD6"/><circle cx="41.5" cy="35.5" r="2.2" fill="#FFE600"/><circle cx="46" cy="40" r="2.2" fill="#5B8CFF"/>'
+      + '<circle cx="27" cy="41" r="3.6" fill="#FBF7EE"/><circle cx="37" cy="41" r="3.6" fill="#FBF7EE"/></svg>',
+    combo:'<svg viewBox="0 0 64 64" aria-hidden="true">'
+      + '<g fill="#7A3E17"><circle cx="16" cy="30" r="2.2"/><circle cx="12" cy="38" r="1.6"/><circle cx="52" cy="26" r="2"/><circle cx="56" cy="34" r="1.5"/><path d="M47 30c3-4 7-3 6 1"/></g>'
+      + '<path d="M14 38h36c0 11-8 17.5-18 17.5S14 49 14 38z" fill="#FBF3E6" stroke="#1A120E" stroke-width="3" stroke-linejoin="round"/>'
+      + '<path d="M30 38l-3 6 4 3-2 6M36 38l2 5-3 4" fill="none" stroke="#1A120E" stroke-width="2" stroke-linejoin="round"/>'
+      + '<ellipse cx="32" cy="38" rx="18" ry="4" fill="#7A3E17" stroke="#1A120E" stroke-width="3"/>'
+      + '<path d="M10 59c8 3.5 36 3.5 44 0" fill="none" stroke="#1A120E" stroke-width="3" stroke-linecap="round"/>'
+      + '<g transform="translate(2 9) rotate(-38 40 18)"><rect x="37" y="14" width="6" height="30" rx="3" fill="#C97B45" stroke="#111" stroke-width="2.6" transform="translate(0 -12)"/><rect x="27" y="-6" width="26" height="14" rx="3.5" fill="#343B57" stroke="#111" stroke-width="2.6"/></g>'
+      + '<g stroke="#FFD400" stroke-width="2.4" stroke-linecap="round"><path d="M24 26l-4-4M32 24v-5M40 27l4-3"/></g></svg>'
+  };
+  var icoN = 0;
+  function roomIcon(id){ icoN++; return (ROOM_ICON[id] || "").replace(/gbIcon/g, "gbIcon" + icoN); }   /* уникальный id градиента для каждой копии */
+
   function icon(id){ return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true">' + ICON[id] + '</svg>'; }
 
   /* =========================================================
@@ -1133,7 +1193,7 @@ body[data-room="ps"] .section.alt{ background:rgba(7,11,38,.7); }
       var a = el("a", "room-card"); a.href = "#" + r.id; a.dataset.room = r.id;
       a.setAttribute("aria-label", r.name + " — открыть комнату");
       a.style.setProperty("--c", r.accent);
-      a.innerHTML = '<img class="cimg" src="' + IMG(r.cardImg, true) + '" alt="" loading="lazy"><span class="ico">' + icon(r.icon) + '</span>';
+      a.innerHTML = '<img class="cimg" src="' + IMG(r.cardImg, true) + '" alt="" loading="lazy"><span class="ico">' + roomIcon(r.id) + '</span>';
       var t = el("span", "txt"); t.appendChild(el("h3", "", r.name)); t.appendChild(el("p", "", r.card)); a.appendChild(t);
       a.appendChild(el("span", "go", "→"));
       a.addEventListener("click", function(e){ e.preventDefault(); nav("#" + r.id); });   /* работает и в предпросмотре */
@@ -1729,6 +1789,11 @@ body[data-room="ps"] .section.alt{ background:rgba(7,11,38,.7); }
     paintBear();
     document.body.dataset.room = r.id;
     clearEggs(); if(r.id === "relax") setupRelaxEgg(); if(r.id === "ps") setupPsEgg();
+    $("rIco").innerHTML = roomIcon(r.id);
+    if(r.id === "glowbear" && !B3.ok()){
+      /* 3D-мишка: грузим three.js только на странице Glow Bear; если WebGL нет — 2D-версия */
+      loadThree(function(ok){ var good = ok && B3.init($("bear3d")); $("bear3d").hidden = !good; $("bearCv").hidden = good; BEAR.attached = false; paintBear(); });
+    }
   }
   $("pPrev").addEventListener("click", function(){ $("packs").scrollBy({ left:-320, behavior:"smooth" }); });
   $("pNext").addEventListener("click", function(){ $("packs").scrollBy({ left:320, behavior:"smooth" }); });
@@ -2169,6 +2234,101 @@ body[data-room="ps"] .section.alt{ background:rgba(7,11,38,.7); }
   })();
 
   /* =========================================================
+     3D-МИШКА GLOW BEAR (three.js) — настоящая объёмная фигурка:
+     глянцевый лак, мраморная заливка стекает сверху вниз прямо по поверхности модели,
+     внизу растёт лужа краски, камера медленно облетает мишку.
+     Если WebGL недоступен — показываем 2D-версию (FB).
+     ========================================================= */
+  var B3 = (function(){
+    var ok = false, R, scene, cam, U = { uLevel:{ value:0 }, uTime:{ value:0 } }, puddle, cv, w = 0, h = 0;
+    var GLSL = [
+      "uniform float uLevel; uniform float uTime; varying vec3 vW;",
+      "float hh(vec3 p){ p = fract(p * .3183099 + .1); p *= 17.0; return fract(p.x * p.y * p.z * (p.x + p.y + p.z)); }",
+      "float n3(vec3 x){ vec3 i = floor(x); vec3 f = fract(x); f = f * f * (3.0 - 2.0 * f);",
+      "  return mix(mix(mix(hh(i), hh(i + vec3(1,0,0)), f.x), mix(hh(i + vec3(0,1,0)), hh(i + vec3(1,1,0)), f.x), f.y),",
+      "             mix(mix(hh(i + vec3(0,0,1)), hh(i + vec3(1,0,1)), f.x), mix(hh(i + vec3(0,1,1)), hh(i + vec3(1,1,1)), f.x), f.y), f.z); }",
+      "float fbm(vec3 p){ float t = 0.0, a = .5; for(int i = 0; i < 4; i++){ t += a * n3(p); p *= 2.03; a *= .5; } return t; }",
+      "vec3 marble(vec3 p){",
+      "  vec3 q = p * vec3(1.0, .55, 1.0) + vec3(0.0, uTime * .05, 0.0);",
+      "  float w = fbm(q * 1.4) * 3.2 + fbm(q * 3.1 + 7.0) * .6;",
+      "  float s = .5 + .5 * sin((p.y * 1.9 + p.x * .7 + p.z * .45 + w) * 3.7);",
+      "  vec3 c1 = vec3(.24,.05,.47), c2 = vec3(.55,.20,.86), c3 = vec3(.99,.95,1.0), c4 = vec3(.90,.38,.95);",
+      "  vec3 col = mix(c1, c2, smoothstep(.0, .3, s)); col = mix(col, c4, smoothstep(.3, .45, s)); col = mix(col, c3, smoothstep(.47, .6, s)); col = mix(col, c4, smoothstep(.7, .8, s)); col = mix(col, c2, smoothstep(.82, 1.0, s));",
+      "  return col; }"
+    ].join("\n");
+    function mat(force){
+      var m = new THREE.MeshPhysicalMaterial({ color:0xffffff, roughness:.28, metalness:0, clearcoat:1, clearcoatRoughness:.06, reflectivity:.6 });
+      m.customProgramCacheKey = function(){ return force ? "glowbear-puddle" : "glowbear-body"; };
+      m.onBeforeCompile = function(sh){
+        sh.uniforms.uLevel = U.uLevel; sh.uniforms.uTime = U.uTime;
+        sh.vertexShader = sh.vertexShader.replace("#include <common>", "#include <common>\nvarying vec3 vW;")
+          .replace("#include <project_vertex>", "#include <project_vertex>\nvW = (modelMatrix * vec4(transformed, 1.0)).xyz;");
+        sh.fragmentShader = sh.fragmentShader.replace("#include <common>", "#include <common>\n" + GLSL)
+          .replace("#include <color_fragment>", [
+            "#include <color_fragment>",
+            "float ang = atan(vW.z, vW.x);",
+            "float drip = .55 * pow(.5 + .5 * sin(ang * 7.0 + 1.3), 6.0) + .35 * pow(.5 + .5 * sin(ang * 12.0 + 2.0 + uTime * .25), 9.0);",
+            "float grow = min(1.0, uLevel * 3.0) * (1.0 - smoothstep(.82, 1.0, uLevel));",
+            "float front = mix(3.3, -1.0, uLevel) - drip * grow - .08 * sin(ang * 3.0 + uTime * .6);",
+            "float m = smoothstep(-.025, .025, vW.y - front);",
+            force ? "m = 1.0; vec3 mp = vec3(vW.x * .9 + vW.z * .4, vW.z * 1.3 - vW.x * .5 + .6, vW.x * .5 + 2.0);" : "vec3 mp = vW;",
+            "diffuseColor.rgb = mix(vec3(.95,.94,.92), marble(mp), m);",
+            force ? "diffuseColor.rgb = pow(diffuseColor.rgb, vec3(2.2)) * .7;" : ""
+          ].join("\n"));
+      };
+      return m;
+    }
+    function part(g, m, x, y, z, sx, sy, sz, rz, rx){
+      var me = new THREE.Mesh(g, m); me.position.set(x, y, z); me.scale.set(sx, sy, sz); if(rz) me.rotation.z = rz; if(rx) me.rotation.x = rx; scene.add(me); return me;
+    }
+    function init(canvas){
+      if(!window.THREE) return false;
+      try{ R = new THREE.WebGLRenderer({ canvas:canvas, antialias:true, alpha:true, powerPreference:"low-power" }); }catch(e){ return false; }
+      if(!R.getContext()) return false;
+      cv = canvas;
+      R.setPixelRatio(Math.min(2, window.devicePixelRatio || 1));
+      R.outputEncoding = THREE.sRGBEncoding; R.toneMapping = THREE.ACESFilmicToneMapping; R.toneMappingExposure = 1.05;
+      scene = new THREE.Scene();
+      cam = new THREE.PerspectiveCamera(30, 2 / 3, .1, 60);
+      scene.add(new THREE.HemisphereLight(0xffffff, 0x2a0c4a, .75));
+      var key = new THREE.DirectionalLight(0xffffff, 1.5); key.position.set(3, 6, 5); scene.add(key);
+      var rim = new THREE.DirectionalLight(0xff6bf0, 1.2); rim.position.set(-5, 3, -4); scene.add(rim);
+      var rim2 = new THREE.DirectionalLight(0x5ef2ff, .8); rim2.position.set(5, 1.5, -3); scene.add(rim2);
+      var fill = new THREE.PointLight(0xffffff, .5); fill.position.set(0, 1, 6); scene.add(fill);
+      var m = mat(false), sp = new THREE.SphereGeometry(1, 64, 48);
+      /* «fluid bear»: большая голова, круглые уши, мордочка, грушевидное тело, короткие лапы */
+      part(sp, m, 0, 2.08, 0, 1.08, .94, .92);
+      part(sp, m, -.74, 2.86, -.08, .4, .4, .24); part(sp, m, .74, 2.86, -.08, .4, .4, .24);
+      part(sp, m, 0, 1.84, .8, .34, .25, .24);
+      part(sp, m, 0, .78, 0, .8, .98, .7);
+      part(sp, m, -.74, .96, .14, .25, .52, .27, -.38); part(sp, m, .74, .96, .14, .25, .52, .27, .38);
+      part(sp, m, -.4, -.06, .14, .32, .48, .34); part(sp, m, .4, -.06, .14, .32, .48, .34);
+      var pm = mat(true); pm.clearcoatRoughness = .2; pm.roughness = .45; puddle = new THREE.Mesh(new THREE.CylinderGeometry(1, 1, .03, 64), pm); puddle.position.y = -.52; scene.add(puddle);
+      ok = true; size(); return true;
+    }
+    function size(){ if(!ok) return; w = cv.clientWidth; h = cv.clientHeight; if(!w || !h) return; R.setSize(w, h, false); cam.aspect = w / h; cam.updateProjectionMatrix(); }
+    function draw(k, time){
+      if(!ok) return;
+      if(cv.clientWidth !== w || cv.clientHeight !== h) size();
+      var t = (time || 0) / 1000;
+      U.uLevel.value = k; U.uTime.value = t;
+      var pr = Math.max(0, (k - .12) / .88); puddle.visible = pr > 0; puddle.scale.set(.25 + 1.55 * pr, 1, .25 + 1.3 * pr);
+      var a = Math.sin(t * .35) * .9;                     /* камера плавно облетает мишку */
+      cam.position.set(Math.sin(a) * 11.2, 2.2, Math.cos(a) * 11.2); cam.lookAt(0, 1.2, 0);
+      R.render(scene, cam);
+    }
+    return { init:init, draw:draw, ok:function(){ return ok; } };
+  })();
+  var THREE_URL = "https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js", threeState = 0;
+  function loadThree(cb){
+    if(window.THREE){ cb(true); return; }
+    if(threeState === 2){ cb(false); return; }
+    var s = document.createElement("script"); s.src = THREE_URL; s.async = true;
+    s.onload = function(){ cb(!!window.THREE); }; s.onerror = function(){ threeState = 2; cb(false); };
+    document.head.appendChild(s);
+  }
+
+  /* =========================================================
      ПЕРЕХОДЫ МЕЖДУ МИРАМИ — у каждой комнаты свой «телепорт»
      ========================================================= */
   var TP = {
@@ -2324,9 +2484,9 @@ body[data-room="ps"] .section.alt{ background:rgba(7,11,38,.7); }
   function bearFrame(t){
     BEAR.raf = 0;
     if(!$("bearfill").classList.contains("on")) return;
-    if(!BEAR.attached){ FB.attach($("bearCv")); BEAR.attached = true; }
     BEAR.k += (BEAR.target - BEAR.k) * .08;
-    FB.draw(BEAR.k, t || 0);
+    if(B3.ok()) B3.draw(BEAR.k, t || 0);
+    else { if(!BEAR.attached){ FB.attach($("bearCv")); BEAR.attached = true; } FB.draw(BEAR.k, t || 0); }
     var full = BEAR.k > .97;
     $("bearfill").classList.toggle("full", full);
     $("bearTxt").textContent = full ? "готов! сохнет 2 ч" : "листай — краска потечёт";
