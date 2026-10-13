@@ -576,7 +576,7 @@ body[data-room="ps"] .section.alt{ background:rgba(7,11,38,.7); }
 @keyframes dimInOut{ 0%{ opacity:0; } 35%,55%{ opacity:1; } 100%{ opacity:0; } }
 @keyframes candle{ 0%,25%{ transform:scale(0); } 50%{ transform:scale(3); } 100%{ transform:scale(140); opacity:0; } }
 /* glow bear: неоновая краска стекает и смывает экран */
-#tp[data-k="glowbear"] .tp-drip{ position:absolute; top:0; height:160%; border-radius:0 0 999px 999px; transform:translateY(-100%); animation:dripScreen 1.15s cubic-bezier(.6,0,.4,1) forwards; }
+#tp[data-k="glowbear"] .tp-drip{ will-change:transform; position:absolute; top:0; height:160%; border-radius:0 0 999px 999px; transform:translateY(-100%); animation:dripScreen 1.15s cubic-bezier(.6,0,.4,1) forwards; }
 @keyframes dripScreen{ 0%{ transform:translateY(-100%); } 45%,55%{ transform:translateY(-20%); } 100%{ transform:translateY(80%); } }
 /* playstation: кинескоп + загрузка */
 #tp[data-k="ps"]{ background:#000; animation:crt 1.1s steps(30) forwards; }
@@ -1827,6 +1827,16 @@ body[data-room="ps"] .section.alt{ background:rgba(7,11,38,.7); }
     drawPacks(); drawWz();
   }
 
+  /* декодируем картинку заранее, чтобы переход не подвисал на распаковке большой фотки */
+  var DEC = {};
+  function decodeImg(src){
+    if(DEC[src]) return DEC[src];
+    var im = new Image(); im.decoding = "async"; im.src = src;
+    DEC[src] = (im.decode ? im.decode() : new Promise(function(res){ im.onload = res; im.onerror = res; })).catch(function(){});
+    DEC[src].img = im;   /* держим ссылку, чтобы браузер не выкинул декодированное */
+    return DEC[src];
+  }
+  function prewarmRoom(id){ var r = room(id); if(r && r.slides && r.slides[0]) return decodeImg(IMG(r.slides[0])); return Promise.resolve(); }
   function renderRoom(r, gift){
     document.documentElement.style.setProperty("--accent", r.accent);
     $("rBg").className = "bg " + r.bg;
@@ -1851,9 +1861,18 @@ body[data-room="ps"] .section.alt{ background:rgba(7,11,38,.7); }
     r.gallery.forEach(function(id, i){ var b = el("button", "gimg"); b.type = "button"; b.setAttribute("aria-label", "Открыть фото " + (i + 1)); var im = el("img"); im.src = IMG(id, true); im.alt = r.name + " — фото " + (i + 1); im.loading = "lazy"; b.appendChild(im); b.addEventListener("click", function(){ openLb(r.gallery, i); }); g.appendChild(b); });
     $("rGalT").innerHTML = r.galT;
     var sl = $("rSlides"); sl.innerHTML = ""; clearInterval(slideT);
-    r.slides.forEach(function(id, i){ var p = el("div", "slide" + (i ? "" : " on")); p.style.backgroundImage = "url(" + IMG(id) + ")"; sl.appendChild(p); });
+    /* фон-слайдшоу: сразу грузим только первое фото, следующее — заранее декодируем и только потом показываем */
+    r.slides.forEach(function(id, i){ var p = el("div", "slide" + (i ? "" : " on")); p.dataset.src = IMG(id); if(!i) p.style.backgroundImage = "url(" + IMG(id) + ")"; sl.appendChild(p); });
     var si = 0;
-    if(!reduce) slideT = setInterval(function(){ var c = sl.children; if(!c.length) return; c[si].classList.remove("on"); si = (si + 1) % c.length; c[si].classList.add("on"); }, 4000);
+    if(!reduce) slideT = setInterval(function(){
+      var c = sl.children; if(c.length < 2 || TPBUSY()) return;
+      var ni = (si + 1) % c.length, nx = c[ni];
+      decodeImg(nx.dataset.src).then(function(){
+        if(nx.parentNode !== sl) return;
+        if(!nx.style.backgroundImage) nx.style.backgroundImage = "url(" + nx.dataset.src + ")";
+        c[si].classList.remove("on"); nx.classList.add("on"); si = ni;
+      });
+    }, 4500);
     $("bookT").innerHTML = gift ? 'Собери <span class="y">подарок</span>' : 'Собери <span class="y">свою сессию</span>';
     var tabs = $("rTabs"); tabs.innerHTML = "";
     ROOMS.forEach(function(x){ var a = el("a", x.id === r.id ? "on" : "", x.name); a.href = "#" + x.id + (gift ? "/gift" : ""); tabs.appendChild(a); });
@@ -1863,9 +1882,16 @@ body[data-room="ps"] .section.alt{ background:rgba(7,11,38,.7); }
     document.body.dataset.room = r.id;
     clearEggs(); if(r.id === "relax") setupRelaxEgg(); if(r.id === "ps") setupPsEgg();
     $("rIco").innerHTML = roomIcon(r.id);
-    if(r.id === "glowbear" && !B3.ok()){
-      /* 3D-мишка: грузим three.js только на странице Glow Bear; если WebGL нет — 2D-версия */
-      loadThree(function(ok){ var good = ok && B3.init($("bear3d")); $("bear3d").hidden = !good; $("bearCv").hidden = good; BEAR.attached = false; paintBear(); });
+    if(r.id === "glowbear" && !B3.ok() && !B3.loading){
+      /* 3D-мишка: грузим three.js только на странице Glow Bear и только когда переход уже закончился,
+         пока сборка не готова — в углу рисуется лёгкая 2D-версия */
+      B3.loading = true;
+      afterTp(function(){
+        loadThree(function(ok){
+          var go3 = function(){ B3.loading = false; var good = ok && B3.init($("bear3d")); $("bear3d").hidden = !good; $("bearCv").hidden = good; BEAR.attached = false; paintBear(); };
+          if(window.requestIdleCallback) requestIdleCallback(go3, { timeout:700 }); else setTimeout(go3, 60);
+        });
+      });
     }
   }
   $("pPrev").addEventListener("click", function(){ $("packs").scrollBy({ left:-320, behavior:"smooth" }); });
@@ -2359,7 +2385,7 @@ body[data-room="ps"] .section.alt{ background:rgba(7,11,38,.7); }
       try{ R = new THREE.WebGLRenderer({ canvas:canvas, antialias:true, alpha:true, powerPreference:"low-power" }); }catch(e){ return false; }
       if(!R.getContext()) return false;
       cv = canvas;
-      R.setPixelRatio(Math.min(2, window.devicePixelRatio || 1));
+      R.setPixelRatio(Math.min(1.5, window.devicePixelRatio || 1));
       R.outputEncoding = THREE.sRGBEncoding; R.toneMapping = THREE.ACESFilmicToneMapping; R.toneMappingExposure = 1.05;
       scene = new THREE.Scene();
       cam = new THREE.PerspectiveCamera(30, 2 / 3, .1, 60);
@@ -2405,22 +2431,43 @@ body[data-room="ps"] .section.alt{ background:rgba(7,11,38,.7); }
      ПЕРЕХОДЫ МЕЖДУ МИРАМИ — у каждой комнаты свой «телепорт»
      ========================================================= */
   var TP = {
-    antistress:{ mid:430, dur:1000, html:'<div class="tp-fall"></div><svg class="tp-crack" viewBox="0 0 100 100" preserveAspectRatio="none"><g stroke="#fff" stroke-width=".35" fill="none" vector-effect="non-scaling-stroke"><path d="M52 48 L12 0 M52 48 L88 4 M52 48 L100 58 M52 48 L74 100 M52 48 L22 100 M52 48 L0 38 M52 48 L40 22 L30 26 M52 48 L66 30 L78 34 M52 48 L60 70 L72 66"/></g></svg><div class="tp-flash"></div>', sound:true },
+    antistress:{ mid:520, dur:1000, html:'<div class="tp-fall"></div><svg class="tp-crack" viewBox="0 0 100 100" preserveAspectRatio="none"><g stroke="#fff" stroke-width=".35" fill="none" vector-effect="non-scaling-stroke"><path d="M52 48 L12 0 M52 48 L88 4 M52 48 L100 58 M52 48 L74 100 M52 48 L22 100 M52 48 L0 38 M52 48 L40 22 L30 26 M52 48 L66 30 L78 34 M52 48 L60 70 L72 66"/></g></svg><div class="tp-flash"></div>', sound:true },
     relax:{ mid:520, dur:1200, html:'<div class="tp-candle"></div>' },
-    glowbear:{ mid:520, dur:1150, html:function(){ var c = ["#FF2BD6","#B14BFF","#2BFFE4","#C6FF3D","#FFE600","#FF5A1F"], h = ""; for(var i = 0; i < 12; i++){ h += '<i class="tp-drip" style="left:' + (i * 8.6 - 2) + '%;width:' + (10 + (i % 3) * 3) + '%;background:' + c[i % c.length] + ';animation-delay:' + ((i % 4) * 40) + 'ms;box-shadow:0 0 30px ' + c[i % c.length] + '"></i>'; } return h; } },
+    glowbear:{ mid:575, dur:1150, html:function(){ var c = ["#FF2BD6","#B14BFF","#2BFFE4","#C6FF3D","#FFE600","#FF5A1F"], h = ""; for(var i = 0; i < 12; i++){ h += '<i class="tp-drip" style="left:' + (i * 8.6 - 2) + '%;width:' + (10 + (i % 3) * 3) + '%;background:' + c[i % c.length] + ';animation-delay:' + ((i % 4) * 40) + 'ms"></i>'; } return h; } },
     ps:{ mid:560, dur:1100, html:'<div class="tp-load">LOADING...<s></s></div>' },
     combo:{ mid:470, dur:1100, html:'<div class="tp-l"></div><div class="tp-r"></div>' },
-    home:{ mid:420, dur:900, html:'<div class="tp-tape"></div>' }
+    home:{ mid:450, dur:900, html:'<div class="tp-tape"></div>' }
   };
-  var tpBusy = false;
-  function teleport(kind, mid){
+  /* Переход в два этапа: экран закрывается → анимация замирает на «закрытом» кадре →
+     под шторкой строится новая комната и декодируется её фото → шторка уезжает.
+     Так тяжёлая работа не попадает в движущуюся анимацию и ничего не дёргается. */
+  var tpBusy = false, tpWait = [];
+  function TPBUSY(){ return tpBusy; }
+  function afterTp(fn){ if(tpBusy) tpWait.push(fn); else setTimeout(fn, 0); }
+  function raf2(){ return new Promise(function(res){ requestAnimationFrame(function(){ requestAnimationFrame(res); }); }); }
+  function teleport(kind, mid, ready){
     var t = TP[kind];
     if(reduce || !t || tpBusy){ mid(); return; }
     tpBusy = true;
     var el2 = $("tp"); el2.className = ""; el2.dataset.k = kind; el2.innerHTML = typeof t.html === "function" ? t.html() : t.html; void el2.offsetWidth; el2.className = "go";
     if(t.sound) setTimeout(function(){ crackSound(true); }, 120);
-    setTimeout(function(){ mid(); }, t.mid);
-    setTimeout(function(){ el2.className = ""; el2.innerHTML = ""; tpBusy = false; }, t.dur);
+    var warm = ready || Promise.resolve();
+    setTimeout(function(){
+      var anims = el2.getAnimations ? el2.getAnimations({ subtree:true }) : [];
+      anims.forEach(function(a){ try{ a.pause(); }catch(e){} });
+      var t0 = performance.now();
+      Promise.race([warm, new Promise(function(res){ setTimeout(res, 700); })]).then(function(){
+        mid();
+        return raf2();
+      }).then(function(){
+        var held = performance.now() - t0;
+        anims.forEach(function(a){ try{ a.play(); }catch(e){} });
+        setTimeout(function(){
+          el2.className = ""; el2.innerHTML = ""; tpBusy = false;
+          var w = tpWait; tpWait = []; w.forEach(function(fn){ try{ fn(); }catch(e){} });
+        }, t.dur - t.mid);
+      });
+    }, t.mid);
   }
 
   /* =========================================================
@@ -2573,7 +2620,7 @@ body[data-room="ps"] .section.alt{ background:rgba(7,11,38,.7); }
     BEAR.raf = 0;
     if(!$("bearfill").classList.contains("on")) return;
     BEAR.k += (BEAR.target - BEAR.k) * .08;
-    if(B3.ok()) B3.draw(BEAR.k, t || 0);
+    if(B3.ok()){ if(!tpBusy && (t || 0) - (BEAR.last || 0) > 31){ BEAR.last = t || 0; B3.draw(BEAR.k, t || 0); } }
     else { if(!BEAR.attached){ FB.attach($("bearCv")); BEAR.attached = true; } FB.draw(BEAR.k, t || 0); }
     var full = BEAR.k > .97;
     $("bearfill").classList.toggle("full", full);
@@ -2620,8 +2667,15 @@ body[data-room="ps"] .section.alt{ background:rgba(7,11,38,.7); }
     teleport(kind, function(){
       try{ if(location.hash !== hash) history.pushState(null, "", hash); }catch(e){}
       route(hash);
-    });
+    }, kind === "home" ? null : prewarmRoom(kind));
   }
+  /* палец коснулся ссылки на комнату — начинаем грузить её фото ещё до клика */
+  ["pointerdown", "mouseover", "touchstart"].forEach(function(ev){
+    document.addEventListener(ev, function(e){
+      var a = e.target.closest && e.target.closest("a[href^='#']"); if(!a) return;
+      var id = a.getAttribute("href").replace(/^#\/?/, "").split("/")[0]; if(room(id)) prewarmRoom(id);
+    }, { passive:true, capture:true });
+  });
   document.addEventListener("click", function(e){
     if(e.defaultPrevented || e.button) return;
     var a = e.target.closest && e.target.closest("a[href^='#']");
@@ -2632,7 +2686,7 @@ body[data-room="ps"] .section.alt{ background:rgba(7,11,38,.7); }
     nav(href);
   });
   addEventListener("hashchange", function(){ if(location.hash !== CUR) route(); });
-  addEventListener("popstate", function(){ var id = (location.hash || "").replace(/^#\/?/, "").split("/")[0]; teleport(room(id) ? id : "home", function(){ route(); }); });
+  addEventListener("popstate", function(){ var id = (location.hash || "").replace(/^#\/?/, "").split("/")[0]; teleport(room(id) ? id : "home", function(){ route(); }, room(id) ? prewarmRoom(id) : null); });
   route(CUR);
 
   /* ссылки на разделы главной из любой страницы */
