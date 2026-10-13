@@ -2610,32 +2610,36 @@ body.tp-cover main, body.tp-cover .view, body.tp-cover #bearfill, body.tp-cover 
   function TPBUSY(){ return tpBusy; }
   function afterTp(fn){ if(tpBusy) tpWait.push(fn); else setTimeout(fn, 0); }
   function raf2(){ return new Promise(function(res){ requestAnimationFrame(function(){ requestAnimationFrame(res); }); }); }
+  var TP_SPEED = 1.6;   /* все переходы в 1,6 раза быстрее исходных (~0,6–0,75 с вместо 1–1,2 с) */
   function teleport(kind, mid, ready){
     var t = TP[kind];
     if(reduce || !t || tpBusy){ mid(); return; }
     tpBusy = true; document.body.classList.add("tp-run");
     var el2 = $("tp"); el2.className = ""; el2.dataset.k = kind; el2.innerHTML = typeof t.html === "function" ? t.html() : t.html; void el2.offsetWidth; el2.className = "go";
-    if(t.sound) setTimeout(function(){ crackSound(true); }, 120);
+    var all = el2.getAnimations ? el2.getAnimations({ subtree:true }) : [];
+    all.forEach(function(a){ try{ a.playbackRate = TP_SPEED; }catch(e){} });
+    var tMid = all.length ? t.mid / TP_SPEED : t.mid, tDur = all.length ? t.dur / TP_SPEED : t.dur;
+    if(t.sound) setTimeout(function(){ crackSound(true); }, 120 / TP_SPEED);
     var warm = ready || Promise.resolve();
     setTimeout(function(){
       var anims = el2.getAnimations ? el2.getAnimations({ subtree:true }) : [];
       anims.forEach(function(a){ try{ a.pause(); }catch(e){} });
       document.body.classList.add("tp-cover");
       var t0 = performance.now();
-      Promise.race([warm, new Promise(function(res){ setTimeout(res, 120); })]).then(function(){
+      Promise.race([warm, new Promise(function(res){ setTimeout(res, 60); })]).then(function(){
         mid();
         return raf2();
       }).then(function(){
         document.body.classList.remove("tp-cover");
-        return raf2();
+        return new Promise(function(res){ requestAnimationFrame(res); });
       }).then(function(){
         anims.forEach(function(a){ try{ a.play(); }catch(e){} });
         setTimeout(function(){
           el2.className = ""; el2.innerHTML = ""; tpBusy = false; document.body.classList.remove("tp-run");
           var w = tpWait; tpWait = []; w.forEach(function(fn){ try{ fn(); }catch(e){} });
-        }, t.dur - t.mid);
+        }, tDur - tMid);
       });
-    }, t.mid);
+    }, tMid);
   }
 
   /* =========================================================
