@@ -1308,7 +1308,7 @@ body[data-room="ps"] .section.alt{ background:rgba(7,11,38,.7); }
     this.setAttribute("aria-pressed", soundOn ? "true" : "false");
     this.setAttribute("aria-label", "Звук и музыка: " + (soundOn ? "включены" : "выключены"));
     $("sndWave").style.opacity = soundOn ? "1" : ".15";
-    if(soundOn) bgStart(); else bgStop();
+    if(soundOn) unlockAudio(); else { bgStop(); if(SIL) SIL.pause(); }
   });
 
   /* =========================================================
@@ -1395,10 +1395,37 @@ body[data-room="ps"] .section.alt{ background:rgba(7,11,38,.7); }
   }
   function bgDuck(on){ BG.duck = on ? .15 : 1; if(BG.on && actx) BG.gain.gain.setTargetAtTime(.16 * BG.duck, actx.currentTime, .1); }
   /* старт с первого касания */
-  function firstTouch(){ removeEventListener("pointerdown", firstTouch, true); removeEventListener("keydown", firstTouch, true); bgStart(); }
-  addEventListener("pointerdown", firstTouch, true);
-  addEventListener("keydown", firstTouch, true);
-  document.addEventListener("visibilitychange", function(){ if(!actx) return; if(document.hidden) actx.suspend(); else if(BG.on) actx.resume(); });
+  /* На телефонах звук разрешается только по «настоящему» касанию (touchend / click / pointerup),
+     pointerdown там не считается — поэтому слушаем все и снимаем, только когда звук реально пошёл.
+     На iPhone ещё и беззвучный режим глушит Web Audio — включаем тихий <audio>, чтобы звук шёл как у видео. */
+  var SIL = null;
+  function silentAudio(){
+    if(SIL) return SIL;
+    var n = 4000, b = new Uint8Array(44 + n), v = new DataView(b.buffer);
+    function w(o, t){ for(var i = 0; i < t.length; i++) b[o + i] = t.charCodeAt(i); }
+    w(0, "RIFF"); v.setUint32(4, 36 + n, true); w(8, "WAVEfmt "); v.setUint32(16, 16, true); v.setUint16(20, 1, true); v.setUint16(22, 1, true);
+    v.setUint32(24, 8000, true); v.setUint32(28, 8000, true); v.setUint16(32, 1, true); v.setUint16(34, 8, true); w(36, "data"); v.setUint32(40, n, true);
+    for(var i = 0; i < n; i++) b[44 + i] = 128;
+    SIL = new Audio(URL.createObjectURL(new Blob([b], { type:"audio/wav" })));
+    SIL.loop = true; SIL.setAttribute("playsinline", ""); SIL.setAttribute("x-webkit-airplay", "deny"); SIL.preload = "auto";
+    return SIL;
+  }
+  var UNLOCK_EV = ["pointerdown", "pointerup", "touchend", "click", "keydown"];
+  function unlockAudio(){
+    if(!soundOn) return;
+    try{ if(navigator.audioSession) navigator.audioSession.type = "playback"; }catch(e){}
+    try{ var a = silentAudio(); if(a.paused){ var pr = a.play(); if(pr && pr.catch) pr.catch(function(){}); } }catch(e){}
+    try{ bgCtx(); }catch(e){ return; }
+    bgStart();
+    if(actx.state === "running") UNLOCK_EV.forEach(function(t){ removeEventListener(t, unlockAudio, true); });
+    else if(actx.resume) actx.resume().then(function(){ if(actx.state === "running") UNLOCK_EV.forEach(function(t){ removeEventListener(t, unlockAudio, true); }); }, function(){});
+  }
+  UNLOCK_EV.forEach(function(t){ addEventListener(t, unlockAudio, { capture:true, passive:true }); });
+  document.addEventListener("visibilitychange", function(){
+    if(!actx) return;
+    if(document.hidden){ actx.suspend(); if(SIL) SIL.pause(); }
+    else if(BG.on){ actx.resume(); if(SIL && soundOn){ var pr = SIL.play(); if(pr && pr.catch) pr.catch(function(){}); } }
+  });
 
   function shakeEl(n){ if(reduce) return; n.classList.remove("shake"); void n.offsetWidth; n.classList.add("shake"); }
 
