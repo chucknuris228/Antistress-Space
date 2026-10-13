@@ -113,7 +113,7 @@ a:focus-visible,button:focus-visible{ outline:2px solid var(--accent); outline-o
 .hero .lead-box{ margin-top:30px; max-width:540px; padding:14px 16px; background:rgba(8,8,8,.62); border-left:3px solid var(--yel); }
 .hero .lead-box b{ display:block; color:#fff; font-size:1.12rem; font-weight:800; }
 .hero .lead-box p{ margin:6px 0 0; color:rgba(255,255,255,.88); font-size:1rem; line-height:1.45; }
-.hero .row2{ display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:22px; max-width:620px; }
+.hero .row2{ display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:22px; max-width:620px;}
 .hero .row2 .btn{ display:flex; align-items:center; justify-content:space-between; gap:10px; text-align:left; line-height:1.15; padding:16px 16px; min-height:74px; }
 .hero .row2 .btn i{ font-style:normal; font-size:1.4em; flex:none; }
 .hero .row2 .ghost2{ background:rgba(8,8,8,.7); color:#fff; border:2px solid rgba(255,255,255,.85); }
@@ -122,6 +122,8 @@ a:focus-visible,button:focus-visible{ outline:2px solid var(--accent); outline-o
 .btn.wa .wa-ic{ width:20px; height:20px; margin-right:7px; flex:none; }
 .btn.wa{ display:inline-flex; align-items:center; }
 .quick{ background:#0B0B0B; padding:18px 0 26px; }
+.quick-hint{ max-width:1240px; margin:10px auto 0; padding:0 16px; font-family:var(--mono); font-size:.74rem; color:rgba(255,255,255,.6); }
+@media (min-width:900px){ .hero-rooms a{ min-height:330px; } .hero-rooms .ico{ width:64px; height:64px; } .hero-rooms b{ font-size:1rem; } }
 .hero-rooms{ display:grid; grid-auto-flow:column; grid-auto-columns:minmax(150px, 1fr); gap:8px; overflow-x:auto; padding:0 16px 6px; scroll-snap-type:x mandatory; scrollbar-width:none; max-width:1240px; margin:0 auto; }
 .hero-rooms::-webkit-scrollbar{ display:none; }
 .hero-rooms a{ position:relative; display:flex; flex-direction:column; justify-content:flex-end; align-items:center; text-align:center; min-height:250px; padding:14px 10px 16px; color:#fff; text-decoration:none; overflow:hidden; scroll-snap-align:start; border:1px solid rgba(255,255,255,.12); background:#151515; }
@@ -139,7 +141,8 @@ a:focus-visible,button:focus-visible{ outline:2px solid var(--accent); outline-o
 .feats svg{ width:38px; height:38px; fill:none; stroke:#fff; stroke-width:1.6; stroke-linecap:round; stroke-linejoin:round; margin-bottom:8px; }
 .feats b{ color:#fff; text-transform:uppercase; font-size:.78rem; font-weight:800; line-height:1.2; }
 .feats span{ color:rgba(255,255,255,.72); font-size:.76rem; margin-top:4px; line-height:1.3; }
-#glass{ position:absolute; inset:0; width:100%; height:100%; z-index:3; cursor:crosshair; touch-action:manipulation; }
+#glass{ position:absolute; inset:0; width:100%; height:100%; z-index:3; cursor:crosshair; touch-action:manipulation; pointer-events:none; }
+.hero:not(.done){ cursor:crosshair; }
 .glass-label{ position:absolute; z-index:4; right:7%; top:24%; text-align:right; pointer-events:none; transition:opacity .3s; }
 .glass-label b{ font-family:var(--hit); text-transform:uppercase; color:var(--yel); font-size:clamp(1.6rem,5vw,2.8rem); line-height:.9; display:block; transform:rotate(-4deg); }
 .glass-label span{ font-family:var(--mono); font-size:.78rem; color:var(--ink-2); display:inline-block; margin-top:8px; }
@@ -730,8 +733,9 @@ body.tp-cover main, body.tp-cover .view, body.tp-cover #bearfill, body.tp-cover 
     <div class="glass-label" id="glassLabel" aria-hidden="true"><b>Разбей<br>это</b><span id="glassHint">тапни по стеклу</span></div>
   </section>
 
-  <section class="quick" aria-label="Комнаты и условия">
+  <section class="quick" id="rooms" aria-label="Комнаты и условия">
     <div class="hero-rooms" id="heroRooms"></div>
+    <p class="quick-hint">Нажми на комнату — откроются пакеты, цены и запись</p>
     <div class="feats">
       <div><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4M8 14h.01M12 14h.01M16 14h.01M8 18h.01M12 18h.01"/></svg><b>Только по&nbsp;записи</b><span>Гарантируем ваше время</span></div>
       <div><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2.5 18.5h19"/><path d="M4.5 18.5v-2.5a7.5 7.5 0 0 1 15 0v2.5"/><path d="M10 9.2V5.5h4v3.7"/><path d="M7.5 11.5a5 5 0 0 1 2.5-2.3M16.5 11.5a5 5 0 0 0-2.5-2.3"/></svg><b>Экипировка включена</b><span>В антистрессе и Glow Bear</span></div>
@@ -740,17 +744,6 @@ body.tp-cover main, body.tp-cover .view, body.tp-cover #bearfill, body.tp-cover 
   </section>
 
   <div class="tape-wrap" aria-hidden="true"><div class="tape text"><div class="run" id="run"></div></div></div>
-
-  <!-- ВЫБОР КОМНАТЫ -->
-  <section class="section" id="rooms">
-    <div class="wrap">
-      <span class="kicker">Шаг первый</span>
-      <h2 class="sh hit">Выбери <span class="y">свою комнату</span></h2>
-      <p class="sub">Нажми на комнату — откроются пакеты, цены и запись.</p>
-      <div class="rooms" id="roomGrid"></div>
-      <p class="choose-hint"><i></i>каждая комната — со своим настроением и своими сюрпризами</p>
-    </div>
-  </section>
 
   <!-- КВИЗ -->
   <section class="section alt" id="quiz">
@@ -1304,7 +1297,7 @@ body.tp-cover main, body.tp-cover .view, body.tp-cover #bearfill, body.tp-cover 
 
   /* ---------- карточки комнат ---------- */
   (function(){
-    var g = $("roomGrid");
+    var g = $("roomGrid"); if(!g) return;   /* большой список убран: комнаты теперь сразу под первым экраном */
     ROOMS.forEach(function(r){
       var a = el("a", "room-card"); a.href = "#" + r.id; a.dataset.room = r.id;
       a.setAttribute("aria-label", r.name + " — открыть комнату");
@@ -1670,7 +1663,11 @@ body.tp-cover main, body.tp-cover .view, body.tp-cover #bearfill, body.tp-cover 
         hero.classList.add("done");
       }
     }
-    c.addEventListener("pointerdown", function(e){ var r = c.getBoundingClientRect(); hit(e.clientX - r.left, e.clientY - r.top); });
+    /* стекло ловит касания через весь экран, но кнопки и ссылки под ним работают с первого нажатия */
+    hero.addEventListener("pointerdown", function(e){
+      if(hero.classList.contains("done") || (e.target.closest && e.target.closest("a,button,input,select,label"))) return;
+      var r = c.getBoundingClientRect(); hit(e.clientX - r.left, e.clientY - r.top);
+    });
     c.addEventListener("keydown", function(e){ if(e.key === "Enter" || e.key === " "){ e.preventDefault(); hit(W / 2, H / 2); } });
     $("again").addEventListener("click", function(){ cancelAnimationFrame(raf); cracks = []; shards = null; hits = 0; hero.classList.remove("done"); $("glassHint").textContent = "тапни по стеклу"; drawPane(); });
     addEventListener("resize", size);
