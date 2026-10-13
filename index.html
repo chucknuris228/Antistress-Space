@@ -428,7 +428,7 @@ a:focus-visible,button:focus-visible{ outline:2px solid var(--accent); outline-o
 .bits{ position:fixed; width:10px; height:14px; z-index:85; pointer-events:none; background:linear-gradient(135deg, rgba(200,255,220,.9), rgba(47,125,74,.7)); clip-path:polygon(50% 0,100% 70%,30% 100%,0 40%); }
 .vinyl.scroll{ animation:none; right:-120px; top:auto; bottom:-60px; width:300px; height:300px; }
 /* мишка, который раскрашивается при прокрутке */
-.bearfill{ position:fixed; right:10px; bottom:calc(10px + env(safe-area-inset-bottom,0px)); z-index:50; width:104px; display:none; text-align:center; pointer-events:none; filter:drop-shadow(0 8px 14px rgba(0,0,0,.55)); }
+.bearfill{ position:fixed; right:10px; bottom:calc(10px + env(safe-area-inset-bottom,0px)); z-index:50; width:104px; display:none; text-align:center; pointer-events:none; }
 @media (min-width:900px){ .bearfill{ width:150px; right:24px; } }
 .bearfill.on{ display:block; }
 .bearfill small{ display:block; font-family:var(--mono); font-size:.6rem; color:var(--ink-3); margin-top:4px; }
@@ -574,9 +574,9 @@ body.tp-cover main, body.tp-cover .view, body.tp-cover #bearfill, body.tp-cover 
 @keyframes fallAway{ 0%,38%{ transform:translateY(-100%); } 46%{ transform:translateY(0) rotate(0); } 62%{ transform:translateY(0) rotate(0); } 100%{ transform:translateY(120%) rotate(8deg); } }
 /* релакс: свет медленно гаснет, загорается свеча */
 #tp[data-k="relax"]{ background:#0d0705; animation:dimInOut 1.2s ease forwards; }
-#tp[data-k="relax"] .tp-candle{ position:absolute; left:50%; top:50%; width:20px; height:20px; margin:-10px; border-radius:50%; background:radial-gradient(circle, #FFE7B0, #F2B95B 40%, rgba(242,185,91,0) 70%); animation:candle 1.2s ease forwards; }
+#tp[data-k="relax"] .tp-candle{ position:absolute; left:50%; top:50%; width:280vmax; height:280vmax; margin:-140vmax 0 0 -140vmax; border-radius:50%; will-change:transform,opacity; background:radial-gradient(circle, #FFE7B0, #F2B95B 40%, rgba(242,185,91,0) 70%); animation:candle 1.2s ease forwards; }
 @keyframes dimInOut{ 0%{ opacity:0; } 35%,55%{ opacity:1; } 100%{ opacity:0; } }
-@keyframes candle{ 0%,25%{ transform:scale(0); } 50%{ transform:scale(3); } 100%{ transform:scale(140); opacity:0; } }
+@keyframes candle{ 0%,25%{ transform:scale(0); } 50%{ transform:scale(.0215); } 100%{ transform:scale(1); opacity:0; } }
 /* glow bear: неоновая краска стекает и смывает экран */
 #tp[data-k="glowbear"] .tp-drip{ will-change:transform; position:absolute; top:0; height:160%; border-radius:0 0 999px 999px; transform:translateY(-100%); animation:dripScreen 1.15s cubic-bezier(.6,0,.4,1) forwards; }
 @keyframes dripScreen{ 0%{ transform:translateY(-100%); } 45%,55%{ transform:translateY(-20%); } 100%{ transform:translateY(80%); } }
@@ -611,7 +611,7 @@ body.tp-cover main, body.tp-cover .view, body.tp-cover #bearfill, body.tp-cover 
 .bearfill canvas{ width:100%; display:block; }
 .bearfill #bear3d{ aspect-ratio:2/3; }
 .bearfill canvas[hidden]{ display:none; }
-.bearfill.full canvas{ filter:drop-shadow(0 0 12px rgba(177,75,255,.8)); transition:filter .6s; }
+.bearfill #bearCv{ filter:drop-shadow(0 8px 14px rgba(0,0,0,.55)); }
 
 .r-hero .wrap{ position:relative; z-index:2; pointer-events:none; }
 .r-hero .wrap a, .r-hero .wrap button{ pointer-events:auto; }
@@ -2459,7 +2459,7 @@ body.tp-cover main, body.tp-cover .view, body.tp-cover #bearfill, body.tp-cover 
       anims.forEach(function(a){ try{ a.pause(); }catch(e){} });
       document.body.classList.add("tp-cover");
       var t0 = performance.now();
-      Promise.race([warm, new Promise(function(res){ setTimeout(res, 700); })]).then(function(){
+      Promise.race([warm, new Promise(function(res){ setTimeout(res, 120); })]).then(function(){
         mid();
         return raf2();
       }).then(function(){
@@ -2626,7 +2626,7 @@ body.tp-cover main, body.tp-cover .view, body.tp-cover #bearfill, body.tp-cover 
     if(!$("bearfill").classList.contains("on")) return;
     BEAR.k += (BEAR.target - BEAR.k) * .08;
     if(B3.ok()){ if(!tpBusy && (t || 0) - (BEAR.last || 0) > 31){ BEAR.last = t || 0; B3.draw(BEAR.k, t || 0); } }
-    else { if(!BEAR.attached){ FB.attach($("bearCv")); BEAR.attached = true; } FB.draw(BEAR.k, t || 0); }
+    else if(!B3.loading && !tpBusy){ if(!BEAR.attached){ FB.attach($("bearCv")); BEAR.attached = true; } FB.draw(BEAR.k, t || 0); }
     var full = BEAR.k > .97;
     $("bearfill").classList.toggle("full", full);
     $("bearTxt").textContent = full ? "готов! сохнет 2 ч" : "листай — краска потечёт";
