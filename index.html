@@ -246,6 +246,20 @@ a:focus-visible,button:focus-visible{ outline:2px solid var(--accent); outline-o
 /* sticky CTA (мобильный) */
 .sticky{ position:fixed; left:12px; right:12px; bottom:calc(12px + env(safe-area-inset-bottom,0px)); z-index:55; display:flex; gap:8px; transform:translateY(140%); transition:transform .35s cubic-bezier(.2,.8,.2,1); }
 .sticky.on{ transform:none; }
+.gift-chip{ position:fixed; right:12px; top:calc(74px + env(safe-area-inset-top,0px)); z-index:56; max-width:min(330px, calc(100vw - 24px)); text-align:left; background:#FFD400; color:#0B0B0B; padding:9px 13px; font-weight:800; font-size:.86rem; box-shadow:0 8px 24px rgba(0,0,0,.45); transform:rotate(1.5deg); }
+.gift-chip[hidden]{ display:none; }
+body[data-room] .gift-chip{ top:calc(142px + env(safe-area-inset-top,0px)); }
+.gift-chip .gc-row{ display:flex; gap:6px; align-items:center; white-space:nowrap; }
+.gift-chip b{ font-family:var(--mono); background:#0B0B0B; color:#FFD400; padding:1px 6px; margin-left:2px; }
+.gift-chip .gc-more{ display:none; font-weight:500; font-size:.82rem; line-height:1.35; margin-top:6px; white-space:normal; }
+.gift-chip[aria-expanded="true"] .gc-more{ display:block; }
+body.tp-run .gift-chip{ visibility:hidden; }
+.gift-note{ margin:14px 0 4px; padding:12px 14px; border:1px dashed var(--accent); background:rgba(255,212,0,.08); font-size:.92rem; line-height:1.45; }
+.gift-note b{ color:var(--accent); }
+.now-card{ margin-top:22px; padding:18px; border:2px solid var(--accent); background:var(--bg-3); }
+.now-card b{ display:block; font-size:1.15rem; margin-top:6px; }
+.now-card s{ opacity:.6; }
+.now-card p{ color:var(--ink-3); margin:6px 0 0; font-size:.92rem; }
 .sticky .btn{ flex:1; min-height:54px; box-shadow:0 10px 30px rgba(0,0,0,.5); }
 @media (min-width:900px){ .sticky{ left:auto; right:24px; width:360px; } }
 
@@ -809,7 +823,7 @@ body.tp-cover main, body.tp-cover .view, body.tp-cover #bearfill, body.tp-cover 
           <div class="socials">
             <a class="soc" href="https://2gis.kz/almaty/geo/70000001067866712" target="_blank" rel="noopener">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 22s7-6.2 7-12a7 7 0 1 0-14 0c0 5.8 7 12 7 12z"/><circle cx="12" cy="10" r="2.5"/></svg>Маршрут в 2ГИС</a>
-            <a class="soc" href="#" aria-label="Instagram (ссылку добавим)">
+            <a class="soc" href="https://www.instagram.com/antistress_space/" target="_blank" rel="noopener" aria-label="Instagram">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor"/></svg>Instagram</a>
             <a class="soc" href="#" aria-label="TikTok (ссылку добавим)">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M14 3v11.5a3.5 3.5 0 1 1-3.5-3.5"/><path d="M14 3c.5 2.6 2.4 4.4 5 4.6"/></svg>TikTok</a>
@@ -899,6 +913,11 @@ body.tp-cover main, body.tp-cover .view, body.tp-cover #bearfill, body.tp-cover 
     </div>
   </div>
 </footer>
+
+<button class="gift-chip" id="giftChip" type="button" hidden aria-expanded="false">
+  <span class="gc-row">🎁 <span id="giftChipT">Подарок к записи</span> <b id="giftChipLeft">30:00</b></span>
+  <span class="gc-more" id="giftChipMore"></span>
+</button>
 
 <div class="sticky" id="sticky">
   <a class="btn" href="#/" data-scroll="rooms">Выбрать комнату</a>
@@ -1027,7 +1046,30 @@ body.tp-cover main, body.tp-cover .view, body.tp-cover #bearfill, body.tp-cover 
     note:'<path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/>'
   };
   function ic(k){ return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true">' + (IC[k] || "") + '</svg>'; }
-  function money(n){ return n == null ? "—" : String(n).replace(/\B(?=(\d{3})+(?!\d))/g, " ") + " ₸"; }
+  function money(n){ return n == null ? "—" : String(n).replace(/\B(?=(\d{3})+(?!\d))/g, "\u00A0") + "\u00A0₸"; }
+  /* =========================================================
+     ТАЙМЕР-АКЦИЯ «30 МИНУТ» (идея Анастасии)
+     Отсчёт идёт с первого захода на сайт с этого телефона/браузера и больше не перезапускается:
+     вышел и зашёл снова — таймер продолжает идти; закончился — акция для этого человека исчезла навсегда.
+     Подарок: антистресс и комбо — 5 бутылок к пакету, релакс — чайник чая.
+     В заявку в WhatsApp попадает строка с подарком и временем, до которого действует акция.
+     ========================================================= */
+  var GIFT = { minutes:30, rooms:{ antistress:"5 бутылок в подарок к пакету", combo:"5 бутылок в подарок к пакету", relax:"чайник чая в подарок" } };
+  function store(k, v){
+    try{ if(v === undefined){ var x = localStorage.getItem(k); if(x != null) return x; } else localStorage.setItem(k, v); }catch(e){}
+    try{
+      if(v === undefined){ var m = document.cookie.match(new RegExp("(?:^|; )" + k + "=([^;]*)")); return m ? decodeURIComponent(m[1]) : null; }
+      document.cookie = k + "=" + encodeURIComponent(v) + ";max-age=31536000;path=/;SameSite=Lax";
+    }catch(e){}
+    return null;
+  }
+  var GIFT_T0 = (function(){ var t = parseInt(store("as_gift_t0"), 10); if(!t || t > Date.now()){ t = Date.now(); store("as_gift_t0", String(t)); } return t; })();
+  function giftDeadline(){ return GIFT_T0 + GIFT.minutes * 60000; }
+  function giftLeft(){ return store("as_gift_used") ? 0 : Math.max(0, giftDeadline() - Date.now()); }
+  function giftFor(st){ return st && !st.gift && giftLeft() > 0 ? (GIFT.rooms[st.r.id] || "") : ""; }
+  function hhmm(t){ var d = new Date(t); return (d.getHours() < 10 ? "0" : "") + d.getHours() + ":" + (d.getMinutes() < 10 ? "0" : "") + d.getMinutes(); }
+  function mmss(ms){ var s2 = Math.ceil(ms / 1000), m = Math.floor(s2 / 60), r = s2 % 60; return m + ":" + (r < 10 ? "0" : "") + r; }
+
 
   /* =========================================================
      ДАННЫЕ — из прайсов Antistress Space (Instagram-прайсы, жёлтый прайс допов, чайная карта)
@@ -1145,15 +1187,15 @@ body.tp-cover main, body.tp-cover .view, body.tp-cover #bearfill, body.tp-cover 
       kicker:"PlayStation · до 4–5 человек", title:"PlayStation",
       lead:"Для тех, кто предпочитает уничтожать противников виртуально. Большие экраны, геймпады и мягкие кресла-мешки.",
       hint:"",
-      packsSub:"Оплата по часам. Цена зависит от дня и времени.",
+      packsSub:"Оплата по часам, с человека. Цена зависит от дня и времени.",
       cardImg:"ps-280", slides:["ps-276","ps-280","ps-272"],
       gallery:["ps-254","ps-255","ps-256","ps-264","ps-266","ps-273","ps-274","ps-281","ps-284","ps-265"],
       galT:'Так выглядит <span class="y">игровая</span>',
       packs:[
-        { id:"ps", name:"PlayStation-комната", group:"main", photo:"ps-273", tag:"Оплата по часам", max:5, hourly:true, list:true,
-          items:["Пн–чт, 11:00–17:00 — 1 500 ₸/ч","Пн–чт, 17:00–21:00 — 1 700 ₸/ч","Пт–вс, 10:00–17:00 — 1 700 ₸/ч","Пт–вс, 17:00–21:00 — 2 000 ₸/ч"],
-          from:1500, priceLabel:"от 1 500 ₸ в час [уточнить: за комнату или с человека]",
-          calc:function(){ var h = S.hours || 1, t = parseInt(S.time, 10) || 11, we = isWeekend(S.date); return h * (we ? (t < 17 ? 1700 : 2000) : (t < 17 ? 1500 : 1700)); } }
+        { id:"ps", name:"PlayStation-комната", group:"main", photo:"ps-273", tag:"Почасовая, с человека", max:5, hourly:true, list:true,
+          items:["Пн–чт, 11:00–17:00 — 1 500 ₸/ч с человека","Пн–чт, 17:00–21:00 — 1 700 ₸/ч с человека","Пт–вс, 10:00–17:00 — 1 700 ₸/ч с человека","Пт–вс, 17:00–21:00 — 2 000 ₸/ч с человека"],
+          from:1500, priceLabel:"от 1 500 ₸ в час с человека",
+          calc:function(ppl){ var h = S.hours || 1, n = ppl || S.ppl || 1, t = parseInt(S.time, 10) || 11, we = isWeekend(S.date); return n * h * (we ? (t < 17 ? 1700 : 2000) : (t < 17 ? 1500 : 1700)); } }
       ] }
   ];
   function room(id){ for(var i = 0; i < ROOMS.length; i++) if(ROOMS[i].id === id) return ROOMS[i]; return null; }
@@ -1167,9 +1209,10 @@ body.tp-cover main, body.tp-cover .view, body.tp-cover #bearfill, body.tp-cover 
     ["Экипировка", [["Одноразовый комбинезон",3000],["Одноразовый халат",2000],["Перчатки, пара",850],["Шапочка под маску",450],["Бахилы тканевые, пара",750]]]
   ];
   /* «Только сейчас» — последний шанс добавить [свои акции Анастасия пришлёт — заменим] */
+  /* «Только сейчас» — лобовое стекло со скидкой. Показывается на странице комнаты и ещё раз в шаге заявки.
+     SALE: впишите цену со скидкой (сейчас null — на сайте «цену со скидкой уточнит администратор») [уточнить у Анастасии] */
   var PROMOS = [
-    { id:"pinata", name:"Фирменная пиньята", desc:"Напиши на стикерах свои страхи и негативные установки, наклей — и разбей.", price:10500 },
-    { id:"windshield", name:"Лобовое стекло", desc:"Самый громкий звук в комнате.", price:9500 }
+    { id:"windshield", name:"Лобовое стекло", desc:"Самый громкий звук в комнате — разбей его кувалдой.", old:9500, price:null }
   ];
   /* чайная карта — 18 видов китайского чая */
   var TEA = {
@@ -1290,6 +1333,26 @@ body.tp-cover main, body.tp-cover .view, body.tp-cover #bearfill, body.tp-cover 
   }
   addEventListener("resize", fitTitle);
   if(document.fonts && document.fonts.ready) document.fonts.ready.then(fitTitle);
+
+  /* таймер-акция: плашка в углу, обновляется раз в секунду */
+  (function(){
+    var chip = $("giftChip"); if(!chip) return;
+    chip.addEventListener("click", function(){ chip.setAttribute("aria-expanded", chip.getAttribute("aria-expanded") === "true" ? "false" : "true"); });
+    function tick(){
+      var left = giftLeft(), rid = document.body.dataset.room, onHome = !rid, txt = rid ? GIFT.rooms[rid] : "";
+      if(left <= 0){
+        chip.hidden = true; clearInterval(tm);
+        var gn = $("wzGift"); if(gn) drawWz();
+        return;
+      }
+      chip.hidden = !(onHome || txt);
+      $("giftChipLeft").textContent = mmss(left);
+      $("giftChipT").textContent = txt ? (rid === "relax" ? "Чай в подарок" : "5 бутылок в подарок") : "Подарок к записи";
+      $("giftChipMore").textContent = (txt ? "Запишитесь и оплатите до " + hhmm(giftDeadline()) + " — " + txt + "." : "Запишитесь и оплатите до " + hhmm(giftDeadline()) + ": в антистрессе и комбо — 5 бутылок к пакету, в релаксе — чайник чая.") + " Предложение действует один раз.";
+      var gl = document.querySelector("#wzGift .gift-left"); if(gl) gl.textContent = mmss(left);
+    }
+    var tm = setInterval(tick, 1000); tick();
+  })();
 
   /* подвал: надпись всегда в одну строку */
   function fitBig(){
@@ -1780,6 +1843,13 @@ body.tp-cover main, body.tp-cover .view, body.tp-cover #bearfill, body.tp-cover 
 
   function variantOf(p, v){ return p && p.variants ? (p.variants.filter(function(x){ return x.id === v; })[0] || null) : null; }
   function maxPpl(p){ var vv = variantOf(p, S.variant); return vv ? vv.max : (p.max || 1); }
+  function promoPrice(p){
+    var sp = el("span");
+    if(p.old){ var o = el("s", "", money(p.old)); o.style.opacity = ".6"; sp.appendChild(o); sp.appendChild(document.createTextNode(" ")); }
+    sp.appendChild(document.createTextNode(p.price ? money(p.price) : "со скидкой"));
+    return sp;
+  }
+
   function priceOf(p, ppl, v){
     if(!p) return null;
     if(p.variants){ var vv = variantOf(p, v); return vv ? vv.price : null; }
@@ -1864,6 +1934,13 @@ body.tp-cover main, body.tp-cover .view, body.tp-cover #bearfill, body.tp-cover 
     drawPacks();
     /* «входит в любой пакет» — серым, после пакетов */
     var inc = $("rIncl"); inc.innerHTML = "";
+    if(r.promos && PROMOS.length){
+      var on = el("div", "now-card"), pp = PROMOS[0];
+      on.appendChild(el("span", "kicker", "Только сейчас"));
+      var h = el("b", "", pp.name + " — "); h.appendChild(promoPrice(pp)); on.appendChild(h);
+      on.appendChild(el("p", "", pp.desc + " Добавить можно прямо при записи — шаг «Только сейчас»."));
+      inc.appendChild(on);
+    }
     if(r.included){
       var d = el("div", "incl"); d.appendChild(el("b", "", r.included.title));
       var ul = el("ul"); r.included.list.forEach(function(t){ ul.appendChild(el("li", "", t)); }); d.appendChild(ul);
@@ -1952,7 +2029,7 @@ body.tp-cover main, body.tp-cover .view, body.tp-cover #bearfill, body.tp-cover 
     var t = priceOf(S.pack, S.ppl, S.variant);
     if(t == null) return null;
     addonsList().forEach(function(a){ t += a[2]; });
-    if(S.r.promos) PROMOS.forEach(function(p){ if(S.promo[p.id]) t += p.price; });
+    if(S.r.promos) PROMOS.forEach(function(p){ if(S.promo[p.id] && p.price) t += p.price; });
     if(S.tea && TEA[S.tea]) t += TEA[S.tea].price + (S.teaSet ? 2000 : 0);
     return t;
   }
@@ -2129,13 +2206,13 @@ body.tp-cover main, body.tp-cover .view, body.tp-cover #bearfill, body.tp-cover 
       var on = !!S.promo[p.id];
       var t = el("button", "toggle-card" + (on ? " on" : "")); t.type = "button"; t.setAttribute("aria-pressed", on ? "true" : "false");
       t.innerHTML = '<span class="tk">' + (on ? "✓" : "") + '</span>';
-      var tx = el("span"); tx.appendChild(el("b", "", p.name + " — " + money(p.price)));
-      var sm = el("small", "", p.desc); if(p.old){ sm.appendChild(document.createTextNode(" ")); sm.appendChild(el("s", "", money(p.old))); } tx.appendChild(sm); t.appendChild(tx);
+      var tx = el("span"), bb = el("b", "", p.name + " — "); bb.appendChild(promoPrice(p)); tx.appendChild(bb);
+      tx.appendChild(el("small", "", p.desc)); t.appendChild(tx);
       t.addEventListener("click", function(){ S.promo[p.id] = !S.promo[p.id]; if(S.promo[p.id]) crackSound(false); drawWz(); });
       g.appendChild(t);
     });
     b.appendChild(g);
-    b.appendChild(el("p", "wz-note", "Можно ничего не выбирать и идти дальше. [Ваши акции пришлёте — добавим сюда.]"));
+    b.appendChild(el("p", "wz-note", "Можно ничего не выбирать и идти дальше."));
   }
 
   function stSrc(b){
@@ -2168,7 +2245,8 @@ body.tp-cover main, body.tp-cover .view, body.tp-cover #bearfill, body.tp-cover 
     if(S.tea) rows.push(["Чай", TEA[S.tea].name + (S.teaName ? ": " + S.teaName : "") + (S.teaSet ? " + чайный сет" : "")]);
     var ad = addonsList(); if(ad.length) rows.push(["Допы", ad.map(function(a){ return a[0] + " ×" + a[1]; }).join(", ")]);
     (S.r.extras || []).forEach(function(x){ if(S.ex[x.id]) rows.push(["Добавить", x.name]); });
-    var pr = S.r.promos ? PROMOS.filter(function(p){ return S.promo[p.id]; }) : []; if(pr.length) rows.push(["Только сейчас", pr.map(function(p){ return p.name; }).join(", ")]);
+    var pr = S.r.promos ? PROMOS.filter(function(p){ return S.promo[p.id]; }) : []; if(pr.length) rows.push(["Только сейчас", pr.map(function(p){ return p.name + (p.price ? " со скидкой (" + money(p.price) + ")" : " со скидкой (цену уточнить)"); }).join(", ")]);
+    var gf = giftFor(S); if(gf) rows.push(["🎁 Подарок по таймеру", gf + " — акция до " + hhmm(giftDeadline())]);
     rows.push(["Откуда узнали", S.src === "Другое" ? "Другое: " + S.srcOther : (S.src || "—")]);
     return rows;
   }
@@ -2176,6 +2254,7 @@ body.tp-cover main, body.tp-cover .view, body.tp-cover #bearfill, body.tp-cover 
     var lines = [S.gift ? "Здравствуйте! Хочу подарочный сертификат (заявка с сайта)." : "Здравствуйте! Заявка на запись с сайта."];
     summary().forEach(function(r){ lines.push(r[0] + ": " + r[1]); });
     var t = total(); lines.push("Сумма по сайту: " + (t != null ? "≈ " + money(t) : "уточнить"));
+    if(giftFor(S)) lines.push("Заявка отправлена в " + hhmm(Date.now()) + ", таймер акции — до " + hhmm(giftDeadline()) + ".");
     lines.push("С условиями бронирования ознакомлен(а).");
     return lines.join("\n");
   }
@@ -2195,11 +2274,18 @@ body.tp-cover main, body.tp-cover .view, body.tp-cover #bearfill, body.tp-cover 
     ag.appendChild(cb); ag.appendChild(document.createTextNode("Я ознакомился(-ась) с условиями бронирования")); b.appendChild(ag);
     var pp = el("div", "prepay"); pp.innerHTML = "Для брони нужна <b>предоплата 50% или 100%</b>. После отправки вас перекинет в WhatsApp — администратор подтвердит время и пришлёт реквизиты.";
     b.appendChild(pp);
+    var gf = giftFor(S);
+    if(gf){
+      var gb = el("div", "gift-note"); gb.id = "wzGift";
+      gb.innerHTML = '🎁 <b>Успеваете по таймеру:</b> ' + gf + '. Отправьте заявку и внесите предоплату до <b>' + hhmm(giftDeadline()) + '</b> — осталось <b class="gift-left">' + mmss(giftLeft()) + '</b>.';
+      b.appendChild(gb);
+    }
     var send = el("a", "btn wa", "Забронировать в WhatsApp"); send.target = "_blank"; send.rel = "noopener"; send.href = wa(waText()); send.id = "wzSend";
     send.addEventListener("click", function(e){
       var er = check("send");
       if(er){ e.preventDefault(); S.err = er; updFoot(); return; }
       send.href = wa(waText());
+      if(giftFor(S)) store("as_gift_used", "1");
       setTimeout(function(){ $("pre").classList.add("on"); $("preDone").focus(); }, 300);
     });
     b.appendChild(send);
