@@ -214,7 +214,6 @@ a:focus-visible,button:focus-visible{ outline:2px solid var(--accent); outline-o
 .where .info dt{ font-family:var(--mono); font-size:.72rem; color:var(--ink-3); text-transform:uppercase; letter-spacing:.06em; }
 .where .info dd{ margin:4px 0 0; font-weight:700; font-size:1.05rem; }
 .map{ min-height:340px; display:grid; place-items:center; text-align:center; padding:24px; }
-.map-tabs{ margin-bottom:8px; }
 .map{ position:relative; padding:0; display:block; height:380px; min-height:0; background:#e9e5dc; overflow:hidden; border:1px solid var(--line); }
 .mlayer{ position:absolute; inset:0; }
 .mlayer[hidden]{ display:none; }
@@ -805,13 +804,8 @@ body[data-room="ps"] .section.alt{ background:rgba(7,11,38,.7); }
           </div>
         </dl>
         <div>
-          <div class="chips map-tabs" role="group" aria-label="Карта">
-            <button class="chip on" type="button" data-map="g2">2ГИС</button>
-            <button class="chip" type="button" data-map="gg">Google Карты</button>
-          </div>
           <div class="map" id="map2gis">
-            <div class="mlayer" id="mapG2"><div class="mload"><b>Карта 2ГИС</b><span>загружаем карту…</span></div></div>
-            <div class="mlayer" id="mapGG" hidden></div>
+            <div class="mlayer" id="mapGG"><iframe title="Antistress Space на Google Картах" loading="lazy" referrerpolicy="no-referrer-when-downgrade" src="https://maps.google.com/maps?q=43.239653,76.944551&amp;z=17&amp;hl=ru&amp;output=embed"></iframe></div>
           </div>
           <a class="soc" style="margin-top:8px" href="https://2gis.kz/almaty/firm/70000001067866712" target="_blank" rel="noopener">Открыть в 2ГИС и построить маршрут →</a>
         </div>
@@ -1230,36 +1224,7 @@ body[data-room="ps"] .section.alt{ background:rgba(7,11,38,.7); }
     $("revs").appendChild(c);
   });
 
-  /* ---------- карта: 2ГИС (можно двигать и приближать) + Google Карты на выбор ----------
-     Загружается, когда пользователь долистал до блока. Если 2ГИС не загрузился — сама переключается на Google. */
-  (function(){
-    var LAT = 43.239653, LON = 76.944551, g2 = $("mapG2"), gg = $("mapGG"), started = false, m2 = null, ggDone = false;
-    function tab(k){
-      document.querySelectorAll("[data-map]").forEach(function(b){ var on = b.dataset.map === k; b.classList.toggle("on", on); b.setAttribute("aria-pressed", on ? "true" : "false"); });
-      g2.hidden = k !== "g2"; gg.hidden = k !== "gg";
-      if(k === "gg" && !ggDone){ ggDone = true; gg.innerHTML = '<iframe title="Antistress Space на Google Картах" loading="lazy" referrerpolicy="no-referrer-when-downgrade" src="https://maps.google.com/maps?q=' + LAT + ',' + LON + '&z=17&hl=ru&output=embed"></iframe>'; }
-      if(k === "g2" && m2) setTimeout(function(){ m2.invalidateSize(); }, 50);
-    }
-    document.querySelectorAll("[data-map]").forEach(function(b){ b.addEventListener("click", function(){ tab(b.dataset.map); }); });
-    function fail(){ g2.innerHTML = '<div class="mload"><b>2ГИС не загрузился</b><span>показываем Google Карты</span></div>'; tab("gg"); }
-    function load(){
-      if(started) return; started = true;
-      var s = document.createElement("script"); s.src = "https://maps.api.2gis.ru/2.0/loader.js?pkg=full"; s.async = true;
-      var t = setTimeout(fail, 8000);
-      s.onerror = function(){ clearTimeout(t); fail(); };
-      s.onload = function(){
-        if(!window.DG){ clearTimeout(t); fail(); return; }
-        DG.then(function(){
-          clearTimeout(t); g2.innerHTML = "";
-          m2 = DG.map(g2, { center:[LAT, LON], zoom:16, scrollWheelZoom:false, fullscreenControl:false, zoomControl:true });
-          DG.marker([LAT, LON]).addTo(m2).bindPopup("<b>Antistress Space</b><br>Байсеитова, 49<br>чёрная дверь, цокольный этаж").openPopup();
-        });
-      };
-      document.head.appendChild(s);
-    }
-    var box = $("map2gis");
-    if("IntersectionObserver" in window){ var io = new IntersectionObserver(function(es){ if(es[0].isIntersecting){ io.disconnect(); load(); } }, { rootMargin:"400px" }); io.observe(box); } else load();
-  })();
+  /* карта: Google Карты (встроены прямо в разметку), маршрут в 2ГИС — ссылкой под картой */
 
   /* подвал: надпись всегда в одну строку */
   function fitBig(){
