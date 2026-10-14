@@ -70,7 +70,7 @@ a:focus-visible,button:focus-visible{ outline:2px solid var(--accent); outline-o
 .hdr{ position:fixed; top:0; left:0; right:0; z-index:60; padding-top:env(safe-area-inset-top,0px); background:linear-gradient(rgba(11,11,11,.94),rgba(11,11,11,.0)); transition:background .3s; }
 .hdr.solid{ background:rgba(11,11,11,.96); }
 .hrow{ height:66px; display:flex; align-items:center; justify-content:space-between; gap:10px; max-width:1160px; margin:0 auto; padding-inline:14px; }
-.logo{ display:flex; flex-direction:column; text-decoration:none; line-height:.9; user-select:none; }
+.logo{ display:flex; flex-direction:column; text-decoration:none; line-height:.9; user-select:none; -webkit-user-select:none; touch-action:manipulation; -webkit-tap-highlight-color:transparent; padding:10px 8px 10px 0; margin:-10px -8px -10px 0; }
 .logo b{ font-family:"Dela Gothic One","Arial Black",sans-serif; color:var(--yel); font-size:1.05rem; letter-spacing:.01em; }
 .logo span{ font-family:"Dela Gothic One","Arial Black",sans-serif; color:var(--ink); font-size:.72rem; letter-spacing:.32em; }
 .nav{ display:none; gap:22px; font-weight:700; font-size:.92rem; }
@@ -122,7 +122,9 @@ a:focus-visible,button:focus-visible{ outline:2px solid var(--accent); outline-o
 .btn.wa .wa-ic{ width:20px; height:20px; margin-right:7px; flex:none; }
 .btn.wa{ display:inline-flex; align-items:center; }
 .quick{ background:#0B0B0B; padding:18px 0 26px; }
-.quick-hint{ max-width:1240px; margin:10px auto 0; padding:0 16px; font-family:var(--mono); font-size:.74rem; color:rgba(255,255,255,.6); }
+.quick-h{ max-width:1240px; margin:4px auto 14px; padding:0 16px; font-family:var(--body); font-weight:800; font-size:1.05rem; line-height:1.3; color:#fff; letter-spacing:0; text-transform:none; }
+.quick-h::before{ content:""; display:inline-block; width:18px; height:3px; background:var(--yel); vertical-align:middle; margin-right:10px; }
+@media (min-width:900px){ .quick-h{ font-size:1.25rem; } }
 @media (min-width:900px){ .hero-rooms a{ min-height:330px; } .hero-rooms .ico{ width:64px; height:64px; } .hero-rooms b{ font-size:1rem; } }
 .hero-rooms{ display:grid; grid-auto-flow:column; grid-auto-columns:minmax(150px, 1fr); gap:8px; overflow-x:auto; padding:0 16px 6px; scroll-snap-type:x mandatory; scrollbar-width:none; max-width:1240px; margin:0 auto; }
 .hero-rooms::-webkit-scrollbar{ display:none; }
@@ -428,6 +430,27 @@ body.tp-run .gift-chip{ visibility:hidden; }
 .sum dd{ margin:0; text-align:right; font-weight:700; }
 .prepay{ border-left:3px solid var(--accent); background:var(--bg-3); padding:14px 16px; }
 .prepay b{ color:var(--accent); }
+.cal-field{ margin-top:6px; }
+.cal-btn{ width:100%; display:flex; justify-content:space-between; align-items:center; padding:13px 14px; background:var(--bg); border:1px solid var(--line); color:var(--ink); font:inherit; font-weight:700; text-align:left; }
+.cal-btn.empty{ color:var(--ink-3); font-weight:500; }
+.fl .cal-btn span, .fl .cal span, .fl .cal b{ font-family:var(--body); font-size:1rem; text-transform:none; letter-spacing:0; color:inherit; margin:0; display:inline; }
+.fl .cal .cal-w{ font-family:var(--mono); font-size:.72rem; color:var(--ink-3); display:block; }
+.fl .cal .cal-w.we{ color:var(--accent); }
+.cal{ margin-top:8px; padding:12px; background:var(--bg); border:1px solid var(--line); }
+.cal[hidden]{ display:none; }
+.cal-h{ display:flex; align-items:center; justify-content:space-between; margin-bottom:8px; }
+.cal-h b{ text-transform:capitalize; }
+.cal-h button{ width:40px; height:40px; background:var(--bg-3); color:var(--ink); border:1px solid var(--line); font-size:1.3rem; }
+.cal-h button:disabled{ opacity:.3; }
+.cal-g{ display:grid; grid-template-columns:repeat(7, 1fr); gap:4px; text-align:center; }
+.cal-w{ font-family:var(--mono); font-size:.72rem; color:var(--ink-3); padding:4px 0; }
+.cal-w.we{ color:var(--accent); }
+.cal-d{ aspect-ratio:1; min-height:36px; background:transparent; color:var(--ink); border:1px solid transparent; font:inherit; font-weight:700; }
+.cal-d.we{ color:var(--accent); }
+.cal-d.today{ border-color:var(--line); }
+.cal-d.on{ background:var(--accent); color:#0B0B0B; }
+.cal-d:disabled{ opacity:.25; }
+.cal-note{ margin:8px 0 0; font-size:.78rem; color:var(--ink-3); }
 .conds summary{ cursor:pointer; font-weight:700; text-decoration:underline; text-underline-offset:3px; }
 .conds div{ color:var(--ink-2); font-size:.88rem; margin-top:10px; }
 .conds div p{ margin:0 0 8px; } .conds div ul{ margin:0 0 8px; padding-left:20px; list-style:disc; } .conds div li{ margin:2px 0; } .conds div .small{ font-size:.8rem; opacity:.8; }
@@ -719,7 +742,7 @@ body.tp-cover main, body.tp-cover .view, body.tp-cover #bearfill, body.tp-cover 
     <div class="behind">
       <span class="loc"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2a7 7 0 0 0-7 7c0 5.3 7 13 7 13s7-7.7 7-13a7 7 0 0 0-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z"/></svg>Алматы, Байсеитовой 49</span>
       <span class="since">работаем с 2019 года</span>
-      <h1 class="hh"><span class="l1">Выдохни.</span><span class="l2">Или</span><span class="l3">разнеси.<svg class="brush" viewBox="0 0 400 40" preserveAspectRatio="none" aria-hidden="true"><path d="M4 22 C60 10 140 8 220 10 C290 12 350 6 396 3 L394 20 C340 24 280 29 210 30 C140 30 70 33 8 38 Z" fill="#FFD400"/><path d="M30 31 C120 24 230 23 330 20" stroke="#FFD400" stroke-width="2" fill="none" opacity=".6"/></svg></span></h1>
+      <h1 class="hh"><span class="l1">Выдохни</span><span class="l2">Или</span><span class="l3">разнеси<svg class="brush" viewBox="0 0 400 40" preserveAspectRatio="none" aria-hidden="true"><path d="M4 22 C60 10 140 8 220 10 C290 12 350 6 396 3 L394 20 C340 24 280 29 210 30 C140 30 70 33 8 38 Z" fill="#FFD400"/><path d="M30 31 C120 24 230 23 330 20" stroke="#FFD400" stroke-width="2" fill="none" opacity=".6"/></svg></span></h1>
       <div class="lead-box">
         <b>Пять комнат под любое настроение:</b>
         <p>замедлиться в релаксе, разнести всё в антистрессе, сначала выпустить пар, а потом выдохнуть в комбо, расписать неонового мишку или уничтожать противников в PlayStation.</p>
@@ -735,8 +758,8 @@ body.tp-cover main, body.tp-cover .view, body.tp-cover #bearfill, body.tp-cover 
   </section>
 
   <section class="quick" id="rooms" aria-label="Комнаты и условия">
+    <h2 class="quick-h">Нажми на комнату — откроются пакеты, цены и запись</h2>
     <div class="hero-rooms" id="heroRooms"></div>
-    <p class="quick-hint">Нажми на комнату — откроются пакеты, цены и запись</p>
     <div class="feats">
       <div><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4M8 14h.01M12 14h.01M16 14h.01M8 18h.01M12 18h.01"/></svg><b>Только по&nbsp;записи</b><span>Гарантируем ваше время</span></div>
       <div><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2.5 18.5h19"/><path d="M4.5 18.5v-2.5a7.5 7.5 0 0 1 15 0v2.5"/><path d="M10 9.2V5.5h4v3.7"/><path d="M7.5 11.5a5 5 0 0 1 2.5-2.3M16.5 11.5a5 5 0 0 0-2.5-2.3"/></svg><b>Экипировка включена</b><span>В антистрессе и Glow Bear</span></div>
@@ -1704,7 +1727,7 @@ body.tp-cover main, body.tp-cover .view, body.tp-cover #bearfill, body.tp-cover 
       combo:"Мне мало просто отвлечься. Хочу сначала перезагрузиться, а потом успокоиться.",
       glowbear:"Переключаюсь на что-то творческое — руками, красками, фантазией.",
       ps:"Иду играть и отвлекаться от реальности." } },
-    { q:"Ты пришёл в Antistress Space с другом / подругой, друзьями или второй половинкой. Что предложишь?", o:{
+    { q:"Ты пришёл в Antistress Space с друзьями или второй половинкой. Что предложишь?", o:{
       relax:"Устроим уютное свидание с чаем и творчеством.",
       antistress:"Кто проиграл в споре — тот первым идёт крушить посуду!",
       combo:"Давай устроим целое приключение: сначала адреналин, потом творческий отдых.",
@@ -2112,6 +2135,54 @@ body.tp-cover main, body.tp-cover .view, body.tp-cover #bearfill, body.tp-cover 
     });
     return row;
   }
+  /* свой календарь: неделя с понедельника, прошедшие дни недоступны, выходные (пт–вс) отмечены */
+  var MONTHS = ["январь","февраль","март","апрель","май","июнь","июль","август","сентябрь","октябрь","ноябрь","декабрь"];
+  var MONTHS_G = ["января","февраля","марта","апреля","мая","июня","июля","августа","сентября","октября","ноября","декабря"];
+  var WD = ["Пн","Вт","Ср","Чт","Пт","Сб","Вс"], WDS = ["вс","пн","вт","ср","чт","пт","сб"];
+  function isoD(d){ return d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0"); }
+  function calField(value, onPick){
+    var wrap = el("div", "cal-field"), btn = el("button", "cal-btn"), box = el("div", "cal");
+    btn.type = "button"; box.hidden = true;
+    var today = new Date(); today.setHours(12, 0, 0, 0);
+    var view = value ? new Date(value + "T12:00:00") : new Date(today); view.setDate(1);
+    function txt(){
+      if(!value) return "Выберите дату";
+      var d = new Date(value + "T12:00:00");
+      return d.getDate() + " " + MONTHS_G[d.getMonth()] + ", " + WDS[d.getDay()];
+    }
+    function draw(){
+      btn.innerHTML = '<span>' + txt() + '</span><i aria-hidden="true">' + (box.hidden ? "▾" : "▴") + '</i>';
+      btn.classList.toggle("empty", !value);
+      box.innerHTML = "";
+      var head = el("div", "cal-h");
+      var pv = el("button", "", "‹"), nx = el("button", "", "›"); pv.type = nx.type = "button";
+      pv.setAttribute("aria-label", "Предыдущий месяц"); nx.setAttribute("aria-label", "Следующий месяц");
+      pv.disabled = view.getFullYear() < today.getFullYear() || (view.getFullYear() === today.getFullYear() && view.getMonth() <= today.getMonth());
+      pv.addEventListener("click", function(){ view.setMonth(view.getMonth() - 1); draw(); });
+      nx.addEventListener("click", function(){ view.setMonth(view.getMonth() + 1); draw(); });
+      var mn = MONTHS[view.getMonth()], t = el("b", "", mn.charAt(0).toUpperCase() + mn.slice(1) + " " + view.getFullYear());
+      head.appendChild(pv); head.appendChild(t); head.appendChild(nx); box.appendChild(head);
+      var g = el("div", "cal-g");
+      WD.forEach(function(w, i){ g.appendChild(el("span", "cal-w" + (i >= 4 ? " we" : ""), w)); });
+      var first = new Date(view), lead = (first.getDay() + 6) % 7;
+      for(var i = 0; i < lead; i++) g.appendChild(el("span"));
+      var days = new Date(view.getFullYear(), view.getMonth() + 1, 0).getDate();
+      for(var dd = 1; dd <= days; dd++){
+        (function(dd){
+          var dt = new Date(view.getFullYear(), view.getMonth(), dd, 12), iso = isoD(dt), wd = (dt.getDay() + 6) % 7;
+          var b = el("button", "cal-d" + (wd >= 4 ? " we" : "") + (iso === value ? " on" : "") + (iso === isoD(today) ? " today" : ""), String(dd));
+          b.type = "button"; b.disabled = dt < today;
+          b.addEventListener("click", function(){ value = iso; box.hidden = true; draw(); onPick(iso); });
+          g.appendChild(b);
+        })(dd);
+      }
+      box.appendChild(g);
+      box.appendChild(el("p", "cal-note", "Пт–вс — выходные дни: в релаксе и PlayStation другая цена."));
+    }
+    btn.addEventListener("click", function(){ box.hidden = !box.hidden; draw(); });
+    wrap.appendChild(btn); wrap.appendChild(box); draw();
+    return wrap;
+  }
   function field(lbl, input){ var f = el("label", "fl"); f.appendChild(el("span", "", lbl)); f.appendChild(input); return f; }
   function block(){ return el("div"); }
 
@@ -2148,15 +2219,13 @@ body.tp-cover main, body.tp-cover .view, body.tp-cover #bearfill, body.tp-cover 
     if(!S.gift){
       d = block(); d.appendChild(label("Когда?"));
       var g = el("div", "grid2");
-      var di = el("input"); di.type = "date"; di.value = S.date; di.min = new Date(Date.now() - new Date().getTimezoneOffset() * 6e4).toISOString().slice(0, 10);
-      di.addEventListener("input", function(){ S.date = di.value; S.err = ""; updFoot(); });
-      di.addEventListener("change", function(){ if(r.id === "relax" || r.id === "ps") drawWz(); });
+      var di = calField(S.date, function(v){ S.date = v; S.err = ""; if(r.id === "relax" || r.id === "ps") drawWz(); else updFoot(); });
       var ti = el("select"); ti.appendChild(new Option("Выберите время", ""));
       for(var h = (r.id === "ps" ? 10 : 11); h <= 20; h++){ ["00","30"].forEach(function(m){ var v = h + ":" + m; ti.appendChild(new Option(v, v)); }); }
       ti.value = S.time; ti.addEventListener("change", function(){ S.time = ti.value; S.err = ""; updFoot(); });
       d.appendChild(el("p", "wz-note", "Рекомендуем бронировать за 1–2 дня."));
-      g.appendChild(field("Дата", di)); g.appendChild(field("Желаемое время", ti));
-      d.appendChild(g);
+      var fd = el("div", "fl"); fd.appendChild(el("span", "", "Дата")); fd.appendChild(di);
+      d.appendChild(fd); d.appendChild(field("Желаемое время", ti));
       d.appendChild(el("p", "wz-note", "Сейчас мы работаем только по записи. Это желаемое время: если оно занято, администратор предложит ближайшее свободное окно."));
       if(CONFIG.SHOW_SLOTS){
         /* будущий блок: реальные свободные окна из Altegio (включить через CONFIG.SHOW_SLOTS) */
@@ -2912,7 +2981,7 @@ body.tp-cover main, body.tp-cover .view, body.tp-cover #bearfill, body.tp-cover 
   (function(){
     var n = 0, t = null;
     $("logo").addEventListener("click", function(){
-      n++; clearTimeout(t); t = setTimeout(function(){ n = 0; }, 1500);
+      n++; clearTimeout(t); t = setTimeout(function(){ n = 0; }, 2200);
       if(n >= 5){ n = 0; crackSound(true); $("egg").classList.add("on"); $("eggClose").focus(); }
     });
     $("eggClose").addEventListener("click", function(){ $("egg").classList.remove("on"); });
