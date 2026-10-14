@@ -220,6 +220,10 @@ a:focus-visible,button:focus-visible{ outline:2px solid var(--accent); outline-o
 /* ============ CERTIFICATES ============ */
 .cert{ display:grid; gap:28px; align-items:center; margin-top:10px; }
 @media (min-width:860px){ .cert{ grid-template-columns:1.1fr .9fr; } }
+.cert-fmt{ display:grid; gap:10px; margin:16px 0 4px; }
+.cert-fmt > div{ padding:12px 14px; border:1px solid var(--line); background:var(--bg); }
+.cert-fmt b{ display:block; color:var(--accent); }
+.cert-fmt span{ display:block; margin-top:4px; font-size:.9rem; color:var(--ink-2); }
 .cert-card{ position:relative; aspect-ratio:1.7; background:var(--yel); color:#000; padding:22px; display:flex; flex-direction:column; justify-content:space-between; transform:rotate(-3deg); box-shadow:0 30px 60px rgba(0,0,0,.5); max-width:480px; justify-self:center; width:100%; }
 .cert-card::before{ content:""; position:absolute; inset:10px; border:2px dashed rgba(0,0,0,.35); pointer-events:none; }
 .cert-card .t{ font-family:var(--hit); text-transform:uppercase; font-size:clamp(1.6rem,6vw,2.4rem); line-height:.95; }
@@ -333,7 +337,7 @@ body.tp-run .gift-chip{ visibility:hidden; }
 .step small{ display:block; color:var(--ink-3); font-size:.82rem; margin-top:4px; }
 .soon{ margin-top:22px; padding:16px 18px; border:1px dashed rgba(255,212,0,.4); color:var(--ink-2); font-size:.94rem; }
 .soon b{ color:var(--accent); }
-.packs{ display:flex; gap:12px; overflow-x:auto; scroll-snap-type:x mandatory; margin-top:28px; padding-bottom:10px; scrollbar-width:thin; }
+.packs{ display:flex; gap:12px; overflow-x:auto; scroll-snap-type:x mandatory; margin-top:28px; padding-bottom:10px; scrollbar-width:thin;  align-items:flex-start; }
 .pack{ flex:0 0 min(80vw,310px); scroll-snap-align:start; background:var(--bg-3); border:1px solid var(--line); position:relative; display:flex; flex-direction:column; transition:border-color .2s, transform .2s; }
 .pack.sel{ border-color:var(--accent); transform:translateY(-4px); }
 .pack.muted{ opacity:.82; border-style:dashed; }
@@ -342,7 +346,8 @@ body.tp-run .gift-chip{ visibility:hidden; }
 .pack h3{ font-family:var(--hit); text-transform:uppercase; font-size:1.35rem; line-height:1; }
 .pack .tag{ font-style:italic; color:var(--ink-2); font-size:.92rem; }
 .pack .desc{ color:var(--ink-3); font-size:.86rem; }
-.pack .pr{ font-family:var(--mono); color:var(--accent); font-weight:700; margin-top:auto; padding-top:6px; }
+.pack .pr{ font-family:var(--mono); color:var(--accent); font-weight:700; margin-top:6px; padding-top:6px; white-space:pre-line; }
+.pack .in > .btn{ margin-top:4px; }
 .pack .btn{ min-height:44px; font-size:.78rem; }
 .badge{ position:absolute; top:10px; font-family:var(--mono); font-size:.7rem; font-weight:700; padding:4px 8px; z-index:2; }
 .badge.age{ right:10px; background:#000; color:var(--accent); border:1px solid var(--accent); }
@@ -478,8 +483,12 @@ body.tp-run .gift-chip{ visibility:hidden; }
 .plist li::before{ content:"✓"; color:var(--accent); font-weight:800; }
 .pvar{ border-top:1px dashed var(--line); padding-top:10px; display:grid; gap:8px; }
 .pvar b{ font-size:.84rem; color:var(--accent); }
-.pbonus{ font-size:.84rem; color:#FFB37A; }
+.pbonus{ font-size:.86rem; color:var(--ink); display:grid; gap:3px; }
 .pbonus b{ color:#FF8A3D; }
+.pv-dur{ display:block; font-weight:500; color:var(--ink-2); margin-top:2px; }
+.pgroup{ display:grid; gap:6px; }
+.pgroup b{ font-size:.84rem; color:var(--accent); }
+.rad.sub{ margin:-2px 0 4px 18px; padding-left:12px; border-left:2px solid var(--accent); display:grid; gap:8px; }
 .r-slides .slide{ position:absolute; inset:0; background-size:cover; background-position:center; opacity:0; transition:opacity 1.4s; }
 .r-slides .slide.on{ opacity:.55; }
 .gal .gimg{ flex:0 0 min(78vw,360px); aspect-ratio:3/4; scroll-snap-align:start; padding:0; overflow:hidden; background:var(--bg-3); }
@@ -821,12 +830,17 @@ body.tp-cover main, body.tp-cover .view, body.tp-cover #bearfill, body.tp-cover 
         <div>
           <span class="kicker">Подарок, который запомнят</span>
           <h2 class="sh hit">Подари <span class="y">кому-то выдох</span></h2>
-          <p class="sub">Сертификат на любой пакет или комнату — электронный в PDF или печатный.</p>
+          <p class="sub">Именной сертификат на любой готовый пакет или на определённую сумму. Заполняем индивидуально под получателя.</p>
+          <div class="cert-fmt">
+            <div><b>Онлайн — 500 ₸</b><span>Заполненный вкладыш присылаем в электронном виде.</span></div>
+            <div><b>Печатный премиум — 3 000 ₸</b><span>Чёрный конверт с золотым тиснением логотипа, сургучная печать с золотой кисточкой и заполненный вкладыш на матовой бумаге. Можно дарить как полноценный подарок 🎁</span></div>
+          </div>
           <ul>
-            <li>Выбираешь пакет и допы — как для себя</li>
+            <li>Выбираешь пакет и допы — как для себя, или пишешь сумму в WhatsApp</li>
             <li>Пишешь, для кого и что пожелать</li>
-            <li>Заявка уходит в WhatsApp, менеджер присылает ссылку на оплату</li>
-            <li>Электронный приходит в PDF, печатный можно забрать у нас</li>
+            <li>Сертификат оформляется после 100% оплаты</li>
+            <li>Печатный — самовывоз: Байсеитовой 49 или ориентир Толе би / Нурмакова (точный адрес пришлём после оплаты), либо Яндекс-курьером (адрес согласуем заранее)</li>
+            <li>Действует 2 месяца со дня покупки (кроме спецпакетов)</li>
           </ul>
           <div class="gift-rooms">
             <span class="kicker">Что подарить?</span>
@@ -1164,7 +1178,7 @@ body.tp-cover main, body.tp-cover .view, body.tp-cover #bearfill, body.tp-cover 
       packs:[
         { id:"relax", name:"Релакс-комната", group:"main", photo:"rx-159", tag:"Можно официально ничего не решать", dur:"2 часа", max:6, list:true,
           items:["Рисовать неоновыми красками на стенах — комбинезон входит","Антистресс-раскраски и трафареты, арт-терапия","Фильмы на дисках и кассетах + Netflix, IVI, Кинопоиск","Музыка на пластинках","Sega на телевизоре и портативная консоль SUP","Солевая лампа, настольные игры, антистресс-игрушки"],
-          from:7500, priceLabel:"7 500 ₸/чел. (пн–чт) · 9 000 ₸/чел. (пт–вс)",
+          from:7500, priceLabel:"7 500 ₸/чел. (пн–чт)\n9 000 ₸/чел. (пт–вс)",
           calc:function(n){ return n ? n * (isWeekend(S.date) ? 9000 : 7500) : null; } }
       ],
       included:{ title:"Важно знать", list:[
@@ -1232,7 +1246,7 @@ body.tp-cover main, body.tp-cover .view, body.tp-cover #bearfill, body.tp-cover 
         "До 10 своих мелких предметов (бутылки, банки, посуда, диски)"
       ]), small:"Наполнение может варьироваться от наличия на складе — если чего-то нет, администратор предложит равноценную замену." } },
 
-    { id:"glowbear", name:"Glow Bear", icon:"bear", accent:"#2BFFE4", bg:"bg-glowbear", fx:"drips",
+    { id:"glowbear", name:"Glow Bear", place:"Неоновая комната (Glow Bear)", icon:"bear", accent:"#2BFFE4", bg:"bg-glowbear", fx:"drips",
       card:"Распиши неонового мишку 23 см и забери его домой.",
       kicker:"Арт-мастер-класс · 1 час", title:"Glow Bear",
       lead:"Необычный арт-опыт: в неоновой комнате вы создадите светящийся арт-объект своими эмоциями и красками.",
@@ -1242,8 +1256,9 @@ body.tp-cover main, body.tp-cover .view, body.tp-cover #bearfill, body.tp-cover 
       gallery:["gb-288","gb-298","gb-324","gb-326","gb-300","gb-302","gb-305","gb-311","gb-316","gb-322","gb-290"],
       galT:'Какие бывают <span class="y">мишки</span>',
       packs:[
-        { id:"bear", name:"Glow Bear", group:"main", photo:"gb-298", tag:"Полный комплект", dur:"1 час", max:6, pplLabel:"Сколько мишек?",
-          items:["Мишка 23 см","Ультрафиолетовая лампа","Провод с выключателем","Кисти, валики, маркер","Краски 5 цветов"],
+        { id:"bear", name:"Glow Bear", group:"main", photo:"gb-298", tag:"Полный комплект · для взрослых и детей", dur:"1 час", max:3, pplLabel:"Сколько мишек?",
+          groups:[["На месте выдаются", ["Мишка 23 см","Все комплектующие: валики, кисточки, маркеры и др.","Краски 5 цветов","Защитные комбинезоны (по желанию)"]],
+                  ["С собой забираете", ["Готового мишку","Ультрафиолетовую лампу","Провод и выключатель","Всё упаковано в дизайнерский пакет"]]],
           from:20000, priceLabel:"20 000 ₸ за комплект", calc:function(n){ return n ? n * 20000 : null; } }
       ],
       extras:[{ id:"relax15", name:"Подождать в релаксе со скидкой 15%", desc:"Мишка сохнет 2 часа — проведите это время в релакс-комнате. Скидка попадёт в заявку, администратор её учтёт." }],
@@ -1291,7 +1306,8 @@ body.tp-cover main, body.tp-cover .view, body.tp-cover #bearfill, body.tp-cover 
     prem:{ name:"Чайник чая Premium", price:4000, desc:"на подставке со свечой, более насыщенный вкус", list:["Чёрный «Молочный улун» со вкусом молока","Зелёный «Тегуанинь с персиком»","Фруктовый «8 сокровищ»","Пуэр чёрный в мандарине","Пуэр фисташковый","Зелёный со вкусом мандарина","Пуэр зелёный со вкусом розы","Пуэр чёрный в лимоне","Пуэр белый","Фруктовый чай"] }
   };
   /* обязательный вопрос «откуда узнали» [уточнить список] */
-  var SOURCES = ["Instagram","TikTok","2ГИС","Google Карты","Посоветовали друзья","Уже были у нас","Другое"];
+  var SOURCES = ["Instagram","TikTok","2ГИС","Google Карты","Сарафанное радио (друзья, коллеги)","Уже были у нас","Другое"];
+  var SRC_IG = ["Реклама в Instagram (таргет)","Поиск, хэштеги, рекомендации"];
   /* музыка на сессии — по настроению, не по жанрам */
   var MUSIC = [
     ["aggr","Агрессивная","рок, Rammstein, металл"],
@@ -1974,9 +1990,11 @@ body.tp-cover main, body.tp-cover .view, body.tp-cover #bearfill, body.tp-cover 
     if(p.max) meta.push("👥 до " + p.max + " чел.");
     if(meta.length) inn.appendChild(el("p", "pmeta", meta.join("   ")));
     if(p.variants){
-      p.variants.forEach(function(v){ var d = el("div", "pvar"); d.appendChild(el("b", "", v.label + " — " + money(v.price) + " · до " + v.max + " чел. · " + v.dur)); d.appendChild(itemsBlock(v.items)); inn.appendChild(d); });
+      p.variants.forEach(function(v){ var d = el("div", "pvar"); var vb = el("b", "", v.label + " — " + money(v.price) + " · до " + v.max + " чел."); vb.appendChild(el("span", "pv-dur", v.dur.replace("минут", "мин"))); d.appendChild(vb); d.appendChild(itemsBlock(v.items)); inn.appendChild(d); });
+    } else if(p.groups){
+      p.groups.forEach(function(gp){ var d = el("div", "pgroup"); d.appendChild(el("b", "", gp[0] + ":")); d.appendChild(itemsBlock(gp[1], true)); inn.appendChild(d); });
     } else if(p.items) inn.appendChild(itemsBlock(p.items, p.list));
-    if(p.bonus){ var bn = el("p", "pbonus"); bn.appendChild(el("b", "", "Бонус: ")); bn.appendChild(document.createTextNode(p.bonus)); inn.appendChild(bn); }
+    if(p.bonus){ var bn = el("div", "pbonus"); bn.appendChild(el("b", "", "Бонус:")); p.bonus.split(" · ").forEach(function(x){ bn.appendChild(el("span", "", x)); }); inn.appendChild(bn); }
     inn.appendChild(el("p", "pr", p.priceLabel || ((p.variants || p.priceBy ? "от " : "") + money(minPrice(p)) + (p.price ? " за пакет" : ""))));
     var b = el("button", "btn", S.pack === p ? "Выбран ✓" : "Выбрать →"); b.type = "button";
     b.addEventListener("click", function(){ pickPack(p); go("book"); });
@@ -2085,7 +2103,7 @@ body.tp-cover main, body.tp-cover .view, body.tp-cover #bearfill, body.tp-cover 
      ========================================================= */
   var S = null;
   function resetState(r, gift){
-    S = { r:r, step:0, pack:(r.packs.length === 1 ? r.packs[0] : null), variant:null, ppl:null, hours:1, tea:"", teaName:"", teaSet:false, date:"", time:"", music:"", gift:!!gift, gFor:"", gWish:"", gFmt:"PDF", add:{}, promo:{}, ex:{}, src:"", srcOther:"", agree:false, cat:0, err:"" };
+    S = { r:r, step:0, pack:(r.packs.length === 1 ? r.packs[0] : null), variant:null, ppl:null, hours:1, tea:"", teaName:"", teaSet:false, date:"", time:"", music:"", gift:!!gift, gFor:"", gWish:"", gFmt:"PDF", add:{}, promo:{}, ex:{}, src:"", srcIg:"", srcOther:"", agree:false, cat:0, err:"" };
   }
   function stepsList(){
     var a = [["pack","Пакет"]];
@@ -2104,6 +2122,7 @@ body.tp-cover main, body.tp-cover .view, body.tp-cover #bearfill, body.tp-cover 
     }
     if(key === "src"){
       if(!S.src) return "Это обязательный вопрос — один клик";
+      if(S.src === "Instagram" && !S.srcIg) return "Уточните: реклама или поиск/рекомендации?";
       if(S.src === "Другое" && !S.srcOther.trim()) return "Напишите, откуда узнали";
     }
     if(key === "add" && S.tea && !S.teaName) return "Выберите вкус чая (или «Без чая»)";
@@ -2121,6 +2140,7 @@ body.tp-cover main, body.tp-cover .view, body.tp-cover #bearfill, body.tp-cover 
     addonsList().forEach(function(a){ t += a[2]; });
     if(S.r.promos) PROMOS.forEach(function(p){ if(S.promo[p.id] && p.price) t += p.price; });
     if(S.tea && TEA[S.tea]) t += TEA[S.tea].price + (S.teaSet ? 2000 : 0);
+    if(S.gift) t += S.gFmt === "PDF" ? 500 : 3000;
     return t;
   }
   function label(t){ return el("span", "wz-q", t); }
@@ -2242,7 +2262,9 @@ body.tp-cover main, body.tp-cover .view, body.tp-cover #bearfill, body.tp-cover 
       g2.appendChild(field("Для кого", fo)); g2.appendChild(field("Пожелание (необязательно)", wi));
       d.appendChild(g2);
       var f2 = block(); f2.style.marginTop = "14px"; f2.appendChild(label("Формат"));
-      f2.appendChild(chipRow([["PDF","Электронный","PDF в WhatsApp"],["print","Печатный","заберёте у нас"]], S.gFmt, function(v){ S.gFmt = v; drawWz(); }));
+      f2.appendChild(chipRow([["PDF","Онлайн","+500 ₸"],["print","Печатный премиум","+3 000 ₸"]], S.gFmt, function(v){ S.gFmt = v; drawWz(); }));
+      f2.appendChild(el("p", "wz-note", S.gFmt === "PDF" ? "Заполненный вкладыш пришлём в электронном виде." : "Конверт с золотым тиснением, сургучная печать и вкладыш на матовой бумаге. Самовывоз: Байсеитовой 49 или Толе би / Нурмакова, либо Яндекс-курьером."));
+      f2.appendChild(el("p", "wz-note", "Сертификат оформляется после 100% оплаты и действует 2 месяца со дня покупки (кроме спецпакетов)."));
       d.appendChild(f2);
       b.appendChild(d);
     }
@@ -2263,7 +2285,7 @@ body.tp-cover main, body.tp-cover .view, body.tp-cover #bearfill, body.tp-cover 
         m.appendChild(row);
       });
       d.appendChild(m);
-      d.appendChild(el("p", "wz-note", "▶ — короткий пример настроения. [Заменим на отрывки из ваших плейлистов.]"));
+      d.appendChild(el("p", "wz-note", "▶ — короткий пример настроения."));
       b.appendChild(d);
     }
   }
@@ -2359,6 +2381,15 @@ body.tp-cover main, body.tp-cover .view, body.tp-cover #bearfill, body.tp-cover 
       var l = el("label"); var i = el("input"); i.type = "radio"; i.name = "src"; i.value = s; i.checked = S.src === s;
       i.addEventListener("change", function(){ S.src = s; S.err = ""; drawWz(); });
       l.appendChild(i); l.appendChild(document.createTextNode(s)); g.appendChild(l);
+      if(s === "Instagram" && S.src === "Instagram"){
+        var sg = el("div", "rad sub"); sg.setAttribute("role", "radiogroup"); sg.setAttribute("aria-label", "Где именно в Instagram?");
+        SRC_IG.forEach(function(x){
+          var l2 = el("label"); var i2 = el("input"); i2.type = "radio"; i2.name = "srcIg"; i2.value = x; i2.checked = S.srcIg === x;
+          i2.addEventListener("change", function(){ S.srcIg = x; S.err = ""; updFoot(); });
+          l2.appendChild(i2); l2.appendChild(document.createTextNode(x)); sg.appendChild(l2);
+        });
+        g.appendChild(sg);
+      }
     });
     d.appendChild(g);
     if(S.src === "Другое"){
@@ -2370,12 +2401,12 @@ body.tp-cover main, body.tp-cover .view, body.tp-cover #bearfill, body.tp-cover 
   }
 
   function summary(){
-    var rows = [["Комната", S.r.name]];
+    var rows = [["Комната", S.r.place || S.r.name]];
     var vv = variantOf(S.pack, S.variant);
     rows.push([S.gift ? "Сертификат" : "Пакет", S.pack ? S.pack.name + (vv ? " — " + vv.label : "") : "—"]);
     rows.push([S.pack && S.pack.pplLabel ? "Мишек" : "Человек", S.ppl || "—"]);
     if(S.pack && S.pack.hourly) rows.push(["Часов", S.hours]);
-    if(S.gift){ rows.push(["Для кого", S.gFor || "—"]); if(S.gWish) rows.push(["Пожелание", S.gWish]); rows.push(["Формат", S.gFmt === "PDF" ? "электронный (PDF)" : "печатный, заберу у вас"]); }
+    if(S.gift){ rows.push(["Для кого", S.gFor || "—"]); if(S.gWish) rows.push(["Пожелание", S.gWish]); rows.push(["Формат", S.gFmt === "PDF" ? "онлайн (+500 ₸)" : "печатный премиум (+3 000 ₸)"]); }
     else rows.push(["Дата и время", (S.date ? S.date.split("-").reverse().join(".") : "—") + ", " + (S.time || "—") + " (желаемое)"]);
     if(S.r.music && S.music){ rows.push(["Музыка", MUSIC.filter(function(m){ return m[0] === S.music; })[0][1]]); }
     if(S.tea) rows.push(["Чай", TEA[S.tea].name + (S.teaName ? ": " + S.teaName : "") + (S.teaSet ? " + чайный сет" : "")]);
@@ -2383,7 +2414,7 @@ body.tp-cover main, body.tp-cover .view, body.tp-cover #bearfill, body.tp-cover 
     (S.r.extras || []).forEach(function(x){ if(S.ex[x.id]) rows.push(["Добавить", x.name]); });
     var pr = S.r.promos ? PROMOS.filter(function(p){ return S.promo[p.id]; }) : []; if(pr.length) rows.push(["Только сейчас", pr.map(function(p){ return p.name + (p.price ? " со скидкой (" + money(p.price) + ")" : " со скидкой (цену уточнить)"); }).join(", ")]);
     var gf = giftFor(S); if(gf) rows.push(["🎁 Подарок по таймеру", gf + " — акция до " + hhmm(giftDeadline())]);
-    rows.push(["Откуда узнали", S.src === "Другое" ? "Другое: " + S.srcOther : (S.src || "—")]);
+    rows.push(["Откуда узнали", S.src === "Другое" ? "Другое: " + S.srcOther : (S.src === "Instagram" && S.srcIg ? "Instagram — " + S.srcIg : (S.src || "—"))]);
     return rows;
   }
   function waText(){
@@ -2421,7 +2452,7 @@ body.tp-cover main, body.tp-cover .view, body.tp-cover #bearfill, body.tp-cover 
     var ag = el("label", "agree"); var cb = el("input"); cb.type = "checkbox"; cb.checked = S.agree;
     cb.addEventListener("change", function(){ S.agree = cb.checked; S.err = ""; updFoot(); });
     ag.appendChild(cb); ag.appendChild(document.createTextNode("Я ознакомился(-ась) с условиями бронирования")); b.appendChild(ag);
-    var pp = el("div", "prepay"); pp.innerHTML = "Для брони нужна <b>предоплата 50% или 100%</b>. После отправки вас перекинет в WhatsApp — администратор подтвердит время и пришлёт реквизиты.";
+    var pp = el("div", "prepay"); pp.innerHTML = S.gift ? "Сертификат оформляется после <b>100% оплаты</b>. После отправки вас перекинет в WhatsApp — администратор пришлёт реквизиты." : "Для брони нужна <b>предоплата 50% или 100%</b>. После отправки вас перекинет в WhatsApp — администратор подтвердит время и пришлёт реквизиты.";
     b.appendChild(pp);
     var gf = giftFor(S);
     if(gf){
