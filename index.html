@@ -1386,6 +1386,7 @@ body.tp-cover main, body.tp-cover .view, body.tp-cover #bearfill, body.tp-cover 
   (function(){
     var chip = $("giftChip"); if(!chip) return;
     chip.addEventListener("click", function(){ chip.setAttribute("aria-expanded", chip.getAttribute("aria-expanded") === "true" ? "false" : "true"); });
+    addEventListener("scroll", function(){ if(chip.getAttribute("aria-expanded") === "true") chip.setAttribute("aria-expanded", "false"); }, { passive:true });
     function tick(){
       var left = giftLeft(), rid = document.body.dataset.room, onHome = !rid, txt = rid ? GIFT.rooms[rid] : "";
       if(left <= 0){
