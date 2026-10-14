@@ -551,6 +551,20 @@ body.tp-run .gift-chip{ visibility:hidden; }
 .paintbar.on{ display:block; }
 
 /* пасхалка */
+.cmod{ position:fixed; inset:0; z-index:91; background:rgba(0,0,0,.84); overflow-y:auto; padding:16px; }
+.cmod[hidden]{ display:none; }
+.cm-box{ position:relative; max-width:860px; margin:40px auto; background:var(--bg-2); border:1px solid var(--line); padding:26px 18px 22px; }
+.cm-x{ position:absolute; top:10px; right:10px; width:42px; height:42px; background:var(--bg-3); color:var(--ink); border:1px solid var(--line); font-size:1.1rem; }
+.cm-sub{ color:var(--ink-2); margin:10px 0 0; }
+.cm-cols{ display:grid; gap:22px; margin-top:20px; }
+@media (min-width:760px){ .cm-cols{ grid-template-columns:1fr 1fr; } }
+.cm-h{ display:flex; justify-content:space-between; align-items:baseline; gap:10px; font-size:1.15rem; }
+.cm-h i{ font-style:normal; font-family:var(--mono); color:var(--accent); }
+.cm-cols p{ color:var(--ink-2); font-size:.94rem; margin:8px 0 0; }
+.cm-ph{ display:grid; gap:8px; margin-top:12px; }
+.cm-ph.four{ grid-template-columns:1fr 1fr; }
+.cm-ph img{ width:100%; display:block; border:1px solid var(--line); cursor:zoom-in; }
+.cert-more{ display:inline-block; margin-top:6px; font:inherit; font-weight:700; color:var(--accent); background:none; border:0; padding:0; text-decoration:underline; text-underline-offset:3px; cursor:pointer; }
 .egg{ position:fixed; inset:0; z-index:90; display:none; place-items:center; background:rgba(0,0,0,.82); padding:20px; }
 .egg.on{ display:grid; animation:viewIn .3s; }
 .egg .box{ background:var(--yel); color:#000; padding:28px 24px; max-width:420px; text-align:center; transform:rotate(-2deg); }
@@ -832,9 +846,10 @@ body.tp-cover main, body.tp-cover .view, body.tp-cover #bearfill, body.tp-cover 
           <h2 class="sh hit">Подари <span class="y">кому-то выдох</span></h2>
           <p class="sub">Именной сертификат на любой готовый пакет или на определённую сумму. Заполняем индивидуально под получателя.</p>
           <div class="cert-fmt">
-            <div><b>Онлайн — 500 ₸</b><span>Заполненный вкладыш присылаем в электронном виде.</span></div>
-            <div><b>Печатный премиум — 3 000 ₸</b><span>Чёрный конверт с золотым тиснением логотипа, сургучная печать с золотой кисточкой и заполненный вкладыш на матовой бумаге. Можно дарить как полноценный подарок 🎁</span></div>
+            <div><b>Электронный — 500 ₸</b><span>Заполненный вкладыш присылаем в электронном виде.</span></div>
+            <div><b>Печатный — 3 000 ₸</b><span>Чёрный конверт с золотым тиснением логотипа, сургучная печать с золотой кисточкой и заполненный вкладыш на матовой бумаге. Можно дарить как полноценный подарок 🎁</span></div>
           </div>
+          <button class="cert-more" type="button" data-certinfo>Чем отличаются сертификаты — посмотреть фото →</button>
           <ul>
             <li>Выбираешь пакет и допы — как для себя, или пишешь сумму в WhatsApp</li>
             <li>Пишешь, для кого и что пожелать</li>
@@ -1006,6 +1021,28 @@ body.tp-cover main, body.tp-cover .view, body.tp-cover #bearfill, body.tp-cover 
 
 <div class="sticky" id="sticky">
   <a class="btn" href="#/" data-scroll="rooms">Выбрать комнату</a>
+</div>
+
+<div class="cmod" id="certInfo" role="dialog" aria-modal="true" aria-labelledby="certInfoT" hidden>
+  <div class="cm-box">
+    <button class="cm-x" type="button" id="certInfoX" aria-label="Закрыть">✕</button>
+    <span class="kicker">Подарочные сертификаты</span>
+    <h3 class="sh hit" id="certInfoT">Чем отличаются <span class="y">сертификаты</span></h3>
+    <p class="cm-sub">Все сертификаты именные — заполняем индивидуально под получателя. Можно на любой готовый пакет или на определённую сумму. Оформляется после 100% оплаты, действует 2 месяца со дня покупки (кроме спецпакетов).</p>
+    <div class="cm-cols">
+      <section>
+        <b class="cm-h">Электронный <i>500 ₸</i></b>
+        <p>Заполненный под получателя вкладыш присылаем в электронном виде — удобно, если дарите прямо сегодня или на расстоянии.</p>
+        <div class="cm-ph"><img src="img/cert-on-1.webp" alt="Онлайн-сертификат: обложка" loading="lazy"><img src="img/cert-on-2.webp" alt="Онлайн-сертификат: вкладыш" loading="lazy"></div>
+      </section>
+      <section>
+        <b class="cm-h">Печатный <i>3 000 ₸</i></b>
+        <p>Более праздничный вариант: конверт чёрного цвета с золотым тиснением логотипа, сургучная печать с золотой кисточкой и заполненный вкладыш на матовой бумаге. Можно дарить как полноценный подарок 🎁</p>
+        <p>Самовывоз: Байсеитовой 49 или ориентир Толе би / Нурмакова (точный адрес пришлём после оплаты), либо Яндекс-курьером — адрес согласуем заранее.</p>
+        <div class="cm-ph four"><img src="img/cert-pr-1.webp" alt="Печатный сертификат: конверт" loading="lazy"><img src="img/cert-pr-2.webp" alt="Печатный сертификат: конверт и вкладыш" loading="lazy"><img src="img/cert-pr-3.webp" alt="Печатный сертификат: сургучная печать" loading="lazy"><img src="img/cert-pr-4.webp" alt="Печатный сертификат в руке" loading="lazy"></div>
+      </section>
+    </div>
+  </div>
 </div>
 
 <div class="egg" id="egg" role="dialog" aria-modal="true" aria-labelledby="eggT">
@@ -2262,7 +2299,8 @@ body.tp-cover main, body.tp-cover .view, body.tp-cover #bearfill, body.tp-cover 
       g2.appendChild(field("Для кого", fo)); g2.appendChild(field("Пожелание (необязательно)", wi));
       d.appendChild(g2);
       var f2 = block(); f2.style.marginTop = "14px"; f2.appendChild(label("Формат"));
-      f2.appendChild(chipRow([["PDF","Онлайн","+500 ₸"],["print","Печатный премиум","+3 000 ₸"]], S.gFmt, function(v){ S.gFmt = v; drawWz(); }));
+      f2.appendChild(chipRow([["PDF","Электронный","500 ₸"],["print","Печатный","3 000 ₸"]], S.gFmt, function(v){ S.gFmt = v; drawWz(); }));
+      var cmb = el("button", "cert-more", "Чем отличаются сертификаты →"); cmb.type = "button"; cmb.setAttribute("data-certinfo", ""); f2.appendChild(cmb);
       f2.appendChild(el("p", "wz-note", S.gFmt === "PDF" ? "Заполненный вкладыш пришлём в электронном виде." : "Конверт с золотым тиснением, сургучная печать и вкладыш на матовой бумаге. Самовывоз: Байсеитовой 49 или Толе би / Нурмакова, либо Яндекс-курьером."));
       f2.appendChild(el("p", "wz-note", "Сертификат оформляется после 100% оплаты и действует 2 месяца со дня покупки (кроме спецпакетов)."));
       d.appendChild(f2);
@@ -2406,7 +2444,7 @@ body.tp-cover main, body.tp-cover .view, body.tp-cover #bearfill, body.tp-cover 
     rows.push([S.gift ? "Сертификат" : "Пакет", S.pack ? S.pack.name + (vv ? " — " + vv.label : "") : "—"]);
     rows.push([S.pack && S.pack.pplLabel ? "Мишек" : "Человек", S.ppl || "—"]);
     if(S.pack && S.pack.hourly) rows.push(["Часов", S.hours]);
-    if(S.gift){ rows.push(["Для кого", S.gFor || "—"]); if(S.gWish) rows.push(["Пожелание", S.gWish]); rows.push(["Формат", S.gFmt === "PDF" ? "онлайн (+500 ₸)" : "печатный премиум (+3 000 ₸)"]); }
+    if(S.gift){ rows.push(["Для кого", S.gFor || "—"]); if(S.gWish) rows.push(["Пожелание", S.gWish]); rows.push(["Сертификат", S.gFmt === "PDF" ? "электронный — 500 ₸" : "печатный — 3 000 ₸"]); }
     else rows.push(["Дата и время", (S.date ? S.date.split("-").reverse().join(".") : "—") + ", " + (S.time || "—") + " (желаемое)"]);
     if(S.r.music && S.music){ rows.push(["Музыка", MUSIC.filter(function(m){ return m[0] === S.music; })[0][1]]); }
     if(S.tea) rows.push(["Чай", TEA[S.tea].name + (S.teaName ? ": " + S.teaName : "") + (S.teaSet ? " + чайный сет" : "")]);
@@ -3007,6 +3045,18 @@ body.tp-cover main, body.tp-cover .view, body.tp-cover #bearfill, body.tp-cover 
       paintBear();
     }
   }, { passive:true });
+
+  /* ---------- окно «Чем отличаются сертификаты» ---------- */
+  (function(){
+    var m = $("certInfo"), last = null;
+    function open(){ last = document.activeElement; m.hidden = false; document.body.style.overflow = "hidden"; $("certInfoX").focus(); }
+    function close(){ m.hidden = true; document.body.style.overflow = ""; if(last && last.focus) last.focus(); }
+    document.addEventListener("click", function(e){ if(e.target.closest && e.target.closest("[data-certinfo]")){ e.preventDefault(); open(); } });
+    $("certInfoX").addEventListener("click", close);
+    m.addEventListener("click", function(e){ if(e.target === m) close(); });
+    m.querySelectorAll(".cm-ph img").forEach(function(im){ im.addEventListener("click", function(){ window.open(im.src, "_blank"); }); });
+    addEventListener("keydown", function(e){ if(e.key === "Escape" && !m.hidden) close(); });
+  })();
 
   /* ---------- пасхалка: 5 нажатий на логотип ---------- */
   (function(){
