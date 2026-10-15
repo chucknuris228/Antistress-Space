@@ -530,7 +530,14 @@ body.tp-run .gift-chip{ visibility:hidden; }
 /* летящая бутылка и осколки */
 .bottle{ position:fixed; left:0; top:0; width:26px; z-index:85; pointer-events:none; }
 .bits{ position:fixed; width:10px; height:14px; z-index:85; pointer-events:none; background:linear-gradient(135deg, rgba(200,255,220,.9), rgba(47,125,74,.7)); clip-path:polygon(50% 0,100% 70%,30% 100%,0 40%); }
-.vinyl.scroll{ animation:none; right:-120px; top:auto; bottom:-60px; width:300px; height:300px; }
+.vinyl.scroll{ display:none; }
+.vinylfix{ position:fixed; right:12px; bottom:calc(12px + env(safe-area-inset-bottom,0px)); z-index:50; width:96px; text-align:center; pointer-events:none; display:none; }
+body[data-room="relax"] .vinylfix{ display:block; }
+body.tp-run .vinylfix{ visibility:hidden; }
+.vf-disc{ width:96px; height:96px; border-radius:50%; background:radial-gradient(circle, #F2B95B 0 17%, #1a1a1a 17.5% 19%, transparent 19.5%), repeating-radial-gradient(circle, #141414 0 2px, #222 2px 4px); box-shadow:0 0 0 2px rgba(242,185,91,.55), 0 10px 26px rgba(0,0,0,.6); display:grid; place-items:center; will-change:transform; }
+.vf-disc span{ font-family:'Caveat',cursive; font-weight:700; font-size:.95rem; color:#2A1A14; transform:translateY(1px); }
+.vinylfix small{ display:block; margin-top:5px; font-family:var(--mono); font-size:.6rem; color:#F2B95B; text-shadow:0 1px 4px #000; }
+@media (min-width:900px){ .vinylfix{ width:130px; right:24px; } .vf-disc{ width:130px; height:130px; } }
 /* мишка, который раскрашивается при прокрутке */
 .bearfill{ position:fixed; right:10px; bottom:calc(10px + env(safe-area-inset-bottom,0px)); z-index:50; width:104px; display:none; text-align:center; pointer-events:none; }
 @media (min-width:900px){ .bearfill{ width:150px; right:24px; } }
@@ -743,6 +750,7 @@ body.tp-cover main, body.tp-cover .view, body.tp-cover #bearfill, body.tp-cover 
 
 <div class="paintbar" id="paintbar" aria-hidden="true"></div>
 <div class="draft">ЧЕРНОВИК · на согласование</div>
+<div class="vinylfix" id="vinylFix" aria-hidden="true"><div class="vf-disc"><span>relax</span></div><small>листай — крутится</small></div>
 <div class="bearfill" id="bearfill" aria-hidden="true">
   <canvas id="bear3d"></canvas>
   <canvas id="bearCv" hidden></canvas>
@@ -1225,7 +1233,7 @@ body.tp-cover main, body.tp-cover .view, body.tp-cover #bearfill, body.tp-cover 
       card:"Неоновые стены, кино, пластинки, Sega и китайский чай. 2 часа ничего не решать.",
       kicker:"2 часа · до 6 человек", title:"Релакс",
       lead:"Рисуйте неоном на стенах, смотрите кино, слушайте пластинки, играйте в Sega и настолки. Вы платите за время — как его провести, решаете сами.",
-      hint:"листай вниз — пластинка закрутится",
+      hint:"листай вниз — пластинка в углу закрутится",
       packsSub:"Будни (пн–чт) — 7 500 ₸ с человека, выходные (пт–вс) — 9 000 ₸ с человека. Чай из чайной карты можно добавить при записи.",
       cardImg:"rx-197", slides:["rx-159","rx-197","rx-142"],
       gallery:["rx-145","rx-147","rx-158","rx-144","rx-152","rx-228","rx-150","rx-160","rx-243","rx-148","rx-153","rx-154","rx-156","rx-157","rx-141","rx-248","rx-206"],
@@ -3060,7 +3068,7 @@ body.tp-cover main, body.tp-cover .view, body.tp-cover #bearfill, body.tp-cover 
     }
     if(!homeOn && !reduce){
       $("rBg").style.transform = "translateY(" + (y * .3) + "px) scale(1.1)";   /* параллакс фона комнаты */
-      var v = document.querySelector(".vinyl.scroll"); if(v) v.style.transform = "rotate(" + (y * .5) + "deg)";   /* пластинка в релаксе крутится от прокрутки */
+      var v = document.querySelector("#vinylFix .vf-disc"); if(v && document.body.dataset.room === "relax") v.style.transform = "rotate(" + (y * .6) + "deg)";   /* пластинка в углу релакса крутится от прокрутки */
       paintBear();
     }
   }, { passive:true });
