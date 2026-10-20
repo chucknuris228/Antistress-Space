@@ -6,6 +6,11 @@
 <title>Antistress Space — комнаты ярости и релакса в Алматы</title>
 <meta name="description" content="Antistress Space, Алматы, Байсеитовой 49. Антистресс-комната, релакс, Glow Bear, PlayStation и комбо. Выбери свою комнату и оставь заявку в WhatsApp.">
 <meta name="theme-color" content="#0B0B0B">
+<script>
+/* Хэллоуин: тема и спецпакеты включаются сами 25.10.2026 и выключаются 2.11.2026 в 00:00.
+   Превью заранее: добавить к адресу ?hw=1 · выключить вручную: ?hw=0 */
+(function(){ var q = (location.search.match(/[?&]hw=([01])/) || [])[1], n = new Date(), on = n >= new Date(2026, 9, 25) && n < new Date(2026, 10, 2); if(q) on = q === "1"; if(on) document.documentElement.classList.add("hw"); })();
+</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=Fira+Sans+Extra+Condensed:ital,wght@1,900&family=Manrope:wght@500;600;700;800&family=JetBrains+Mono:wght@500;700&family=Unbounded:wght@600;800&family=Press+Start+2P&family=Russo+One&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
@@ -365,6 +370,67 @@ body.tp-run .gift-chip{ visibility:hidden; }
 .cont svg{ width:16px; height:16px; color:var(--accent); }
 .cont b{ font-family:var(--mono); color:var(--accent); }
 .pack-div{ flex:0 0 120px; scroll-snap-align:start; display:grid; place-items:center; text-align:center; padding:12px; border-left:2px dashed var(--line); color:var(--ink-3); font-family:var(--mono); font-size:.74rem; }
+
+/* =========================================================
+   ХЭЛЛОУИН — всё ниже работает только при html.hw (25.10–1.11, см. скрипт в <head>)
+   ========================================================= */
+html:not(.hw) .hw-only{ display:none !important; }
+html.hw{ --yel:#FF7A1A; --yel-2:#E85D00; }
+html.hw .hero{ background:radial-gradient(120% 80% at 70% 20%, #2e1404 0%, #0B0B0B 55%); }
+html.hw .hero h1.hh .brush path:first-child{ fill:var(--yel); }
+html.hw .hero h1.hh .brush path + path{ stroke:var(--yel); }
+html.hw .gift-chip{ background:var(--yel); }
+html.hw .gift-chip b{ color:var(--yel); }
+html.hw body[data-room="combo"] .r-hero h1{ background:linear-gradient(100deg, #FF7A1A 0 48%, #B46CFF 52% 100%); -webkit-background-clip:text; background-clip:text; color:transparent; }
+html.hw body[data-room="combo"] .pack{ border-image:linear-gradient(100deg,#FF7A1A,#B46CFF) 1; }
+html.hw #tp[data-k="antistress"] .tp-fall, html.hw #tp[data-k="home"] .tp-tape{ background:repeating-linear-gradient(-45deg,#FF7A1A 0 30px,#0B0B0B 30px 60px); }
+html.hw #tp[data-k="combo"] .tp-l{ background:repeating-linear-gradient(-45deg,#FF7A1A 0 26px,#0B0B0B 26px 52px); }
+/* паутина и летучие мыши на главном экране */
+.hw-deco{ position:absolute; inset:0; z-index:1; pointer-events:none; overflow:hidden; }
+.hw-web{ position:absolute; top:0; width:clamp(120px,30vw,260px); height:auto; color:rgba(255,255,255,.28); }
+.hw-web.l{ left:0; } .hw-web.r{ right:0; transform:scaleX(-1); }
+.hw-bat{ position:absolute; width:34px; color:#0B0B0B; filter:drop-shadow(0 0 6px rgba(255,122,26,.55)); animation:batFly 14s linear infinite; }
+.hw-bat:nth-child(3){ top:18%; animation-duration:17s; animation-delay:-4s; width:26px; }
+.hw-bat:nth-child(4){ top:30%; animation-duration:12s; animation-delay:-9s; width:22px; }
+.hw-bat:nth-child(5){ top:10%; animation-duration:20s; animation-delay:-13s; width:30px; }
+.hw-bat svg{ width:100%; height:auto; display:block; animation:batFlap .28s ease-in-out infinite alternate; transform-origin:50% 40%; }
+@keyframes batFly{ 0%{ transform:translate(-10vw, 40px); } 25%{ transform:translate(25vw, -10px); } 50%{ transform:translate(55vw, 50px); } 75%{ transform:translate(85vw, 0); } 100%{ transform:translate(110vw, 30px); } }
+@keyframes batFlap{ to{ transform:scaleY(.55); } }
+@media (prefers-reduced-motion:reduce){ .hw-bat, .hw-bat svg{ animation:none; } .hw-bat{ display:none; } }
+.hw-chip{ display:inline-flex; align-items:center; gap:8px; margin-top:16px; padding:8px 12px; background:var(--yel); color:#0B0B0B; font-weight:800; font-size:.9rem; text-decoration:none; transform:rotate(-1.5deg); box-shadow:0 8px 24px rgba(255,122,26,.3); }
+.hero-rooms a > .hw-tag, .hw-tag{ position:absolute; top:8px; left:8px; z-index:2 !important; background:var(--yel); color:#0B0B0B; font-family:var(--mono); font-size:.66rem; font-weight:700; padding:3px 6px; }
+/* блок «Хэллоуин» на главной */
+.hw-sec{ background:radial-gradient(90% 70% at 85% 10%, rgba(255,122,26,.16), transparent 60%), radial-gradient(80% 60% at 0% 100%, rgba(150,60,255,.14), transparent 60%), #0E0A08; border-top:1px solid rgba(255,122,26,.3); border-bottom:1px solid rgba(255,122,26,.3); }
+.hw-grid{ display:grid; gap:28px; }
+@media (min-width:900px){ .hw-grid{ grid-template-columns:1.25fr .75fr; align-items:start; } }
+.hw-new{ display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:22px; }
+.hw-new li{ background:rgba(255,255,255,.04); border:1px solid rgba(255,122,26,.25); padding:12px; font-size:.9rem; color:var(--ink-2); }
+.hw-new li b{ display:block; color:#fff; font-size:.95rem; margin-bottom:2px; }
+.hw-list{ display:grid; gap:8px; margin-top:22px; }
+.hw-list a{ display:grid; grid-template-columns:44px 1fr auto; gap:12px; align-items:center; padding:12px 14px; background:#151010; border:1px solid rgba(255,255,255,.1); color:#fff; text-decoration:none; transition:border-color .2s, transform .2s; }
+.hw-list a:hover{ border-color:var(--yel); transform:translateX(3px); }
+.hw-list .ico{ width:44px; height:44px; }
+.hw-list .ico svg{ width:100%; height:100%; display:block; background:#FBF7EE; border-radius:12px; padding:4px; }
+.hw-list b{ display:block; font-size:1rem; }
+.hw-list small{ display:block; color:var(--ink-3); font-size:.82rem; line-height:1.35; }
+.hw-list .pr{ font-family:var(--mono); color:var(--yel); font-weight:700; font-size:.85rem; white-space:nowrap; text-align:right; }
+.hw-list .pr i{ display:block; font-style:normal; color:var(--ink-3); font-size:.72rem; }
+.hw-poster{ position:relative; display:block; width:100%; max-width:440px; margin:0 auto; border:1px solid rgba(255,122,26,.35); box-shadow:0 20px 60px rgba(0,0,0,.6); }
+.hw-poster img{ width:100%; height:auto; }
+.hw-poster span{ position:absolute; left:0; right:0; bottom:0; padding:12px; background:linear-gradient(transparent, rgba(0,0,0,.9)); color:#fff; font-weight:800; font-size:.9rem; text-align:center; }
+.hw-note{ margin-top:14px; font-family:var(--mono); font-size:.76rem; color:var(--ink-3); }
+@media (max-width:520px){ .hw-list a{ grid-template-columns:40px 1fr; } .hw-list .pr{ grid-column:2; text-align:left; } .hw-list .pr i{ display:inline; margin-left:4px; } }
+/* хэллоуинские пакеты в комнатах */
+.pack.hwp{ border-color:rgba(255,122,26,.55); background:linear-gradient(180deg, #1f1209, var(--bg-3) 40%); }
+.badge.hwb{ left:10px; background:#FF7A1A; color:#0B0B0B; }
+.pack.hwp .pr{ color:#FF7A1A; }
+.hw-films{ margin-top:22px; border:1px solid rgba(255,122,26,.35); background:#140e0a; padding:16px 18px; max-width:760px; }
+.hw-films summary{ cursor:pointer; font-weight:800; color:#fff; }
+.hw-films b{ display:block; margin:12px 0 6px; font-family:var(--mono); font-size:.74rem; color:#FF7A1A; text-transform:uppercase; letter-spacing:.05em; }
+.hw-films ul{ columns:2; column-gap:18px; color:var(--ink-2); font-size:.9rem; }
+.hw-films li{ break-inside:avoid; margin-bottom:4px; }
+@media (max-width:520px){ .hw-films ul{ columns:1; } }
+.cal-d.hwd{ box-shadow:inset 0 -3px 0 #FF7A1A; }
 .carousel-nav{ display:flex; gap:8px; margin-top:12px; }
 .carousel-nav button{ width:46px; height:46px; background:var(--bg-3); font-size:1.2rem; }
 .incl{ margin-top:22px; background:#1a1a1a; border-left:3px solid var(--grey); padding:18px 20px; color:var(--ink-2); max-width:760px; }
@@ -782,9 +848,11 @@ body.tp-cover main, body.tp-cover .view, body.tp-cover #bearfill, body.tp-cover 
 
   <section class="hero" id="hero" aria-label="Главный экран">
     <img class="hero-img" src="img/as-113.webp" alt="" aria-hidden="true">
+    <div class="hw-deco hw-only" aria-hidden="true"><svg class="hw-web l" viewBox="0 0 200 200" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M0 0L200 200M0 0L110 200M0 0L200 110M0 0L40 200M0 0L200 40"/><path d="M0 40Q22 32 34 34Q40 22 40 0"/><path d="M0 85Q45 70 70 72Q74 46 85 0"/><path d="M0 135Q70 110 104 108Q110 70 135 0"/><path d="M0 190Q95 150 140 145Q150 95 190 0"/></svg><svg class="hw-web r" viewBox="0 0 200 200" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M0 0L200 200M0 0L110 200M0 0L200 110M0 0L40 200M0 0L200 40"/><path d="M0 40Q22 32 34 34Q40 22 40 0"/><path d="M0 85Q45 70 70 72Q74 46 85 0"/><path d="M0 135Q70 110 104 108Q110 70 135 0"/><path d="M0 190Q95 150 140 145Q150 95 190 0"/></svg><div class="hw-bat"><svg viewBox="0 0 64 28"><path fill="currentColor" d="M32 8c2-4 3-6 3-6l2 5c6-4 14-6 27-3-6 2-9 6-10 11-4-3-9-3-12 2-3-3-6-3-8 0-2-3-5-3-8 0-3-5-8-5-12-2-1-5-4-9-10-11 13-3 21-1 27 3l2-5s1 2 3 6z"/></svg></div><div class="hw-bat"><svg viewBox="0 0 64 28"><path fill="currentColor" d="M32 8c2-4 3-6 3-6l2 5c6-4 14-6 27-3-6 2-9 6-10 11-4-3-9-3-12 2-3-3-6-3-8 0-2-3-5-3-8 0-3-5-8-5-12-2-1-5-4-9-10-11 13-3 21-1 27 3l2-5s1 2 3 6z"/></svg></div><div class="hw-bat"><svg viewBox="0 0 64 28"><path fill="currentColor" d="M32 8c2-4 3-6 3-6l2 5c6-4 14-6 27-3-6 2-9 6-10 11-4-3-9-3-12 2-3-3-6-3-8 0-2-3-5-3-8 0-3-5-8-5-12-2-1-5-4-9-10-11 13-3 21-1 27 3l2-5s1 2 3 6z"/></svg></div><div class="hw-bat"><svg viewBox="0 0 64 28"><path fill="currentColor" d="M32 8c2-4 3-6 3-6l2 5c6-4 14-6 27-3-6 2-9 6-10 11-4-3-9-3-12 2-3-3-6-3-8 0-2-3-5-3-8 0-3-5-8-5-12-2-1-5-4-9-10-11 13-3 21-1 27 3l2-5s1 2 3 6z"/></svg></div></div>
     <div class="behind">
       <span class="loc"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2a7 7 0 0 0-7 7c0 5.3 7 13 7 13s7-7.7 7-13a7 7 0 0 0-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z"/></svg>Алматы, Байсеитовой 49</span>
       <span class="since">работаем с 2019 года</span>
+      <a class="hw-chip hw-only" href="#/" data-scroll="halloween">🎃 Хэллоуин 29.10–1.11: спецпакеты →</a>
       <h1 class="hh"><span class="l1">Выдохни</span><span class="l2">Или</span><span class="l3">разнеси<svg class="brush" viewBox="0 0 400 40" preserveAspectRatio="none" aria-hidden="true"><path d="M4 22 C60 10 140 8 220 10 C290 12 350 6 396 3 L394 20 C340 24 280 29 210 30 C140 30 70 33 8 38 Z" fill="#FFD400"/><path d="M30 31 C120 24 230 23 330 20" stroke="#FFD400" stroke-width="2" fill="none" opacity=".6"/></svg></span></h1>
       <div class="lead-box">
         <b>Пять комнат под любое настроение:</b>
@@ -808,6 +876,26 @@ body.tp-cover main, body.tp-cover .view, body.tp-cover #bearfill, body.tp-cover 
       <div><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2.5 18.5h19"/><path d="M4.5 18.5v-2.5a7.5 7.5 0 0 1 15 0v2.5"/><path d="M10 9.2V5.5h4v3.7"/><path d="M7.5 11.5a5 5 0 0 1 2.5-2.3M16.5 11.5a5 5 0 0 0-2.5-2.3"/></svg><b>Экипировка включена</b><span>Всё необходимое предоставляем</span></div>
       <div><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg><b>Ожидание до&nbsp;10&nbsp;мин</b><span>Бесплатно</span></div>
       <div><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="8" r="3.2"/><path d="M3 20v-1.5a6 6 0 0 1 12 0V20"/><circle cx="17" cy="9" r="2.6"/><path d="M15.8 14.2A5 5 0 0 1 21 19v1"/></svg><b>Можно компанией</b><span>Друзья, семья, коллеги</span></div>
+    </div>
+  </section>
+
+  <!-- ХЭЛЛОУИН (виден только 25.10–1.11) — тексты Анастасии от 20.10.2026 -->
+  <section class="section hw-sec hw-only" id="halloween">
+    <div class="wrap hw-grid">
+      <div>
+        <span class="kicker">🎃 Только 29 октября — 1 ноября включительно</span>
+        <h2 class="sh hit">Хэллоуин <span class="y">в Antistress Space</span></h2>
+        <p class="sub">Пять хэллоуинских предложений — от тотального разгрома до творческого безумия и уютных вечеров с атмосферой 90-х. Всего 4 дня, чтобы выпустить своих демонов.</p>
+        <ul class="hw-new">
+          <li><b>Интерактивные задания</b>впервые — в каждом пакете</li>
+          <li><b>Лотерея</b>бонусные предметы, среди них даже техника</li>
+          <li><b>Скидочные флаеры</b>на следующее посещение</li>
+          <li><b>Хэллоуинский декор</b>тематическая атмосфера и особые развлечения</li>
+        </ul>
+        <div class="hw-list" id="hwList"></div>
+        <p class="hw-note">Количество мест и время сеансов ограничены. Выберите сценарий — откроются пакеты и запись.</p>
+      </div>
+      <button class="hw-poster" type="button" id="hwPoster" aria-label="Открыть хэллоуинские афиши"><img src="img/hw-1.webp" alt="Афиша: Хэллоуин в Antistress Space, 29 октября — 1 ноября" loading="lazy" width="1024" height="1280"><span>Смотреть все афиши →</span></button>
     </div>
   </section>
 
@@ -1215,7 +1303,7 @@ body.tp-cover main, body.tp-cover .view, body.tp-cover #bearfill, body.tp-cover 
   var GIFT_T0 = (function(){ var t = parseInt(store("as_gift_t0"), 10); if(!t || t > Date.now()){ t = Date.now(); store("as_gift_t0", String(t)); } return t; })();
   function giftDeadline(){ return GIFT_T0 + GIFT.minutes * 60000; }
   function giftLeft(){ return store("as_gift_used") ? 0 : Math.max(0, giftDeadline() - Date.now()); }
-  function giftFor(st){ return st && !st.gift && giftLeft() > 0 ? (GIFT.rooms[st.r.id] || "") : ""; }
+  function giftFor(st){ return st && !st.gift && !(st.pack && st.pack.hw) && giftLeft() > 0 ? (GIFT.rooms[st.r.id] || "") : ""; }
   function hhmm(t){ var d = new Date(t); return (d.getHours() < 10 ? "0" : "") + d.getHours() + ":" + (d.getMinutes() < 10 ? "0" : "") + d.getMinutes(); }
   function mmss(ms){ var s2 = Math.ceil(ms / 1000), m = Math.floor(s2 / 60), r = s2 % 60; return m + ":" + (r < 10 ? "0" : "") + r; }
 
@@ -1350,6 +1438,69 @@ body.tp-cover main, body.tp-cover .view, body.tp-cover #bearfill, body.tp-cover 
   ];
   function room(id){ for(var i = 0; i < ROOMS.length; i++) if(ROOMS[i].id === id) return ROOMS[i]; return null; }
 
+  /* =========================================================
+     ХЭЛЛОУИН 29.10–1.11 (тексты и цены Анастасии от 20.10.2026).
+     Пакеты встают первыми в каждой комнате, записаться на них можно только на даты HW.from–HW.to.
+     После 1 ноября всё скрывается само (скрипт в <head>). Удалять ничего не нужно.
+     ========================================================= */
+  var HWON = document.documentElement.classList.contains("hw");
+  var HW = { from:"2026-10-29", to:"2026-11-01", label:"29.10–1.11" };
+  var FLYER15 = "Флаер −15% на следующее посещение (многоразовый, до конца 2026)", FLYER10 = "Флаер −10% на следующее посещение (многоразовый, до конца 2026)", LOTTERY = "Лотерея бонусного предмета";
+  var HW_ROOMS = {
+    antistress:{ name:"Крушить", sub:"«Первая кровь», «Обитель безумия», «Экзорцизм: полный разнос»",
+      packsSub:"🎃 С 29 октября по 1 ноября — три хэллоуинских пакета. Листай вправо: дальше обычные пакеты. Цена — за весь пакет.",
+      packs:[
+        { id:"hw-blood", name:"Первая кровь", photo:"as-110", price:23000, max:2, dur:"до 30 минут", tag:"«Пробуди своих внутренних демонов». Для тех, кому нужно немного выпустить пар и почувствовать себя героем собственного хоррора.",
+          items:["15 бутылок","1 клавиатура","1 видеокассета","4 предмета мелкой посуды","4 предмета крупной посуды","2 компакт-диска","1 деревянный ящик","5 надувных шариков"], bonus:LOTTERY },
+        { id:"hw-madness", name:"Обитель безумия", photo:"as-106", price:40500, max:3, dur:"до 40 минут", tag:"«Место, где стираются любые запреты и правила». Больше предметов, больше шума и больше возможностей дать волю эмоциям!",
+          items:["20 бутылок","1 лобовое стекло","1 предмет средней техники","1 клавиатура","2 видеокассеты","5 предметов крупной посуды","5 предметов мелкой посуды","1 деревянный ящик","5 надувных шариков"], bonus:LOTTERY + " · " + FLYER15 },
+        { id:"hw-exorcism", name:"Экзорцизм: полный разнос", photo:"as-116", price:80000, max:6, dur:"до 60 минут", tag:"«Ведь изгнание бесов всегда сопровождается летающими предметами и криками». Наш самый масштабный хэллоуинский пакет.",
+          items:["1 задняя дверь кроссовера со стеклом (багажник)","1 огромный телевизор","1 пиньята","1 торс манекена","2 деревянных ящика","20 бутылок","1 журнал","1 газета","3 видеокассеты","8 надувных шариков"], bonus:"+5 предметов крупной посуды в подарок · " + LOTTERY + " · " + FLYER15 }
+      ] },
+    combo:{ name:"Хаос + неон", sub:"«Полтергейст 1» и «Полтергейст 2»: час разгрома, потом час неонового рисования",
+      packsSub:"🎃 С 29 октября по 1 ноября — хэллоуинское комбо: антистресс-комната (1 час) + неоновое рисование (1 час). Листай вправо: дальше обычные комбо с релаксом.",
+      packs:[
+        { id:"hw-polt1", name:"Полтергейст 1", photo:"as-103", price:30666, max:2, dur:"1 ч антистресс + 1 ч неоновое рисование", tag:"Сначала устраиваете настоящий погром, а затем переходите к неоновому творчеству!",
+          items:["1 лобовое стекло","1 клавиатура","1 видеокассета","15 бутылок","3 банки объёмом до 1 литра","3 предмета крупной посуды","1 компакт-диск","1 деревянный ящик"], bonus:LOTTERY + " · " + FLYER15 },
+        { id:"hw-polt2", name:"Полтергейст 2", photo:"as-116", price:50666, max:4, dur:"1 ч антистресс + 1 ч неоновое рисование", tag:"«Если уж вызывать хаос, то масштабный!»",
+          items:["1 огромный телевизор","1 предмет средней техники","1 клавиатура","1 видеокассета","20 бутылок","2 банки объёмом до 1 литра","10 предметов крупной посуды","2 деревянных ящика"], bonus:LOTTERY + " · " + FLYER15 }
+      ] },
+    relax:{ name:"Horror VHS Night", sub:"«Шабаш Mini» и «Шабаш Full Moon»: ужасы на кассетах, ведьмин чай, попкорн",
+      packsSub:"🎃 С 29 октября по 1 ноября — Horror VHS Night: 2 часа, цена за двоих, каждый следующий гость +5 000 ₸. Листай вправо: дальше обычный релакс.",
+      packs:[
+        { id:"hw-sabbath", name:"Шабаш Mini", photo:"rx-197", dur:"2 часа", max:6, tag:"«Немного магии, немного сладостей и никакой спешки»",
+          groups:[["В стоимость входит", ["Ведьмин чай","Попкорн"]], ["Весь вечер", ["Фильм ужасов на видеокассете или через интернет","Создание браслета своими руками","Ретро-приставка Sega","Настольные игры","Хэллоуинский декор"]]],
+          from:21666, priceLabel:"21 666 ₸ за двоих\n+5 000 ₸ за гостя", calc:function(n){ return n ? 21666 + Math.max(0, n - 2) * 5000 : null; }, bonus:FLYER10 },
+        { id:"hw-fullmoon", name:"Шабаш Full Moon", photo:"rx-145", dur:"2 часа", max:6, tag:"«Полная луна, горячий чай и настоящий ведьминский пир»",
+          groups:[["В стоимость входит", ["Пирог на выбор: мясной или овощной","Чай на выбор: «Ведьмин», «Приворотное зелье» или «Кровь вампира»","Попкорн или чайный сет с угощениями — орешками, печеньем и другими вкусностями"]], ["Весь вечер", ["Фильм ужасов на видеокассете или через интернет","Создание браслета своими руками","Ретро-приставка Sega","Настольные игры","Хэллоуинский декор"]]],
+          from:28666, priceLabel:"28 666 ₸ за двоих\n+5 000 ₸ за гостя", calc:function(n){ return n ? 28666 + Math.max(0, n - 2) * 5000 : null; }, bonus:FLYER10,
+          note:"Пирог, чай и угощения выберете у администратора при подтверждении записи." }
+      ],
+      films:[["Фильмы на видеокассетах", ["Дом ночных призраков","Из Ада","Омен 4: Пробуждение","Байки из склепа. Том 2 (Ловушка / Единственная секунда / На груди мертвеца)","Байки из склепа. Том 8 (Ужас на лестнице / Привычная колея / Амбер навсегда)","Дом 1000 привидений / Дом 1000 трупов","Реликт","Атака пауков"]],
+             ["А ещё можно посмотреть", ["Звёздные войны: Войны клонов","Ночной дозор","Идентификация","Эволюция X: Разоблачение","Пятый элемент","Час пик 2"]]] },
+    glowbear:{ name:"Создать монстрика", sub:"Glow Bear: Halloween Edition — стразы, блёстки, гуашь и УФ-краски",
+      packsSub:"🎃 С 29 октября по 1 ноября — Glow Bear: Halloween Edition. 22 000 ₸ за мишку, два мишки — скидка 6 666 ₸. Листай вправо: дальше обычный Glow Bear.",
+      packs:[
+        { id:"hw-bear", name:"Glow Bear: Halloween Edition", photo:"gb-323", dur:"1 час", max:2, pplLabel:"Сколько мишек?", tag:"Создай своего маленького монстрика: милого, пугающего, безумного или совершенно уникального!",
+          groups:[["Что входит", ["Мишка высотой 23 см","Ультрафиолетовые краски","Гуашь для декора","Стразы","Блёстки","Дополнительный декоративный материал"]], ["С собой забираете", ["Готового монстрика","Ультрафиолетовую лампу","Всё в подарочном пакете"]]],
+          from:22000, priceLabel:"22 000 ₸ за мишку\n2 мишки — 37 334 ₸", calc:function(n){ return n ? (n >= 2 ? 37334 : 22000) : null; }, bonus:"Два мишки — скидка 6 666 ₸ (по 18 667 ₸) · " + FLYER15 }
+      ] },
+    ps:{ name:"Nightmare Mode", sub:"PlayStation с хэллоуинскими заданиями, напиток и снек",
+      packsSub:"🎃 С 29 октября по 1 ноября — Nightmare Mode: 2 часа, цена за двоих, каждый следующий гость +3 000 ₸. Листай вправо: дальше обычная почасовая оплата.",
+      packs:[
+        { id:"hw-nightmare", name:"Nightmare Mode", photo:"ps-280", dur:"2 часа", max:5, tag:"Обычного прохождения недостаточно! В этом году — интерактивные задания, которые сделают игровой вечер ещё веселее.",
+          groups:[["В стоимость входит", ["Игровая сессия на PlayStation — 2 часа","Интерактивные хэллоуинские задания"]], ["Напиток на выбор", ["Чайник чая 1 литр","Кола 2 литра"]], ["Снек на выбор", ["Попкорн","Чипсы"]]],
+          from:9000, priceLabel:"9 000 ₸ за двоих\n+3 000 ₸ за гостя", calc:function(n){ return n ? 9000 + Math.max(0, n - 2) * 3000 : null; }, bonus:FLYER10,
+          note:"Напиток и снек выберете у администратора при подтверждении записи." }
+      ] }
+  };
+  if(HWON) ROOMS.forEach(function(r){
+    var h = HW_ROOMS[r.id]; if(!h) return;
+    h.packs.forEach(function(p){ p.hw = true; p.group = "hw"; });
+    r.packs = h.packs.concat(r.packs); r.packsSub = h.packsSub;
+  });
+  function hwIn(d){ return !!d && d >= HW.from && d <= HW.to; }
+
   /* жёлтый прайс «Дополни свой пакет» (предмет выставляется в зависимости от наличия на складе) */
   var ADDONS = [
     ["Стекло и посуда", [["Бутылка",520],["Банка до 1 л",750],["Банка от 1 л",1350],["Мелкая посуда (тарелочки, чашки, блюдца, бардаки)",800],["Крупная посуда (тарелки, графины, чайники, блюда)",1750],["Лобовое стекло",9500],["Кафель (1 плитка)",4000]]],
@@ -1394,7 +1545,7 @@ body.tp-cover main, body.tp-cover .view, body.tp-cover #bearfill, body.tp-cover 
 
   /* ---------- бегущая лента ---------- */
   (function(){
-    var words = ["Разбей стекло","Распиши мишку","Выдохни в релаксе","Комбо на 3 часа","Только по записи","Байсеитовой 49"];
+    var words = HWON ? ["🎃 Хэллоуин 29.10–1.11","Выпусти своих демонов","Horror VHS Night","Nightmare Mode","Создай монстрика","Байсеитовой 49"] : ["Разбей стекло","Распиши мишку","Выдохни в релаксе","Комбо на 3 часа","Только по записи","Байсеитовой 49"];
     var run = $("run"), all = words.concat(words);
     all.forEach(function(w){ run.appendChild(el("span", "", w)); });
   })();
@@ -1513,11 +1664,26 @@ body.tp-cover main, body.tp-cover .view, body.tp-cover #bearfill, body.tp-cover 
     ROOMS.forEach(function(r){
       var a = el("a"); a.href = "#" + r.id;
       var im = el("img"); im.src = IMG(r.cardImg || r.slides[0], true); im.alt = ""; im.loading = "lazy"; a.appendChild(im);
+      if(HWON && HW_ROOMS[r.id]) a.appendChild(el("span", "hw-tag", "🎃 Хэллоуин"));
       var ic = el("span", "ico"); ic.innerHTML = roomIcon(r.id); a.appendChild(ic);
       a.appendChild(el("b", "", ({ relax:"Релакс комната", combo:"Комбо-пакет", antistress:"Антистресс комната", glowbear:"Glow Bear", ps:"PlayStation комната" })[r.id] || r.name));
       a.appendChild(el("small", "", SHORT[r.id] || ""));
       box.appendChild(a);
     });
+  })();
+
+  /* блок «Хэллоуин»: пять сценариев (порядок как на афише) + афиши в просмотрщике */
+  (function(){
+    var box = $("hwList"); if(!box || !HWON) return;
+    ["antistress","combo","relax","glowbear","ps"].forEach(function(id){
+      var h = HW_ROOMS[id], a = el("a"); a.href = "#" + id;
+      var ic = el("span", "ico"); ic.innerHTML = roomIcon(id); a.appendChild(ic);
+      var t = el("span"); t.appendChild(el("b", "", h.name)); t.appendChild(el("small", "", h.sub)); a.appendChild(t);
+      var min = Math.min.apply(null, h.packs.map(minPrice)), pr = el("span", "pr", "от " + money(min));
+      pr.appendChild(el("i", "", h.packs.length > 1 ? h.packs.length + " пакета" : "1 пакет")); a.appendChild(pr);
+      box.appendChild(a);
+    });
+    $("hwPoster").addEventListener("click", function(){ openLb(["hw-1","hw-2","hw-3","hw-4","hw-5","hw-6"], 0); });
   })();
 
   /* подвал: надпись всегда в одну строку */
@@ -2042,8 +2208,9 @@ body.tp-cover main, body.tp-cover .view, body.tp-cover #bearfill, body.tp-cover 
     return ct;
   }
   function packCard(p){
-    var c = el("article", "pack" + (p.group === "intro" ? " muted" : "") + (S.pack === p ? " sel" : ""));
+    var c = el("article", "pack" + (p.group === "intro" ? " muted" : "") + (p.hw ? " hwp" : "") + (S.pack === p ? " sel" : ""));
     var im = el("img"); im.src = IMG(p.photo, true); im.alt = p.name; im.loading = "lazy"; im.className = "pimg"; c.appendChild(im);
+    if(p.hw) c.appendChild(el("span", "badge hwb", "🎃 Хэллоуин · только " + HW.label));
     if(p.group === "series") c.appendChild(el("span", "badge kind", "серия из 3 пакетов"));
     if(p.when) c.appendChild(el("span", "badge kind", p.when));
     var inn = el("div", "in");
@@ -2068,9 +2235,11 @@ body.tp-cover main, body.tp-cover .view, body.tp-cover #bearfill, body.tp-cover 
   }
   function drawPacks(){
     var box = $("packs"); box.innerHTML = "";
-    var r = S.r, shownDiv = false;
+    var r = S.r, shownDiv = false, prevHw = false;
     r.packs.forEach(function(p){
-      if(p.group !== "main" && !shownDiv && r.packs.some(function(x){ return x.group === "main"; })){ box.appendChild(el("div", "pack-div", "дальше — дополнительные пакеты →")); shownDiv = true; }
+      if(prevHw && !p.hw) box.appendChild(el("div", "pack-div", "дальше — обычные пакеты →"));
+      else if(!p.hw && p.group !== "main" && !shownDiv && r.packs.some(function(x){ return x.group === "main"; })){ box.appendChild(el("div", "pack-div", "дальше — дополнительные пакеты →")); shownDiv = true; }
+      prevHw = !!p.hw;
       box.appendChild(packCard(p));
     });
     $("pPrev").parentNode.style.display = r.packs.length > 2 ? "" : "none";
@@ -2079,6 +2248,7 @@ body.tp-cover main, body.tp-cover .view, body.tp-cover #bearfill, body.tp-cover 
     S.pack = p; S.variant = p.variants ? null : null;
     var m = maxPpl(p);
     S.ppl = m === 1 ? 1 : (S.ppl && S.ppl <= m ? S.ppl : null);
+    if(p.hw){ S.gift = false; if(!hwIn(S.date)) S.date = ""; }
     S.step = 0; S.err = "";
     drawPacks(); drawWz();
   }
@@ -2094,7 +2264,7 @@ body.tp-cover main, body.tp-cover .view, body.tp-cover #bearfill, body.tp-cover 
   }
   function prewarmRoom(id){ var r = room(id); if(r && r.slides && r.slides[0]) return decodeImg(IMG(r.slides[0])); return Promise.resolve(); }
   function renderRoom(r, gift){
-    document.documentElement.style.setProperty("--accent", r.accent);
+    document.documentElement.style.setProperty("--accent", HWON && r.accent === "#FFD400" ? "#FF7A1A" : r.accent);
     $("rBg").className = "bg " + r.bg;
     buildFx(r.fx);
     $("rKicker").textContent = gift ? "Подарочный сертификат" : r.kicker;
@@ -2106,6 +2276,11 @@ body.tp-cover main, body.tp-cover .view, body.tp-cover #bearfill, body.tp-cover 
     drawPacks();
     /* «входит в любой пакет» — серым, после пакетов */
     var inc = $("rIncl"); inc.innerHTML = "";
+    if(HWON && HW_ROOMS[r.id] && HW_ROOMS[r.id].films){
+      var fd = el("details", "hw-films"); fd.appendChild(el("summary", "", "🎃 Horror VHS Night: что можно посмотреть"));
+      HW_ROOMS[r.id].films.forEach(function(g){ fd.appendChild(el("b", "", g[0])); var u = el("ul"); g[1].forEach(function(t){ u.appendChild(el("li", "", t)); }); fd.appendChild(u); });
+      inc.appendChild(fd);
+    }
     if(r.promos && PROMOS.length){
       var on = el("div", "now-card"), pp = PROMOS[0];
       on.appendChild(el("span", "kicker", "Только сейчас"));
@@ -2224,11 +2399,11 @@ body.tp-cover main, body.tp-cover .view, body.tp-cover #bearfill, body.tp-cover 
   var MONTHS_G = ["января","февраля","марта","апреля","мая","июня","июля","августа","сентября","октября","ноября","декабря"];
   var WD = ["Пн","Вт","Ср","Чт","Пт","Сб","Вс"], WDS = ["вс","пн","вт","ср","чт","пт","сб"];
   function isoD(d){ return d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0"); }
-  function calField(value, onPick){
+  function calField(value, onPick, lim){
     var wrap = el("div", "cal-field"), btn = el("button", "cal-btn"), box = el("div", "cal");
     btn.type = "button"; box.hidden = true;
     var today = new Date(); today.setHours(12, 0, 0, 0);
-    var view = value ? new Date(value + "T12:00:00") : new Date(today); view.setDate(1);
+    var view = value ? new Date(value + "T12:00:00") : (lim && lim.min > isoD(today) ? new Date(lim.min + "T12:00:00") : new Date(today)); view.setDate(1);
     function txt(){
       if(!value) return "Выберите дату";
       var d = new Date(value + "T12:00:00");
@@ -2254,14 +2429,14 @@ body.tp-cover main, body.tp-cover .view, body.tp-cover #bearfill, body.tp-cover 
       for(var dd = 1; dd <= days; dd++){
         (function(dd){
           var dt = new Date(view.getFullYear(), view.getMonth(), dd, 12), iso = isoD(dt), wd = (dt.getDay() + 6) % 7;
-          var b = el("button", "cal-d" + (wd >= 4 ? " we" : "") + (iso === value ? " on" : "") + (iso === isoD(today) ? " today" : ""), String(dd));
-          b.type = "button"; b.disabled = dt < today;
+          var b = el("button", "cal-d" + (wd >= 4 ? " we" : "") + (iso === value ? " on" : "") + (iso === isoD(today) ? " today" : "") + (HWON && hwIn(iso) ? " hwd" : ""), String(dd));
+          b.type = "button"; b.disabled = dt < today || (lim && (iso < lim.min || iso > lim.max));
           b.addEventListener("click", function(){ value = iso; box.hidden = true; draw(); onPick(iso); });
           g.appendChild(b);
         })(dd);
       }
       box.appendChild(g);
-      box.appendChild(el("p", "cal-note", "Пт–вс — выходные дни: в релаксе и PlayStation другая цена."));
+      box.appendChild(el("p", "cal-note", lim ? "🎃 Хэллоуинские пакеты — только 29 октября – 1 ноября." : "Пт–вс — выходные дни: в релаксе и PlayStation другая цена." + (HWON ? " 🎃 Оранжевым отмечены дни Хэллоуина (29.10–1.11)." : "")));
     }
     btn.addEventListener("click", function(){ box.hidden = !box.hidden; draw(); });
     wrap.appendChild(btn); wrap.appendChild(box); draw();
@@ -2274,7 +2449,7 @@ body.tp-cover main, body.tp-cover .view, body.tp-cover #bearfill, body.tp-cover 
     var r = S.r, d = block();
     d.appendChild(label(S.gift ? "Что дарим?" : "Какой пакет?"));
     if(r.packs.length > 1){
-      d.appendChild(chipRow(r.packs.map(function(p){ return [p.id, p.name, (p.variants || p.priceBy ? "от " : "") + money(minPrice(p))]; }), S.pack && S.pack.id, function(id){ pickPack(r.packs.filter(function(p){ return p.id === id; })[0]); }));
+      d.appendChild(chipRow(r.packs.map(function(p){ return [p.id, (p.hw ? "🎃 " : "") + p.name, (p.variants || p.priceBy || p.calc ? "от " : "") + money(minPrice(p))]; }), S.pack && S.pack.id, function(id){ pickPack(r.packs.filter(function(p){ return p.id === id; })[0]); }));
       b.appendChild(d);
     } else if(!S.pack){ S.pack = r.packs[0]; }
     if(S.pack && S.pack.variants){
@@ -2289,7 +2464,8 @@ body.tp-cover main, body.tp-cover .view, body.tp-cover #bearfill, body.tp-cover 
       d.appendChild(chipRow(opts, S.ppl, function(n){ S.ppl = n; drawWz(); }, "sq"));
       if(p.price && !p.variants) d.appendChild(el("p", "wz-note", "Цена за весь пакет — " + money(p.price) + ", до " + p.max + " человек."));
       if(p.when) d.appendChild(el("p", "wz-note", "Этот пакет действует " + p.when + "."));
-      if(r.id === "relax") d.appendChild(el("p", "wz-note", "7 500 ₸ с человека в будни (пн–чт), 9 000 ₸ в выходные (пт–вс) — посчитаем по выбранной дате."));
+      if(p.hw) d.appendChild(el("p", "wz-note", "🎃 Хэллоуинский пакет — запись только на 29 октября – 1 ноября." + (p.note ? " " + p.note : "")));
+      if(r.id === "relax" && !p.hw) d.appendChild(el("p", "wz-note", "7 500 ₸ с человека в будни (пн–чт), 9 000 ₸ в выходные (пт–вс) — посчитаем по выбранной дате."));
       b.appendChild(d);
       if(p.hourly){
         d = block(); d.appendChild(label("Сколько часов?"));
@@ -2297,13 +2473,15 @@ body.tp-cover main, body.tp-cover .view, body.tp-cover #bearfill, body.tp-cover 
         b.appendChild(d);
       }
     }
-    d = block(); d.appendChild(label("Для кого?"));
-    d.appendChild(chipRow([[0, "Для себя"], [1, "В подарок — сертификат"]], S.gift ? 1 : 0, function(v){ S.gift = !!v; drawWz(); }));
-    b.appendChild(d);
+    if(!(S.pack && S.pack.hw)){
+      d = block(); d.appendChild(label("Для кого?"));
+      d.appendChild(chipRow([[0, "Для себя"], [1, "В подарок — сертификат"]], S.gift ? 1 : 0, function(v){ S.gift = !!v; drawWz(); }));
+      b.appendChild(d);
+    }
     if(!S.gift){
       d = block(); d.appendChild(label("Когда?"));
       var g = el("div", "grid2");
-      var di = calField(S.date, function(v){ S.date = v; S.err = ""; if(r.id === "relax" || r.id === "ps") drawWz(); else updFoot(); });
+      var di = calField(S.date, function(v){ S.date = v; S.err = ""; if(r.id === "relax" || r.id === "ps") drawWz(); else updFoot(); }, S.pack && S.pack.hw ? { min:HW.from, max:HW.to } : null);
       var ti = el("select"); ti.appendChild(new Option("Выберите время", ""));
       for(var h = (r.id === "ps" ? 10 : 11); h <= 20; h++){ ["00","30"].forEach(function(m){ var v = h + ":" + m; ti.appendChild(new Option(v, v)); }); }
       ti.value = S.time; ti.addEventListener("change", function(){ S.time = ti.value; S.err = ""; updFoot(); });
@@ -2468,7 +2646,8 @@ body.tp-cover main, body.tp-cover .view, body.tp-cover #bearfill, body.tp-cover 
   function summary(){
     var rows = [["Комната", S.r.place || S.r.name]];
     var vv = variantOf(S.pack, S.variant);
-    rows.push([S.gift ? "Сертификат" : "Пакет", S.pack ? S.pack.name + (vv ? " — " + vv.label : "") : "—"]);
+    rows.push([S.gift ? "Сертификат" : "Пакет", S.pack ? (S.pack.hw ? "🎃 " : "") + S.pack.name + (vv ? " — " + vv.label : "") : "—"]);
+    if(S.pack && S.pack.hw) rows.push(["Акция", "Хэллоуин, " + HW.label]);
     rows.push([S.pack && S.pack.pplLabel ? "Мишек" : "Человек", S.ppl || "—"]);
     if(S.pack && S.pack.hourly) rows.push(["Часов", S.hours]);
     if(S.gift){ rows.push(["Для кого", S.gFor || "—"]); if(S.gWish) rows.push(["Пожелание", S.gWish]); rows.push(["Сертификат", S.gFmt === "PDF" ? "электронный — 500 ₸" : "печатный — 3 000 ₸"]); }
@@ -3005,7 +3184,7 @@ body.tp-cover main, body.tp-cover .view, body.tp-cover #bearfill, body.tp-cover 
       document.title = r.name + (gift ? " — сертификат" : "") + " — Antistress Space";
       bgMood(r.id); return;
     }
-    document.documentElement.style.setProperty("--accent", "#FFD400");
+    document.documentElement.style.setProperty("--accent", HWON ? "#FF7A1A" : "#FFD400");
     $("paintbar").classList.remove("on"); $("bearfill").classList.remove("on"); clearInterval(slideT); if(mStop) mStop();
     delete document.body.dataset.room; clearEggs();
     if(!$("v-home").classList.contains("on")){ show("home"); window.scrollTo({ top:0, behavior:"instant" }); if(window.__sizeGlass) window.__sizeGlass(); }
