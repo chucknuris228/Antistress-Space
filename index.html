@@ -468,6 +468,7 @@ html.hw #tp[data-k="combo"] .tp-l{ background:repeating-linear-gradient(-45deg,#
 @media (min-width:700px){ .wz-body{ padding:30px 30px 34px; } }
 .wz-q{ font-family:var(--hit); text-transform:uppercase; font-size:1.05rem; display:block; margin-bottom:10px; }
 .wz-note{ color:var(--ink-3); font-size:.84rem; margin-top:8px; }
+.wz-note.wz-sub{ margin-top:-6px; margin-bottom:12px; }
 .chips{ display:flex; flex-wrap:wrap; gap:8px; }
 .chip{ min-height:44px; padding:8px 14px; background:var(--bg-3); border:1px solid var(--line); font-weight:700; font-size:.9rem; text-align:left; }
 .chip small{ display:block; font-family:var(--mono); font-weight:500; font-size:.7rem; color:var(--ink-3); }
@@ -478,7 +479,8 @@ html.hw #tp[data-k="combo"] .tp-l{ background:repeating-linear-gradient(-45deg,#
 .wz input:focus, .wz select:focus{ outline:2px solid var(--accent); outline-offset:1px; }
 .grid2{ display:grid; gap:14px; }
 @media (min-width:640px){ .grid2{ grid-template-columns:1fr 1fr; } }
-.fl span{ display:block; font-family:var(--mono); font-size:.72rem; color:var(--ink-3); text-transform:uppercase; margin-bottom:6px; }
+label.fl, div.fl{ display:block; }
+.fl span{ display:block; font-family:var(--mono); font-size:.72rem; color:var(--ink-3); text-transform:uppercase; margin-bottom:9px; }
 .mus{ display:grid; gap:8px; }
 @media (min-width:640px){ .mus{ grid-template-columns:1fr 1fr; } }
 .mus-row{ display:flex; gap:6px; }
@@ -2515,9 +2517,9 @@ body.tp-cover main, body.tp-cover .view, body.tp-cover #bearfill, body.tp-cover 
       var ti = el("select"); ti.appendChild(new Option("Выберите время", ""));
       for(var h = (r.id === "ps" ? 10 : 11); h <= 20; h++){ ["00","30"].forEach(function(m){ var v = h + ":" + m; ti.appendChild(new Option(v, v)); }); }
       ti.value = S.time; ti.addEventListener("change", function(){ S.time = ti.value; S.err = ""; updFoot(); });
-      d.appendChild(el("p", "wz-note", "Рекомендуем бронировать за 1–2 дня."));
+      d.appendChild(el("p", "wz-note wz-sub", "Рекомендуем бронировать за 1–2 дня."));
       var fd = el("div", "fl"); fd.appendChild(el("span", "", "Дата")); fd.appendChild(di);
-      d.appendChild(fd); d.appendChild(field("Желаемое время", ti));
+      d.appendChild(fd); var tf = field("Желаемое время", ti); tf.style.marginTop = "18px"; d.appendChild(tf);
       d.appendChild(el("p", "wz-note", "Сейчас мы работаем только по записи. Это желаемое время: если оно занято, администратор предложит ближайшее свободное окно."));
       if(CONFIG.SHOW_SLOTS){
         /* будущий блок: реальные свободные окна из Altegio (включить через CONFIG.SHOW_SLOTS) */
