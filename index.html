@@ -107,9 +107,7 @@ a:focus-visible,button:focus-visible{ outline:2px solid var(--accent); outline-o
 .hero .loc svg{ width:18px; height:18px; color:var(--yel); flex:none; }
 .hero .since{ display:block; margin:6px 0 0 25px; font-family:var(--mono); font-size:.74rem; text-transform:uppercase; letter-spacing:.04em; color:var(--yel); }
 .hero h1.hh{ font-family:'Fira Sans Extra Condensed','Arial Narrow',var(--hit); font-weight:900; font-style:italic; text-transform:uppercase; line-height:.84; letter-spacing:-.01em; font-size:clamp(4.4rem,21vw,7.4rem); margin:22px 0 -.2em; padding:0 .12em .26em 0; transform:rotate(-4deg); transform-origin:0 100%;
-  -webkit-mask-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='300' height='300'><filter id='g'><feTurbulence type='fractalNoise' baseFrequency='.6' numOctaves='3' seed='4'/><feColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 -7 0 0 0 5.4'/></filter><rect width='300' height='300' filter='url(%23g)'/></svg>");
-          mask-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='300' height='300'><filter id='g'><feTurbulence type='fractalNoise' baseFrequency='.6' numOctaves='3' seed='4'/><feColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 -7 0 0 0 5.4'/></filter><rect width='300' height='300' filter='url(%23g)'/></svg>");
-  -webkit-mask-size:300px 300px; mask-size:300px 300px; }
+  }
 .hero h1.hh span{ display:block; }
 .hero h1.hh .l1{ color:#fff; }
 .hero h1.hh .l2, .hero h1.hh .l3{ color:var(--yel); }
@@ -657,8 +655,6 @@ body.tp-run .vinylfix{ visibility:hidden; }
 .egg .box p{ margin-top:12px; }
 .egg .box button{ margin-top:18px; font-family:var(--mono); text-decoration:underline; }
 
-/* черновик-плашка */
-.draft{ position:absolute; left:12px; top:calc(74px + env(safe-area-inset-top,0px)); z-index:58; font-family:var(--mono); font-size:.66rem; background:var(--yel); color:#000; padding:4px 8px; transform:rotate(-2deg); pointer-events:none; }
 
 
 /* =========================================================
@@ -815,7 +811,6 @@ body.tp-cover main, body.tp-cover .view, body.tp-cover #bearfill, body.tp-cover 
 <body>
 
 <div class="paintbar" id="paintbar" aria-hidden="true"></div>
-<div class="draft">ЧЕРНОВИК · на согласование</div>
 <div class="vinylfix" id="vinylFix" aria-hidden="true"><div class="vf-disc"><span>relax</span></div><small>листай — крутится</small></div>
 <div class="bearfill" id="bearfill" aria-hidden="true">
   <canvas id="bear3d"></canvas>
