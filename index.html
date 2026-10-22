@@ -128,7 +128,7 @@ a:focus-visible,button:focus-visible{ outline:2px solid var(--accent); outline-o
 .quick-h{ max-width:1240px; margin:4px auto 14px; padding:0 16px; font-family:var(--body); font-weight:800; font-size:1.05rem; line-height:1.3; color:#fff; letter-spacing:0; text-transform:none; }
 .quick-h::before{ content:""; display:inline-block; width:18px; height:3px; background:var(--yel); vertical-align:middle; margin-right:10px; }
 @media (min-width:900px){ .quick-h{ font-size:1.25rem; } }
-.hero-rooms{ display:grid; grid-auto-flow:column; grid-auto-columns:minmax(138px, 1fr); gap:8px; overflow-x:auto; padding:0 16px 6px; scroll-snap-type:x mandatory; scrollbar-width:none; max-width:1240px; margin:0 auto; }
+.hero-rooms{ display:grid; grid-auto-flow:column; grid-auto-columns:minmax(158px, 1fr); gap:8px; overflow-x:auto; padding:0 16px 6px; scroll-snap-type:x mandatory; scrollbar-width:none; max-width:1240px; margin:0 auto; }
 .hero-rooms::-webkit-scrollbar{ display:none; }
 /* карточка комнаты: фото со скруглением, внизу фото — неоновая иконка | линия | название; под фото — плашка с описанием */
 .hero-rooms a{ display:flex; flex-direction:column; gap:6px; color:#fff; text-decoration:none; scroll-snap-align:start; }
@@ -136,10 +136,11 @@ a:focus-visible,button:focus-visible{ outline:2px solid var(--accent); outline-o
 .hero-rooms .ph img.bg{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; transition:transform .5s; }
 .hero-rooms .ph::after{ content:""; position:absolute; left:0; right:0; bottom:0; height:46%; background:linear-gradient(180deg, rgba(0,0,0,0), rgba(0,0,0,.82)); }
 .hero-rooms a:hover .ph img.bg{ transform:scale(1.05); }
-.hero-rooms .lab{ position:absolute; left:8px; right:8px; bottom:10px; z-index:1; display:flex; align-items:center; gap:8px; }
-.hero-rooms .lab img{ width:40px; height:40px; flex:none; }
+.hero-rooms .lab{ position:absolute; left:8px; right:8px; bottom:10px; z-index:1; display:flex; align-items:center; gap:6px; }
+.hero-rooms .lab img{ width:36px; height:36px; flex:none; }
 .hero-rooms .lab i{ width:1px; align-self:stretch; margin:4px 0; background:rgba(255,255,255,.55); flex:none; }
-.hero-rooms .lab b{ font-family:var(--body); font-weight:800; text-transform:uppercase; font-size:.74rem; line-height:1.15; text-align:left; letter-spacing:.01em; }
+.hero-rooms .lab b{ min-width:0; flex:1; overflow:hidden; white-space:nowrap; font-family:var(--body); font-weight:800; text-transform:uppercase; font-size:.74rem; line-height:1.15; text-align:left; letter-spacing:0; }
+.hero-rooms .lab b span{ display:block; }
 .hero-rooms small{ display:flex; align-items:center; justify-content:center; text-align:center; min-height:54px; padding:8px 8px; border-radius:10px; background:#1B1A26; border:1px solid rgba(255,255,255,.1); font-size:.74rem; line-height:1.3; color:rgba(255,255,255,.82); }
 @media (min-width:900px){ .hero-rooms{ grid-auto-columns:minmax(180px, 1fr); } .hero-rooms .ph{ height:300px; } .hero-rooms .lab img{ width:52px; height:52px; } .hero-rooms .lab b{ font-size:.9rem; } .hero-rooms small{ font-size:.84rem; } }
 .feats{ display:grid; grid-template-columns:repeat(4,1fr); max-width:900px; margin:24px auto 0; padding:0 12px; }
@@ -666,8 +667,8 @@ body.tp-run .vinylfix{ visibility:hidden; }
    ========================================================= */
 body{ transition:background-color .6s; }
 
-.r-ico{ display:grid; place-items:center; width:78px; height:78px; background:#FBF7EE; border-radius:18px; transform:rotate(-6deg); box-shadow:5px 5px 0 rgba(0,0,0,.5); margin-bottom:20px; }
-.r-ico svg{ width:60px; height:60px; }
+.r-ico{ display:grid; place-items:center; width:92px; height:92px; margin-bottom:16px; }
+.r-ico img{ width:100%; height:100%; display:block; }
 body[data-room="relax"] .r-ico{ margin-inline:auto; }
 
 /* ---------- РЕЛАКС: тёплый вечер, кино, чай. Рукописные заголовки — как надписи неоном на их стенах ---------- */
@@ -1670,11 +1671,20 @@ body.tp-cover main, body.tp-cover .view, body.tp-cover #bearfill, body.tp-cover 
       var im = el("img", "bg"); im.src = IMG(r.cardImg || r.slides[0], true); im.alt = ""; im.loading = "lazy"; ph.appendChild(im);
       if(HWON && HW_ROOMS[r.id]) ph.appendChild(el("span", "hw-tag", "🎃 Хэллоуин"));
       var lab = el("span", "lab"), ic = el("img"); ic.src = "img/ic-" + r.id + ".webp"; ic.alt = ""; ic.width = 40; ic.height = 40;
-      lab.appendChild(ic); lab.appendChild(el("i")); lab.appendChild(el("b", "", NAMES[r.id] || r.name)); ph.appendChild(lab);
+      lab.appendChild(ic); lab.appendChild(el("i"));
+      var nb = el("b"); (NAMES[r.id] || r.name).replace("-", "-\n").split(/\s+/).forEach(function(w){ nb.appendChild(el("span", "", w)); }); lab.appendChild(nb); ph.appendChild(lab);
       a.appendChild(ph);
       a.appendChild(el("small", "", SHORT[r.id] || ""));
       box.appendChild(a);
     });
+    /* длинные слова (АНТИСТРЕСС, PLAYSTATION) — уменьшаем шрифт, пока слово не влезет в карточку */
+    function fitLabs(){
+      box.querySelectorAll(".lab b").forEach(function(b){
+        b.style.fontSize = ""; var fs = parseFloat(getComputedStyle(b).fontSize), i = 0;
+        while(b.scrollWidth > b.clientWidth + 0.5 && i++ < 20){ fs *= .94; b.style.fontSize = fs + "px"; }
+      });
+    }
+    addEventListener("resize", fitLabs); if(document.fonts && document.fonts.ready) document.fonts.ready.then(fitLabs); fitLabs();
   })();
 
   /* блок «Хэллоуин»: пять сценариев (порядок как на афише) + афиши в просмотрщике */
@@ -2332,7 +2342,7 @@ body.tp-cover main, body.tp-cover .view, body.tp-cover #bearfill, body.tp-cover 
     paintBear();
     document.body.dataset.room = r.id;
     clearEggs(); if(r.id === "relax") setupRelaxEgg(); if(r.id === "ps") setupPsEgg();
-    $("rIco").innerHTML = roomIcon(r.id);
+    $("rIco").innerHTML = '<img src="img/ic-' + r.id + '.webp" alt="" width="92" height="92">';
     if(r.id === "glowbear" && !B3.ok() && !B3.loading){
       /* 3D-мишка: грузим three.js только на странице Glow Bear и только когда переход уже закончился,
          пока сборка не готова — в углу рисуется лёгкая 2D-версия */
