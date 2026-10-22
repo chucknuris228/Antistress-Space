@@ -128,18 +128,20 @@ a:focus-visible,button:focus-visible{ outline:2px solid var(--accent); outline-o
 .quick-h{ max-width:1240px; margin:4px auto 14px; padding:0 16px; font-family:var(--body); font-weight:800; font-size:1.05rem; line-height:1.3; color:#fff; letter-spacing:0; text-transform:none; }
 .quick-h::before{ content:""; display:inline-block; width:18px; height:3px; background:var(--yel); vertical-align:middle; margin-right:10px; }
 @media (min-width:900px){ .quick-h{ font-size:1.25rem; } }
-@media (min-width:900px){ .hero-rooms a{ min-height:330px; } .hero-rooms .ico{ width:64px; height:64px; } .hero-rooms b{ font-size:1rem; } }
-.hero-rooms{ display:grid; grid-auto-flow:column; grid-auto-columns:minmax(150px, 1fr); gap:8px; overflow-x:auto; padding:0 16px 6px; scroll-snap-type:x mandatory; scrollbar-width:none; max-width:1240px; margin:0 auto; }
+.hero-rooms{ display:grid; grid-auto-flow:column; grid-auto-columns:minmax(138px, 1fr); gap:8px; overflow-x:auto; padding:0 16px 6px; scroll-snap-type:x mandatory; scrollbar-width:none; max-width:1240px; margin:0 auto; }
 .hero-rooms::-webkit-scrollbar{ display:none; }
-.hero-rooms a{ position:relative; display:flex; flex-direction:column; justify-content:flex-end; align-items:center; text-align:center; min-height:250px; padding:14px 10px 16px; color:#fff; text-decoration:none; overflow:hidden; scroll-snap-align:start; border:1px solid rgba(255,255,255,.12); background:#151515; }
-.hero-rooms a img{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; opacity:.7; transition:transform .5s, opacity .3s; }
-.hero-rooms a::after{ content:""; position:absolute; inset:0; background:linear-gradient(180deg, rgba(0,0,0,0) 25%, rgba(0,0,0,.92) 72%); }
-.hero-rooms a > *:not(img){ position:relative; z-index:1; }
-.hero-rooms a:hover img{ transform:scale(1.05); opacity:.85; }
-.hero-rooms .ico{ width:52px; height:52px; margin-bottom:10px; }
-.hero-rooms .ico svg{ width:100%; height:100%; display:block; background:#FBF7EE; border-radius:14px; padding:5px; }
-.hero-rooms b{ font-family:var(--body); font-weight:800; text-transform:uppercase; font-size:.9rem; line-height:1.15; }
-.hero-rooms small{ margin-top:6px; font-size:.78rem; line-height:1.3; color:rgba(255,255,255,.8); }
+/* карточка комнаты: фото со скруглением, внизу фото — неоновая иконка | линия | название; под фото — плашка с описанием */
+.hero-rooms a{ display:flex; flex-direction:column; gap:6px; color:#fff; text-decoration:none; scroll-snap-align:start; }
+.hero-rooms .ph{ display:block; position:relative; height:220px; border-radius:12px; overflow:hidden; border:1px solid rgba(255,255,255,.14); background:#151515; }
+.hero-rooms .ph img.bg{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; transition:transform .5s; }
+.hero-rooms .ph::after{ content:""; position:absolute; left:0; right:0; bottom:0; height:46%; background:linear-gradient(180deg, rgba(0,0,0,0), rgba(0,0,0,.82)); }
+.hero-rooms a:hover .ph img.bg{ transform:scale(1.05); }
+.hero-rooms .lab{ position:absolute; left:8px; right:8px; bottom:10px; z-index:1; display:flex; align-items:center; gap:8px; }
+.hero-rooms .lab img{ width:40px; height:40px; flex:none; }
+.hero-rooms .lab i{ width:1px; align-self:stretch; margin:4px 0; background:rgba(255,255,255,.55); flex:none; }
+.hero-rooms .lab b{ font-family:var(--body); font-weight:800; text-transform:uppercase; font-size:.74rem; line-height:1.15; text-align:left; letter-spacing:.01em; }
+.hero-rooms small{ display:flex; align-items:center; justify-content:center; text-align:center; min-height:54px; padding:8px 8px; border-radius:10px; background:#1B1A26; border:1px solid rgba(255,255,255,.1); font-size:.74rem; line-height:1.3; color:rgba(255,255,255,.82); }
+@media (min-width:900px){ .hero-rooms{ grid-auto-columns:minmax(180px, 1fr); } .hero-rooms .ph{ height:300px; } .hero-rooms .lab img{ width:52px; height:52px; } .hero-rooms .lab b{ font-size:.9rem; } .hero-rooms small{ font-size:.84rem; } }
 .feats{ display:grid; grid-template-columns:repeat(4,1fr); max-width:900px; margin:24px auto 0; padding:0 12px; }
 .feats > div{ display:flex; flex-direction:column; align-items:center; text-align:center; padding:4px 8px; }
 .feats > div + div{ border-left:1px solid rgba(255,255,255,.18); }
@@ -398,7 +400,7 @@ html.hw #tp[data-k="combo"] .tp-l{ background:repeating-linear-gradient(-45deg,#
 @keyframes batFlap{ to{ transform:scaleY(.55); } }
 @media (prefers-reduced-motion:reduce){ .hw-bat, .hw-bat svg{ animation:none; } .hw-bat{ display:none; } }
 .hw-chip{ display:inline-flex; align-items:center; gap:8px; margin-top:16px; padding:8px 12px; background:var(--yel); color:#0B0B0B; font-weight:800; font-size:.9rem; text-decoration:none; transform:rotate(-1.5deg); box-shadow:0 8px 24px rgba(255,122,26,.3); }
-.hero-rooms a > .hw-tag, .hw-tag{ position:absolute; top:8px; left:8px; z-index:2 !important; background:var(--yel); color:#0B0B0B; font-family:var(--mono); font-size:.66rem; font-weight:700; padding:3px 6px; }
+.hero-rooms .ph > .hw-tag, .hw-tag{ position:absolute; top:8px; left:8px; z-index:2 !important; background:var(--yel); color:#0B0B0B; font-family:var(--mono); font-size:.66rem; font-weight:700; padding:3px 6px; }
 /* блок «Хэллоуин» на главной */
 .hw-sec{ background:radial-gradient(90% 70% at 85% 10%, rgba(255,122,26,.16), transparent 60%), radial-gradient(80% 60% at 0% 100%, rgba(150,60,255,.14), transparent 60%), #0E0A08; border-top:1px solid rgba(255,122,26,.3); border-bottom:1px solid rgba(255,122,26,.3); }
 .hw-grid{ display:grid; gap:28px; }
@@ -852,7 +854,7 @@ body.tp-cover main, body.tp-cover .view, body.tp-cover #bearfill, body.tp-cover 
       <a class="hw-chip hw-only" href="#/" data-scroll="halloween">🎃 Хэллоуин 29.10–1.11: спецпакеты →</a>
       <h1 class="hh"><span class="l1">Выдохни</span><span class="l2">Или</span><span class="l3">разнеси<svg class="brush" viewBox="0 0 400 40" preserveAspectRatio="none" aria-hidden="true"><path d="M4 22 C60 10 140 8 220 10 C290 12 350 6 396 3 L394 20 C340 24 280 29 210 30 C140 30 70 33 8 38 Z" fill="#FFD400"/><path d="M30 31 C120 24 230 23 330 20" stroke="#FFD400" stroke-width="2" fill="none" opacity=".6"/></svg></span></h1>
       <div class="lead-box">
-        <b>Пять комнат под любое настроение:</b>
+        <b>Пять форматов под любое настроение:</b>
         <p>замедлиться в релаксе, разнести всё в антистрессе, сначала выпустить пар, а потом выдохнуть в комбо, расписать неонового мишку или уничтожать противников в PlayStation.</p>
       </div>
       <div class="row2">
@@ -1361,7 +1363,7 @@ body.tp-cover main, body.tp-cover .view, body.tp-cover #bearfill, body.tp-cover 
       kicker:"Комната ярости · до 13 человек", title:"Антистресс",
       lead:"Кувалды, ломы, дубинки — и всё, что давно хотелось разнести. Перед сеансом около 20 минут инструктажа: сначала техника безопасности, потом техника разрушения.",
       hint:"↯ тапни по экрану — кое-что полетит",
-      packsSub:"Листай вправо: шесть пакетов от «Уолтера» до «Картеля», дальше «Стеклянный рай» и «Ознакомительный». Цена — за весь пакет.",
+      packsSub:"Листай вправо: шесть пакетов от «Уолтера» до «Картеля», дальше «Стеклянный рай», «Ознакомительный» и «Индивидуальный» — под ваш бюджет. Цена — за весь пакет.",
       cardImg:"as-102", slides:["as-101","as-105","as-116"],
       gallery:["as-100","as-102","as-107","as-111","as-113","as-114","as-65","as-67","as-68","as-110","as-106","as-103","as-112","as-95","as-96"],
       galT:'Так выглядит <span class="y">антистресс</span>',
@@ -1386,7 +1388,10 @@ body.tp-cover main, body.tp-cover .view, body.tp-cover #bearfill, body.tp-cover 
             { id:"3", label:"Пакет 3", price:50000, max:4, dur:"до 40 минут", items:["25 бутылок","1 лобовое стекло","8 мелкой посуды","10 крупной посуды","2 банки от 1 л","2 банки до 1 л","2 деревянных ящика"] }
           ] },
         { id:"intro", name:"Ознакомительный", group:"intro", photo:"as-101", price:16000, max:2, dur:"до 30 минут", when:"только ср–вс, 11:00–18:00", tag:"Чтобы просто познакомиться",
-          items:["15 бутылок","1 деревянный ящик","1 видеокассета","1 электронная мелочёвка","1 компакт-диск","2 волшебные баночки","2 шарика «Звёздная пыль»"] }
+          items:["15 бутылок","1 деревянный ящик","1 видеокассета","1 электронная мелочёвка","1 компакт-диск","2 волшебные баночки","2 шарика «Звёздная пыль»"] },
+        { id:"custom", name:"Индивидуальный", group:"custom", photo:"as-112", custom:true, max:13, tag:"Соберём пакет под ваш бюджет и компанию",
+          list:true, items:["Напишите примерный бюджет и сколько вас будет","Менеджер свяжется и предложит наполнение: стекло, техника, мебель — что захочется разнести","Подходит для дней рождения, корпоративов и больших компаний"],
+          priceLabel:"Цена — под ваш бюджет" }
       ],
       included:{ title:"А также входит в стоимость любого пакета", list:INCL_AS.concat([
         "Экипировка: халат или комбинезон, щиток на лицо и перчатки (многоразовая, обрабатываем антисептиком после каждого сеанса)",
@@ -1658,12 +1663,15 @@ body.tp-cover main, body.tp-cover .view, body.tp-cover #bearfill, body.tp-cover 
   (function(){
     var box = $("heroRooms"); if(!box) return;
     var SHORT = { relax:"Замедлиться, отдохнуть и насладиться чаем", combo:"Сначала разнести, потом выдохнуть", antistress:"Крушить предметы и выпускать пар", glowbear:"Создать своего неонового мишку", ps:"Играть, побеждать и забыть о рутине" };
+    var NAMES = { relax:"Релакс комната", combo:"Комбо-пакет", antistress:"Антистресс комната", glowbear:"Glow Bear", ps:"PlayStation комната" };
     ROOMS.forEach(function(r){
       var a = el("a"); a.href = "#" + r.id;
-      var im = el("img"); im.src = IMG(r.cardImg || r.slides[0], true); im.alt = ""; im.loading = "lazy"; a.appendChild(im);
-      if(HWON && HW_ROOMS[r.id]) a.appendChild(el("span", "hw-tag", "🎃 Хэллоуин"));
-      var ic = el("span", "ico"); ic.innerHTML = roomIcon(r.id); a.appendChild(ic);
-      a.appendChild(el("b", "", ({ relax:"Релакс комната", combo:"Комбо-пакет", antistress:"Антистресс комната", glowbear:"Glow Bear", ps:"PlayStation комната" })[r.id] || r.name));
+      var ph = el("span", "ph");
+      var im = el("img", "bg"); im.src = IMG(r.cardImg || r.slides[0], true); im.alt = ""; im.loading = "lazy"; ph.appendChild(im);
+      if(HWON && HW_ROOMS[r.id]) ph.appendChild(el("span", "hw-tag", "🎃 Хэллоуин"));
+      var lab = el("span", "lab"), ic = el("img"); ic.src = "img/ic-" + r.id + ".webp"; ic.alt = ""; ic.width = 40; ic.height = 40;
+      lab.appendChild(ic); lab.appendChild(el("i")); lab.appendChild(el("b", "", NAMES[r.id] || r.name)); ph.appendChild(lab);
+      a.appendChild(ph);
       a.appendChild(el("small", "", SHORT[r.id] || ""));
       box.appendChild(a);
     });
@@ -2045,6 +2053,12 @@ body.tp-cover main, body.tp-cover .view, body.tp-cover #bearfill, body.tp-cover 
     ["📲 Как к вам записаться? Можно просто ворваться?", ["Ворваться можно в эмоции, а к нам — по предварительной записи 😁","Рекомендуем бронировать за 1–2 дня. Для подтверждения нужна предоплата 50% или 100% от стоимости выбранного пакета.","Выбирайте формат, согласовывайте время — и готовьтесь к перезагрузке."]],
     ["⏰ Я опаздываю. Подождёте? Я почти уже.", ["У вас есть 10 минут бесплатного ожидания. После этого время опоздания вычитается из вашего сеанса.","Всё честно: следующая компания тоже хочет вовремя начать крушить свои проблемы. Поэтому лучше приезжайте за 5 минут до начала сеанса."]],
     ["🔄 А если планы поменялись? Жизнь вообще непредсказуема.", ["Понимаем. Мы бронируем для вас конкретное время и помещение, поэтому действуют такие условия:","Отмена менее чем за 48 часов до начала сеанса — предоплата удерживается в счёт фактически понесённых расходов.","Перенос более чем за 6 часов до начала — бесплатно.","Перенос за 6–3 часа до начала — доплата 15% от стоимости пакета.","Перенос менее чем за 3 часа — доплата 30%.","Менее чем за 1 час или неявка — предоплата удерживается.","Пожалуйста, ознакомьтесь с ними заранее: оплата подтверждает согласие с условиями бронирования и отмены. Жизнь может менять планы, но свободные слоты сами себя не возвращают."]],
+    ["🎂 Есть ли подарки для именинников?", ["День рождения — легальный повод крушить с бонусами! 💥", "Выбирай свой подарок:",
+      ["🍾 5 бутылок — к пакетам до 30 000 ₸","💥 10 бутылок — к пакетам от 30 000 ₸","🎈 10 шариков — к любому пакету","💿 CD-диск + крупная посуда — к любому пакету","🔌 Мелкая техника — к пакетам от 30 000 ₸"],
+      "🎮 Бонусы для релакса, комбо, Glow Bear и PlayStation уточняй у менеджера.",
+      "📅 Когда действует? За 3 дня до дня рождения, в сам день и 3 дня после.",
+      "🪪 Как получить? Отправь фото удостоверения или паспорта менеджеру в WhatsApp, либо покажи оригинал администратору.",
+      "Выбирай свой бонус и устраивай праздничный разнос! 😈"]],
     ["🚗 Есть ли парковка?", ["У нас есть одно парковочное место. Напишите нашему менеджеру в WhatsApp перед приездом — откроем шлагбаум и встретим вас без квеста «найди парковку» 😁","Важно: место всего одно, поэтому лучше уточнить его доступность заранее."]]
   ];
 
@@ -2184,13 +2198,14 @@ body.tp-cover main, body.tp-cover .view, body.tp-cover #bearfill, body.tp-cover 
   }
 
   function priceOf(p, ppl, v){
-    if(!p) return null;
+    if(!p || p.custom) return null;
     if(p.variants){ var vv = variantOf(p, v); return vv ? vv.price : null; }
     if(p.calc) return p.calc(ppl);
     if(p.priceBy) return ppl ? (p.priceBy[ppl] || null) : null;
     return p.price != null ? p.price : null;
   }
   function minPrice(p){
+    if(p.custom) return null;
     if(p.from) return p.from;
     if(p.variants) return Math.min.apply(null, p.variants.map(function(v){ return v.price; }));
     if(p.priceBy){ var k = Object.keys(p.priceBy).map(function(x){ return p.priceBy[x]; }); return Math.min.apply(null, k); }
@@ -2246,6 +2261,7 @@ body.tp-cover main, body.tp-cover .view, body.tp-cover #bearfill, body.tp-cover 
     var m = maxPpl(p);
     S.ppl = m === 1 ? 1 : (S.ppl && S.ppl <= m ? S.ppl : null);
     if(p.hw){ S.gift = false; if(!hwIn(S.date)) S.date = ""; }
+    if(p.custom) S.gift = false;
     S.step = 0; S.err = "";
     drawPacks(); drawWz();
   }
@@ -2339,7 +2355,7 @@ body.tp-cover main, body.tp-cover .view, body.tp-cover #bearfill, body.tp-cover 
      ========================================================= */
   var S = null;
   function resetState(r, gift){
-    S = { r:r, step:0, pack:(r.packs.length === 1 ? r.packs[0] : null), variant:null, ppl:null, hours:1, tea:"", teaName:"", teaSet:false, date:"", time:"", music:"", gift:!!gift, gFor:"", gWish:"", gFmt:"PDF", add:{}, promo:{}, ex:{}, src:"", srcIg:"", srcOther:"", agree:false, cat:0, err:"" };
+    S = { r:r, step:0, pack:(r.packs.length === 1 ? r.packs[0] : null), variant:null, ppl:null, budget:"", hours:1, tea:"", teaName:"", teaSet:false, date:"", time:"", music:"", gift:!!gift, gFor:"", gWish:"", gFmt:"PDF", add:{}, promo:{}, ex:{}, src:"", srcIg:"", srcOther:"", agree:false, cat:0, err:"" };
   }
   function stepsList(){
     var a = [["pack","Пакет"]];
@@ -2353,6 +2369,7 @@ body.tp-cover main, body.tp-cover .view, body.tp-cover #bearfill, body.tp-cover 
       if(!S.pack) return "Выберите пакет";
       if(S.pack.variants && !S.variant) return "Выберите пакет серии";
       if(!S.ppl) return "Сколько вас будет?";
+      if(S.pack.custom && !S.budget) return "Напишите примерный бюджет";
       if(!S.gift && (!S.date || !S.time)) return "Укажите желаемые дату и время";
       if(S.gift && !S.gFor.trim()) return "Напишите, для кого сертификат";
     }
@@ -2446,7 +2463,7 @@ body.tp-cover main, body.tp-cover .view, body.tp-cover #bearfill, body.tp-cover 
     var r = S.r, d = block();
     d.appendChild(label(S.gift ? "Что дарим?" : "Какой пакет?"));
     if(r.packs.length > 1){
-      d.appendChild(chipRow(r.packs.map(function(p){ return [p.id, (p.hw ? "🎃 " : "") + p.name, (p.variants || p.priceBy || p.calc ? "от " : "") + money(minPrice(p))]; }), S.pack && S.pack.id, function(id){ pickPack(r.packs.filter(function(p){ return p.id === id; })[0]); }));
+      d.appendChild(chipRow(r.packs.map(function(p){ return [p.id, (p.hw ? "🎃 " : "") + p.name, p.custom ? "под ваш бюджет" : (p.variants || p.priceBy || p.calc ? "от " : "") + money(minPrice(p))]; }), S.pack && S.pack.id, function(id){ pickPack(r.packs.filter(function(p){ return p.id === id; })[0]); }));
       b.appendChild(d);
     } else if(!S.pack){ S.pack = r.packs[0]; }
     if(S.pack && S.pack.variants){
@@ -2461,6 +2478,12 @@ body.tp-cover main, body.tp-cover .view, body.tp-cover #bearfill, body.tp-cover 
       d.appendChild(chipRow(opts, S.ppl, function(n){ S.ppl = n; drawWz(); }, "sq"));
       if(p.price && !p.variants) d.appendChild(el("p", "wz-note", "Цена за весь пакет — " + money(p.price) + ", до " + p.max + " человек."));
       if(p.when) d.appendChild(el("p", "wz-note", "Этот пакет действует " + p.when + "."));
+      if(p.custom){
+        var bi = el("input"); bi.type = "text"; bi.inputMode = "numeric"; bi.maxLength = 12; bi.placeholder = "Например, 60 000"; bi.value = S.budget;
+        bi.addEventListener("input", function(){ var v = bi.value.replace(/\D/g, ""); S.budget = v; bi.value = v ? String(+v).replace(/\B(?=(\d{3})+(?!\d))/g, " ") : ""; S.err = ""; updFoot(); });
+        var bf = field("Примерный бюджет, ₸", bi); bf.style.marginTop = "14px"; d.appendChild(bf);
+        d.appendChild(el("p", "wz-note", "Менеджер свяжется с вами и соберёт пакет под этот бюджет и количество человек."));
+      }
       if(p.hw) d.appendChild(el("p", "wz-note", "🎃 Хэллоуинский пакет — запись только на 29 октября – 1 ноября." + (p.note ? " " + p.note : "")));
       if(r.id === "relax" && !p.hw) d.appendChild(el("p", "wz-note", "7 500 ₸ с человека в будни (пн–чт), 9 000 ₸ в выходные (пт–вс) — посчитаем по выбранной дате."));
       b.appendChild(d);
@@ -2470,7 +2493,7 @@ body.tp-cover main, body.tp-cover .view, body.tp-cover #bearfill, body.tp-cover 
         b.appendChild(d);
       }
     }
-    if(!(S.pack && S.pack.hw)){
+    if(!(S.pack && (S.pack.hw || S.pack.custom))){
       d = block(); d.appendChild(label("Для кого?"));
       d.appendChild(chipRow([[0, "Для себя"], [1, "В подарок — сертификат"]], S.gift ? 1 : 0, function(v){ S.gift = !!v; drawWz(); }));
       b.appendChild(d);
@@ -2647,6 +2670,7 @@ body.tp-cover main, body.tp-cover .view, body.tp-cover #bearfill, body.tp-cover 
     if(S.pack && S.pack.hw) rows.push(["Акция", "Хэллоуин, " + HW.label]);
     rows.push([S.pack && S.pack.pplLabel ? "Мишек" : "Человек", S.ppl || "—"]);
     if(S.pack && S.pack.hourly) rows.push(["Часов", S.hours]);
+    if(S.pack && S.pack.custom && S.budget) rows.push(["Бюджет", money(+S.budget) + " (собрать пакет)"]);
     if(S.gift){ rows.push(["Для кого", S.gFor || "—"]); if(S.gWish) rows.push(["Пожелание", S.gWish]); rows.push(["Сертификат", S.gFmt === "PDF" ? "электронный — 500 ₸" : "печатный — 3 000 ₸"]); }
     else rows.push(["Дата и время", (S.date ? S.date.split("-").reverse().join(".") : "—") + ", " + (S.time || "—") + " (желаемое)"]);
     if(S.r.music && S.music){ rows.push(["Музыка", MUSIC.filter(function(m){ return m[0] === S.music; })[0][1]]); }
