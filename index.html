@@ -1325,12 +1325,12 @@ body.tp-cover main, body.tp-cover .view, body.tp-cover #bearfill, body.tp-cover 
       lead:"Рисуйте неоном на стенах, смотрите кино, слушайте пластинки, играйте в Sega и настолки. Вы платите за время — как его провести, решаете сами.",
       hint:"листай вниз — пластинка в углу закрутится",
       packsSub:"Будни (пн–чт) — 7 500 ₸ с человека, выходные (пт–вс) — 9 000 ₸ с человека. Чай из чайной карты можно добавить при записи.",
-      cardImg:"rx-197", slides:["rx-159","rx-197","rx-142"],
-      gallery:["rx-145","rx-147","rx-158","rx-144","rx-152","rx-228","rx-150","rx-160","rx-243","rx-148","rx-153","rx-154","rx-156","rx-157","rx-141","rx-248","rx-206"],
+      cardImg:"rn-18", slides:["rn-18","rn-1","rn-8"],
+      gallery:["rn-18","rn-8","rn-2","rn-15","rn-4","rn-1","rn-17","rn-11","rn-14","rn-9","rn-5","rn-12","rn-6","rn-13","rn-3","rn-7","rn-16","rn-10","rn-19"],
       galT:'Так выглядит <span class="y">релакс</span>',
       tea:true,
       packs:[
-        { id:"relax", name:"Релакс-комната", group:"main", photo:"rx-159", tag:"Можно официально ничего не решать", dur:"2 часа", max:6, list:true,
+        { id:"relax", name:"Релакс-комната", group:"main", photo:"rn-1", tag:"Можно официально ничего не решать", dur:"2 часа", max:6, list:true,
           items:["Рисовать неоновыми красками на стенах — комбинезон входит","Антистресс-раскраски и трафареты, арт-терапия","Фильмы на дисках и кассетах + Netflix, IVI, Кинопоиск","Музыка на пластинках","Sega на телевизоре и портативная консоль SUP","Солевая лампа, настольные игры, антистресс-игрушки"],
           from:7500, priceLabel:"7 500 ₸/чел. (пн–чт)\n9 000 ₸/чел. (пт–вс)",
           calc:function(n){ return n ? n * (isWeekend(S.date) ? 9000 : 7500) : null; } }
@@ -1347,8 +1347,8 @@ body.tp-cover main, body.tp-cover .view, body.tp-cover #bearfill, body.tp-cover 
       lead:"Драйв и выплеск эмоций, а потом полный релакс, спокойный и творческий отдых. Окунись в другой мир на 3 часа и отвлекись от мирских забот.",
       hint:"",
       packsSub:"Антистресс-комната (1 час) + релакс-комната (2 часа) и чай в подарок. Цена зависит от количества человек.",
-      cardImg:"rx-145", slides:["as-105","rx-197","rx-145"],
-      gallery:["as-65","rx-147","as-100","rx-243","as-111","rx-158","as-102","rx-142"],
+      cardImg:"rn-8", slides:["as-105","rn-18","rn-8"],
+      gallery:["as-65","rn-2","as-100","rn-15","as-111","rn-11","as-102","rn-17"],
       galT:'Две комнаты — <span class="y">одна программа</span>',
       music:true, addons:true, promos:true,
       packs:[
@@ -1473,10 +1473,10 @@ body.tp-cover main, body.tp-cover .view, body.tp-cover #bearfill, body.tp-cover 
     relax:{ name:"Horror VHS Night", sub:"«Шабаш Mini» и «Шабаш Full Moon»: ужасы на кассетах, ведьмин чай, попкорн",
       packsSub:"🎃 С 29 октября по 1 ноября — Horror VHS Night: 2 часа, цена за двоих, каждый следующий гость +5 000 ₸. Листай вправо: дальше обычный релакс.",
       packs:[
-        { id:"hw-sabbath", name:"Шабаш Mini", photo:"rx-197", dur:"2 часа", max:6, tag:"«Немного магии, немного сладостей и никакой спешки»",
+        { id:"hw-sabbath", name:"Шабаш Mini", photo:"rn-12", dur:"2 часа", max:6, tag:"«Немного магии, немного сладостей и никакой спешки»",
           groups:[["В стоимость входит", ["Ведьмин чай","Попкорн"]], ["Весь вечер", ["Фильм ужасов на видеокассете или через интернет","Создание браслета своими руками","Ретро-приставка Sega","Настольные игры","Хэллоуинский декор"]]],
           from:21666, priceLabel:"21 666 ₸ за двоих\n+5 000 ₸ за гостя", calc:function(n){ return n ? 21666 + Math.max(0, n - 2) * 5000 : null; }, bonus:FLYER10 },
-        { id:"hw-fullmoon", name:"Шабаш Full Moon", photo:"rx-145", dur:"2 часа", max:6, tag:"«Полная луна, горячий чай и настоящий ведьминский пир»",
+        { id:"hw-fullmoon", name:"Шабаш Full Moon", photo:"rn-11", dur:"2 часа", max:6, tag:"«Полная луна, горячий чай и настоящий ведьминский пир»",
           groups:[["В стоимость входит", ["Пирог на выбор: мясной или овощной","Чай на выбор: «Ведьмин», «Приворотное зелье» или «Кровь вампира»","Попкорн или чайный сет с угощениями — орешками, печеньем и другими вкусностями"]], ["Весь вечер", ["Фильм ужасов на видеокассете или через интернет","Создание браслета своими руками","Ретро-приставка Sega","Настольные игры","Хэллоуинский декор"]]],
           from:28666, priceLabel:"28 666 ₸ за двоих\n+5 000 ₸ за гостя", calc:function(n){ return n ? 28666 + Math.max(0, n - 2) * 5000 : null; }, bonus:FLYER10,
           note:"Пирог, чай и угощения выберете у администратора при подтверждении записи." }
@@ -1725,7 +1725,7 @@ body.tp-cover main, body.tp-cover .view, body.tp-cover #bearfill, body.tp-cover 
 
   /* ---------- мозаика фото на главной ---------- */
   (function(){
-    var M = [["as-65","big"],["rx-145",""],["gb-288",""],["rx-197","wide"],["ps-280",""],["as-116",""]], list = M.map(function(m){ return m[0]; });
+    var M = [["as-65","big"],["rn-8",""],["gb-288",""],["rn-18","wide"],["ps-280",""],["as-116",""]], list = M.map(function(m){ return m[0]; });
     M.forEach(function(m, i){ var b = el("button", m[1]); b.type = "button"; b.setAttribute("aria-label", "Открыть фото " + (i + 1)); var im = el("img"); im.src = IMG(m[0], true); im.alt = ""; im.loading = "lazy"; b.appendChild(im); b.addEventListener("click", function(){ openLb(list, i); }); $("mosaic").appendChild(b); });
   })();
 
