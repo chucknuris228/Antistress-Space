@@ -217,8 +217,8 @@ a:focus-visible,button:focus-visible{ outline:2px solid var(--accent); outline-o
 .q-start[hidden], .q-prog[hidden]{ display:none !important; }
 .q-start{ display:flex; flex-wrap:wrap; align-items:center; gap:14px 18px; }
 .q-rhead{ display:flex; align-items:center; gap:16px; }
-.q-ico{ width:62px; height:62px; flex:none; display:grid; place-items:center; background:#FBF7EE; border-radius:14px; transform:rotate(-5deg); box-shadow:4px 4px 0 rgba(0,0,0,.55); }
-.q-ico svg{ width:48px; height:48px; }
+.q-ico{ width:62px; height:62px; flex:none; display:grid; place-items:center; }
+.q-ico img{ width:100%; height:100%; display:block; }
 .q-opt span{ font-weight:600; }
 .q-res{ display:none; }
 .q-res.on{ display:block; animation:viewIn .4s; }
@@ -435,7 +435,7 @@ html.hw #tp[data-k="combo"] .tp-l{ background:repeating-linear-gradient(-45deg,#
 .hw-list a{ display:grid; grid-template-columns:44px 1fr auto; gap:12px; align-items:center; padding:12px 14px; background:#151010; border:1px solid rgba(255,255,255,.1); color:#fff; text-decoration:none; transition:border-color .2s, transform .2s; }
 .hw-list a:hover{ border-color:var(--yel); transform:translateX(3px); }
 .hw-list .ico{ width:44px; height:44px; }
-.hw-list .ico svg{ width:100%; height:100%; display:block; background:#FBF7EE; border-radius:12px; padding:4px; }
+.hw-list .ico img{ width:100%; height:100%; display:block; }
 .hw-list b{ display:block; font-size:1rem; }
 .hw-list small{ display:block; color:var(--ink-3); font-size:.82rem; line-height:1.35; }
 .hw-list .pr{ font-family:var(--mono); color:var(--yel); font-weight:700; font-size:.85rem; white-space:nowrap; text-align:right; }
@@ -1717,7 +1717,7 @@ body.tp-cover main, body.tp-cover .view, body.tp-cover #bearfill, body.tp-cover 
     var box = $("hwList"); if(!box || !HWON) return;
     ["antistress","combo","relax","glowbear","ps"].forEach(function(id){
       var h = HW_ROOMS[id], a = el("a"); a.href = "#" + id;
-      var ic = el("span", "ico"); ic.innerHTML = roomIcon(id); a.appendChild(ic);
+      var ic = el("span", "ico"); ic.innerHTML = '<img src="img/ic-' + id + '.webp" alt="" width="44" height="44">'; a.appendChild(ic);
       var t = el("span"); t.appendChild(el("b", "", h.name)); t.appendChild(el("small", "", h.sub)); a.appendChild(t);
       var min = Math.min.apply(null, h.packs.map(minPrice)), pr = el("span", "pr", "от " + money(min));
       pr.appendChild(el("i", "", h.packs.length > 1 ? h.packs.length + " пакета" : "1 пакет")); a.appendChild(pr);
@@ -2058,7 +2058,7 @@ body.tp-cover main, body.tp-cover .view, body.tp-cover #bearfill, body.tp-cover 
       var r = room(best);
       $("qStage").hidden = true;
       $("rName").textContent = r.name; $("rName").style.color = r.accent;
-      $("rIcoQ").innerHTML = roomIcon(best);
+      $("rIcoQ").innerHTML = '<img src="img/ic-' + best + '.webp" alt="" width="62" height="62">';
       $("rWhy").textContent = WHY[best];
       $("rGo").href = "#" + best;
       $("qRes").classList.add("on");
