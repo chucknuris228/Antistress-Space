@@ -2297,6 +2297,7 @@ body.tp-cover main, body.tp-cover .view, body.tp-cover #bearfill, body.tp-cover 
     S.ppl = m === 1 ? 1 : (S.ppl && S.ppl <= m ? S.ppl : null);
     if(p.hw){ S.gift = false; if(!hwIn(S.date)) S.date = ""; }
     if(p.custom) S.gift = false;
+    if(p.id === "intro"){ var wd = S.date ? new Date(S.date + "T12:00:00").getDay() : -1; if([0,3,4,5,6].indexOf(wd) < 0) S.date = ""; if(S.time && parseInt(S.time, 10) >= 18) S.time = ""; }
     S.step = 0; S.err = "";
     drawPacks(); drawWz();
   }
@@ -2479,13 +2480,13 @@ body.tp-cover main, body.tp-cover .view, body.tp-cover #bearfill, body.tp-cover 
         (function(dd){
           var dt = new Date(view.getFullYear(), view.getMonth(), dd, 12), iso = isoD(dt), wd = (dt.getDay() + 6) % 7;
           var b = el("button", "cal-d" + (wd >= 4 ? " we" : "") + (iso === value ? " on" : "") + (iso === isoD(today) ? " today" : "") + (HWON && hwIn(iso) ? " hwd" : ""), String(dd));
-          b.type = "button"; b.disabled = dt < today || (lim && (iso < lim.min || iso > lim.max));
+          b.type = "button"; b.disabled = dt < today || (lim && ((lim.min && iso < lim.min) || (lim.max && iso > lim.max) || (lim.wd && lim.wd.indexOf(dt.getDay()) < 0)));
           b.addEventListener("click", function(){ value = iso; box.hidden = true; draw(); onPick(iso); });
           g.appendChild(b);
         })(dd);
       }
       box.appendChild(g);
-      box.appendChild(el("p", "cal-note", lim ? "🎃 Хэллоуинские пакеты — только 29 октября – 1 ноября." : "Пт–вс — выходные дни: в релаксе и PlayStation другая цена." + (HWON ? " 🎃 Оранжевым отмечены дни Хэллоуина (29.10–1.11)." : "")));
+      box.appendChild(el("p", "cal-note", lim && lim.wd ? "Ознакомительный пакет — только ср–вс, 11:00–18:00." : lim ? "🎃 Хэллоуинские пакеты — только 29 октября – 1 ноября." : "Пт–вс — выходные дни: в релаксе и PlayStation другая цена." + (HWON ? " 🎃 Оранжевым отмечены дни Хэллоуина (29.10–1.11)." : "")));
     }
     btn.addEventListener("click", function(){ box.hidden = !box.hidden; draw(); });
     wrap.appendChild(btn); wrap.appendChild(box); draw();
@@ -2536,9 +2537,10 @@ body.tp-cover main, body.tp-cover .view, body.tp-cover #bearfill, body.tp-cover 
     if(!S.gift){
       d = block(); d.appendChild(label("Когда?"));
       var g = el("div", "grid2");
-      var di = calField(S.date, function(v){ S.date = v; S.err = ""; if(r.id === "relax" || r.id === "ps") drawWz(); else updFoot(); }, S.pack && S.pack.hw ? { min:HW.from, max:HW.to } : null);
+      var di = calField(S.date, function(v){ S.date = v; S.err = ""; if(r.id === "relax" || r.id === "ps") drawWz(); else updFoot(); }, S.pack && S.pack.hw ? { min:HW.from, max:HW.to } : (S.pack && S.pack.id === "intro" ? { wd:[0,3,4,5,6] } : null));
       var ti = el("select"); ti.appendChild(new Option("Выберите время", ""));
-      for(var h = (r.id === "ps" ? 10 : 11); h <= 20; h++){ ["00","30"].forEach(function(m){ var v = h + ":" + m; ti.appendChild(new Option(v, v)); }); }
+      var intro = S.pack && S.pack.id === "intro";
+      for(var h = (r.id === "ps" ? 10 : 11); h <= (intro ? 17 : 20); h++){ ["00","30"].forEach(function(m){ var v = h + ":" + m; ti.appendChild(new Option(v, v)); }); }
       ti.value = S.time; ti.addEventListener("change", function(){ S.time = ti.value; S.err = ""; updFoot(); });
       d.appendChild(el("p", "wz-note wz-sub", "Рекомендуем бронировать за 1–2 дня."));
       var fd = el("div", "fl"); fd.appendChild(el("span", "", "Дата")); fd.appendChild(di);
