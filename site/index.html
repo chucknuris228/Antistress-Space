@@ -240,9 +240,10 @@ a:focus-visible,button:focus-visible{ outline:2px solid var(--accent); outline-o
 .mosaic .tw img{ object-position:50% 64%; }
 .mosaic .bear img{ object-position:50% 78%; }
 @media (max-width:799px){
-  .mosaic{ grid-template-columns:1fr 1fr; grid-template-rows:clamp(150px,44vw,210px) clamp(150px,44vw,210px) clamp(180px,52vw,240px) clamp(230px,66vw,310px); grid-auto-rows:auto; grid-template-areas:"a b" "a c" "d d" "e f"; }
+  .mosaic{ grid-template-columns:1fr 1fr; grid-template-rows:clamp(150px,44vw,210px) clamp(150px,44vw,210px) clamp(250px,74vw,340px) clamp(180px,51vw,250px); grid-auto-rows:auto; grid-template-areas:"a b" "a c" "d d" "e f"; }
   .mosaic > :nth-child(1){ grid-area:a !important; } .mosaic > :nth-child(2){ grid-area:b !important; } .mosaic > :nth-child(3){ grid-area:d !important; }
   .mosaic > :nth-child(4){ grid-area:c !important; } .mosaic > :nth-child(5){ grid-area:e !important; } .mosaic > :nth-child(6){ grid-area:f !important; }
+  .mosaic .tw img{ object-position:50% 100%; } .mosaic .dw img{ object-position:50% 100%; }
 }
 @media (min-width:800px){ .mosaic{ grid-template-columns:repeat(4,1fr); grid-auto-rows:210px; } .mosaic .tw{ grid-row:span 2; } .mosaic .dw{ grid-column:span 2; grid-row:span 1; } #about{ padding-bottom:40px; } }
 .mosaic .ph.big{ grid-row:span 2; }
@@ -564,6 +565,7 @@ label.fl, div.fl{ display:block; }
 .conds div{ color:var(--ink-2); font-size:.88rem; margin-top:10px; }
 .conds div p{ margin:0 0 8px; } .conds div ul{ margin:0 0 8px; padding-left:20px; list-style:disc; } .conds div li{ margin:2px 0; } .conds div .small{ font-size:.8rem; opacity:.8; }
 .agree{ display:flex; gap:12px; align-items:flex-start; cursor:pointer; font-weight:700; }
+.agree a{ color:var(--accent); }
 .agree input{ accent-color:var(--accent); width:22px; height:22px; flex:none; margin:0; }
 .wz-foot{ display:flex; align-items:center; justify-content:space-between; gap:10px; padding:14px 18px; border-top:1px solid var(--line); background:var(--bg-2); }
 .wz-foot .btn{ min-height:46px; font-size:.78rem; padding:0 16px; }
@@ -581,7 +583,7 @@ label.fl, div.fl{ display:block; }
 .mosaic button{ padding:0; overflow:hidden; }
 .mosaic .big{ grid-row:span 2; } .mosaic .wide{ grid-column:span 2; }
 .pack img.pimg{ width:100%; height:170px; object-fit:cover; display:block; flex:none; }
-.pmeta{ font-family:var(--mono); font-size:.74rem; color:var(--ink-2); white-space:pre-wrap; }
+.pmeta{ font-family:var(--mono); font-size:.74rem; color:var(--ink-2); display:flex; flex-wrap:wrap; column-gap:14px; row-gap:2px; }
 .plist{ display:grid; gap:6px; }
 .plist li{ display:flex; gap:8px; font-size:.86rem; color:var(--ink-2); }
 .plist li::before{ content:"✓"; color:var(--accent); font-weight:800; }
@@ -616,6 +618,42 @@ label.fl, div.fl{ display:block; }
 .pre-item span{ color:var(--ink-2); font-size:.9rem; }
 .modal{ position:fixed; inset:0; z-index:92; display:none; place-items:center; background:rgba(0,0,0,.84); padding:16px; overflow:auto; }
 .modal.on{ display:grid; animation:viewIn .3s; }
+/* особый повод */
+.oc-cover{ margin-top:26px; aspect-ratio:16/7; overflow:hidden; border:1px solid var(--line); }
+.oc-cover img{ width:100%; height:100%; object-fit:cover; object-position:50% 40%; display:block; }
+.oc-grid{ display:grid; grid-auto-flow:column; grid-auto-columns:minmax(272px,82%); gap:12px; overflow-x:auto; scroll-snap-type:x mandatory; margin:14px -16px 0; padding:0 16px 8px; scrollbar-width:none; }
+.oc-grid::-webkit-scrollbar{ display:none; }
+@media (min-width:800px){ .oc-grid{ grid-auto-flow:row; grid-template-columns:repeat(3,1fr); grid-auto-columns:auto; overflow:visible; margin:14px 0 0; padding:0; } }
+.oc-card{ scroll-snap-align:start; display:flex; flex-direction:column; text-align:left; background:var(--bg-2); border:1px solid rgba(255,212,0,.35); overflow:hidden; transition:border-color .2s, transform .2s; color:var(--ink); }
+.oc-card:hover, .oc-card:focus-visible{ border-color:var(--accent); transform:translateY(-3px); }
+.oc-card .ph{ aspect-ratio:16/9; overflow:hidden; position:relative; }
+.oc-card .ph img{ width:100%; height:100%; object-fit:cover; display:block; transition:transform .5s; }
+.oc-card:hover .ph img{ transform:scale(1.05); }
+.oc-card .ph::after{ content:""; position:absolute; inset:auto 0 0 0; height:45%; background:linear-gradient(transparent, var(--bg-2)); }
+.oc-card .in{ padding:2px 16px 18px; display:grid; grid-template-columns:auto 1fr auto; gap:4px 12px; align-items:center; align-content:start; flex:1; }
+.oc-card .ic{ width:40px; height:40px; }
+.oc-card h3{ font-family:var(--body); font-weight:800; font-size:1.12rem; line-height:1.2; text-transform:none; }
+.oc-card .go{ width:40px; height:40px; border:1.5px solid var(--accent); border-radius:50%; display:grid; place-items:center; color:var(--accent); font-size:1.1rem; }
+.oc-card p{ grid-column:1 / -1; color:var(--ink-2); font-size:.88rem; line-height:1.45; margin-top:8px; }
+.oc-hint{ margin-top:14px; }
+#ocm{ place-items:start center; }
+.oc-box{ position:relative; margin:4vh 0; max-width:560px; padding:22px 18px; gap:10px; }
+.oc-x{ position:absolute; top:10px; right:10px; width:40px; height:40px; color:var(--ink-2); font-size:1.1rem; }
+.oc-x:hover{ color:var(--accent); }
+.oc-form{ display:grid; gap:18px; margin-top:6px; }
+.oc-form .wz-q{ font-size:.92rem; margin-bottom:8px; }
+.oc-form .chip{ min-height:40px; }
+.oc-occ .chip{ display:inline-flex; align-items:center; gap:8px; }
+.oc-occ .chip img{ width:22px; height:22px; }
+.oc-occ .chip.on img{ filter:brightness(0); }
+.oc-two{ display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+.oc-form textarea{ width:100%; min-height:84px; padding:12px 14px; background:var(--bg-3); border:1px solid var(--line); color:var(--ink); font:inherit; font-size:16px; border-radius:0; resize:vertical; }
+.oc-form textarea:focus{ outline:2px solid var(--accent); outline-offset:1px; }
+.oc-form input:disabled{ opacity:.45; }
+.oc-kid{ background:var(--bg-3); border-left:3px solid var(--accent); padding:10px 12px; color:var(--ink-2); font-size:.85rem; }
+.oc-err{ color:#FF6B6B; font-weight:700; font-size:.9rem; }
+.oc-err:empty{ display:none; }
+.oc-send{ width:100%; }
 .mbox{ background:var(--bg-2); border:1px solid var(--accent); padding:24px 20px; max-width:520px; width:100%; display:grid; gap:12px; }
 .mbox .hit{ font-size:clamp(1.8rem,7vw,2.4rem); color:var(--accent); }
 .mbox .pre-item{ padding:12px; }
@@ -682,6 +720,8 @@ body.tp-run .vinylfix{ visibility:hidden; }
 .egg .box{ background:var(--yel); color:#000; padding:28px 24px; max-width:420px; text-align:center; transform:rotate(-2deg); }
 .egg .box b{ font-family:var(--hit); text-transform:uppercase; font-size:1.8rem; line-height:1; display:block; }
 .egg .box p{ margin-top:12px; }
+.egg .box .egg-gift{ font-family:inherit; text-transform:none; font-size:inherit; display:inline; font-weight:800; }
+.egg .box .egg-how{ font-size:.85rem; opacity:.75; }
 .egg .box button{ margin-top:18px; font-family:var(--mono); text-decoration:underline; }
 
 
@@ -854,6 +894,7 @@ body.tp-cover main, body.tp-cover .view, body.tp-cover #bearfill, body.tp-cover 
       <a href="#/" data-scroll="rooms">Комнаты</a>
       <a href="#/" data-scroll="quiz">Подобрать</a>
       <a href="#/" data-scroll="cert">Сертификаты</a>
+      <a href="#/" data-scroll="occasion">Особый повод</a>
       <a href="#/" data-scroll="faq">Вопросы</a>
       <a href="#/" data-scroll="where">Где мы</a>
     </nav>
@@ -1010,13 +1051,15 @@ body.tp-cover main, body.tp-cover .view, body.tp-cover #bearfill, body.tp-cover 
     </div>
   </section>
 
-  <!-- ПРАЗДНИКИ — блок готов, но скрыт, пока пакеты не запущены (CONFIG.SHOW_EVENTS) -->
-  <section class="section" id="events" hidden>
+  <!-- ОСОБЫЙ ПОВОД: карточки поводов + мини-конструктор заявки (уходит в WhatsApp) -->
+  <section class="section" id="occasion">
     <div class="wrap">
-      <span class="kicker">Скоро</span>
+      <span class="kicker">Особый повод</span>
       <h2 class="sh hit">Праздник, <span class="y">который запомнят</span></h2>
-      <p class="sub">Готовые пакеты под событие. Под корпоратив соберём программу под ваш бюджет.</p>
-      <div class="events" id="eventGrid"></div>
+      <p class="sub">День рождения, корпоратив, свидание или предложение — выберите повод, и мы соберём программу под вас: комнаты, наполнение, музыку и детали.</p>
+      <div class="oc-cover"><img src="img/oc-cover-s.webp" srcset="img/oc-cover-s.webp 900w, img/oc-cover.webp 1600w" sizes="(min-width:1100px) 1100px, 100vw" alt="Гости празднуют день рождения в Antistress Space" loading="lazy"></div>
+      <div class="oc-grid" id="ocGrid"></div>
+      <p class="wz-note oc-hint">Нажмите на повод → ответьте на несколько вопросов → заявка уйдёт менеджеру в WhatsApp.</p>
     </div>
   </section>
 
@@ -1146,9 +1189,10 @@ body.tp-cover main, body.tp-cover .view, body.tp-cover #bearfill, body.tp-cover 
     <div class="links">
       <a href="#/" data-scroll="rooms">Комнаты</a>
       <a href="#/" data-scroll="cert">Сертификаты</a>
+      <a href="#/" data-scroll="occasion">Особый повод</a>
       <a href="#/" data-scroll="faq">Вопросы</a>
-      <a href="#" aria-label="Публичная оферта (страницу добавим)">Публичная оферта</a>
-      <a href="#" aria-label="Политика конфиденциальности (страницу добавим)">Политика конфиденциальности</a>
+      <a href="oferta.html">Публичная оферта</a>
+      <a href="privacy.html">Политика конфиденциальности</a>
       <span>© Antistress Space, Алматы</span>
     </div>
   </div>
@@ -1188,7 +1232,8 @@ body.tp-cover main, body.tp-cover .view, body.tp-cover #bearfill, body.tp-cover 
 <div class="egg" id="egg" role="dialog" aria-modal="true" aria-labelledby="eggT">
   <div class="box">
     <b id="eggT">Ты нашёл пасхалку</b>
-    <p>Здесь будет секретный бонус для тех, кто дошёл до этого места. Какой — придумаем вместе.</p>
+    <p>Твой секретный бонус — на выбор: <b class="egg-gift">5 бутылок к крушению</b> или <b class="egg-gift">чайник чая Standard</b>.</p>
+    <p class="egg-how">Сделай скриншот и покажи администратору при визите.</p>
     <button type="button" id="eggClose">закрыть</button>
   </div>
 </div>
@@ -1211,6 +1256,15 @@ body.tp-cover main, body.tp-cover .view, body.tp-cover #bearfill, body.tp-cover 
   <button type="button" class="lp" id="lbP" aria-label="Предыдущее">←</button>
   <button type="button" class="ln" id="lbN" aria-label="Следующее">→</button>
   <div class="lc" id="lbC"></div>
+</div>
+
+<div class="modal" id="ocm" role="dialog" aria-modal="true" aria-labelledby="ocT">
+  <div class="mbox wz oc-box">
+    <button class="oc-x" type="button" id="ocClose" aria-label="Закрыть">✕</button>
+    <span class="kicker" style="margin:0">Особый повод</span>
+    <b class="hit" id="ocT">Соберём ваш праздник</b>
+    <div id="ocForm" class="oc-form"></div>
+  </div>
 </div>
 
 <div class="modal" id="pre" role="dialog" aria-modal="true" aria-labelledby="preT">
@@ -1375,11 +1429,11 @@ body.tp-cover main, body.tp-cover .view, body.tp-cover #bearfill, body.tp-cover 
       galT:'Две комнаты — <span class="y">одна программа</span>',
       music:true, addons:true, promos:true,
       packs:[
-        { id:"cplus", name:"Combo Plus", group:"main", photo:"as-110", tag:"Релакс 2 ч + чайник чая (standard) в подарок", dur:"1 ч антистресс + 2 ч релакс",
+        { id:"cplus", name:"Combo Plus", group:"main", photo:"pk-cplus", tag:"Релакс 2 ч + чайник чая (standard) в подарок", dur:"1 ч антистресс + 2 ч релакс",
           items:["20 бутылок","2 мелкой посуды","2 крупной посуды","1 мелкая техника","1 электронная мелочёвка","1 деревянный ящик"], max:2, priceBy:{1:32800,2:32800} },
-        { id:"cpro", name:"Combo Pro", group:"main", photo:"as-103", tag:"Релакс 2 ч + чайник чая (premium) в подарок", dur:"1 ч антистресс + 2 ч релакс",
+        { id:"cpro", name:"Combo Pro", group:"main", photo:"pk-cpro", tag:"Релакс 2 ч + чайник чая (premium) в подарок", dur:"1 ч антистресс + 2 ч релакс",
           items:["20 бутылок","1 крупная посуда","1 средняя мебель","1 средняя техника","2 деревянных ящика","1 видеокассета","1 банка до 1 л"], max:3, priceBy:{1:42000,2:42000,3:47000} },
-        { id:"cmax", name:"Combo Pro Max", group:"main", photo:"as-116", tag:"Релакс 2 ч + чайник чая (premium) + чайный сет в подарок", dur:"1 ч антистресс + 2 ч релакс",
+        { id:"cmax", name:"Combo Pro Max", group:"main", photo:"pk-cmax", tag:"Релакс 2 ч + чайник чая (premium) + чайный сет в подарок", dur:"1 ч антистресс + 2 ч релакс",
           items:["20 бутылок","1 лобовое стекло","1 крупная техника","1 мелкая техника","1 крупная мебель","1 деревянный ящик","2 крупной посуды","2 мелкой посуды"], max:4, priceBy:{1:61600,2:61600,3:66600,4:71600} }
       ],
       included:{ title:"А также входит в антистресс-часть", list:INCL_AS, small:"Наполнение может варьироваться от наличия на складе." } },
@@ -1416,7 +1470,7 @@ body.tp-cover main, body.tp-cover .view, body.tp-cover #bearfill, body.tp-cover 
         { id:"intro", name:"Ознакомительный", group:"intro", photo:"pk-intro", price:16000, max:2, dur:"до 30 минут", when:"только ср–вс, 11:00–18:00", tag:"Чтобы просто познакомиться",
           items:["15 бутылок","1 деревянный ящик","1 видеокассета","1 электронная мелочёвка","1 компакт-диск","2 волшебные баночки","2 шарика «Звёздная пыль»"] },
         { id:"custom", name:"Индивидуальный", group:"custom", photo:"pk-custom", custom:true, max:13, tag:"Соберём пакет под ваш бюджет и компанию",
-          list:true, items:["Напишите примерный бюджет и сколько вас будет","Менеджер свяжется и предложит наполнение: стекло, техника, мебель — что захочется разнести","Подходит для дней рождения, корпоративов и больших компаний"],
+          list:true, items:["Напишите примерный бюджет и сколько вас будет","Менеджер свяжется и предложит наполнение: стекло, техника, мебель — что захочется разнести","Подходит для дней рождений, корпоративов и больших компаний"],
           priceLabel:"Цена — под ваш бюджет" }
       ],
       included:{ title:"А также входит в стоимость любого пакета", list:INCL_AS.concat([
@@ -1433,7 +1487,7 @@ body.tp-cover main, body.tp-cover .view, body.tp-cover #bearfill, body.tp-cover 
       hint:"листай — мишка в углу раскрасится",
       packsSub:"20 000 ₸ за полный комплект. Мишка сохнет 2 часа — можно подождать в релакс-комнате со скидкой 15%.",
       cardImg:"cv-glowbear", slides:["gb-287","gb-323","gb-313"],
-      gallery:["gb-288","gb-298","gb-324","gb-326","gb-300","gb-302","gb-305","gb-311","gb-316","gb-322","gb-290"],
+      gallery:["gb-n1","gb-n2","gb-n3","gb-n4","gb-n5","gb-n6","gb-n7","gb-n8","gb-n9","gb-n10","gb-n11","gb-n12","gb-n13"],
       galT:'Какие бывают <span class="y">мишки</span>',
       packs:[
         { id:"bear", name:"Glow Bear", group:"main", photo:"gb-298", tag:"Полный комплект · для взрослых и детей", dur:"1 час", max:3, pplLabel:"Сколько мишек?",
@@ -1459,7 +1513,7 @@ body.tp-cover main, body.tp-cover .view, body.tp-cover #bearfill, body.tp-cover 
       galT:'Так выглядит <span class="y">игровая</span>',
       packs:[
         { id:"ps", name:"PlayStation-комната", group:"main", photo:"pn-2", tag:"Почасовая, с человека", max:5, hourly:true, list:true,
-          items:["Пн–чт, 11:00–17:00 — 1 500 ₸/ч с человека","Пн–чт, 17:00–21:00 — 1 700 ₸/ч с человека","Пт–вс, 10:00–17:00 — 1 700 ₸/ч с человека","Пт–вс, 17:00–21:00 — 2 000 ₸/ч с человека"],
+          items:["Пн–чт, 11:00–17:00 — 1 500 ₸/⁠ч с человека","Пн–чт, 17:00–21:00 — 1 700 ₸/⁠ч с человека","Пт–вс, 10:00–17:00 — 1 700 ₸/⁠ч с человека","Пт–вс, 17:00–21:00 — 2 000 ₸/⁠ч с человека"],
           from:1500, priceLabel:"от 1 500 ₸ в час с человека",
           calc:function(ppl){ var h = S.hours || 1, n = ppl || S.ppl || 1, t = parseInt(S.time, 10) || 11, we = isWeekend(S.date); return n * h * (we ? (t < 17 ? 1700 : 2000) : (t < 17 ? 1500 : 1700)); } }
       ] }
@@ -1568,6 +1622,98 @@ body.tp-cover main, body.tp-cover .view, body.tp-cover #bearfill, body.tp-cover 
     ["photo","Своё можно взять","До 10 мелких предметов входят в пакет. Больше — 200 ₸ за штуку, мебель и техника — 3 000 ₸ за единицу. Предупредите заранее."],
     ["note","Парковка","Одно место. Напишите менеджеру в WhatsApp перед приездом — откроем шлагбаум."]
   ];
+  /* особый повод: карточки и мини-конструктор заявки */
+  var OCC = [
+    { id:"bday", t:"День рождения", d:"Отметьте особенный день не как обычно! Яркие эмоции, необычные развлечения и готовые программы для вас и ваших гостей." },
+    { id:"corp", t:"Корпоратив", d:"Перезагрузите команду за пределами офиса! Необычный формат тимбилдинга, совместные активности и впечатления, которые объединяют." },
+    { id:"date", t:"Свидание", d:"Забудьте о банальных встречах. Проведите время вдвоём, выплесните эмоции, создайте что-то вместе и добавьте ярких впечатлений в ваши отношения." },
+    { id:"party", t:"Девичник / мальчишник", d:"Соберите свою компанию для незабываемой вечеринки! Много эмоций, необычные активности и возможность устроить праздник по вашим правилам." },
+    { id:"propose", t:"Предложение руки и сердца", d:"Создайте момент, который запомнится на всю жизнь. Поможем организовать особенное предложение с учётом ваших пожеланий и задуманного сценария." },
+    { id:"away", t:"Выездной антистресс", d:"Привезём антистресс-развлечения на вашу площадку! Необычный формат для дней рождения, корпоративов, вечеринок и других мероприятий." }
+  ];
+  var OC_GUESTS = ["2","3–5","6–10","11–15","16+"];
+  var OC = {};
+  function ocReset(id, name){ OC = { occ:id, who:"", age:"", guests:(id === "date" || id === "propose") ? "2" : "", budget:"", noBudget:false, date:"", time:"", place:"", wish:"", name:name || "", err:"" }; }
+  function ocOpen(id){
+    ocReset(id); drawOc(); $("ocm").classList.add("on"); $("ocm").scrollTop = 0;
+    setTimeout(function(){ var f = $("ocForm").querySelector(".chip.on") || $("ocForm").querySelector(".chip"); if(f) f.focus({ preventScroll:true }); }, 50);
+  }
+  function ocClose(){ $("ocm").classList.remove("on"); }
+  function ocChips(opts, cur, pick){
+    var r = el("div", "chips");
+    opts.forEach(function(o){
+      var b = el("button", "chip" + (cur === o[0] ? " on" : "")); b.type = "button"; b.setAttribute("aria-pressed", cur === o[0] ? "true" : "false");
+      if(o[2]){ var im = el("img"); im.src = o[2]; im.alt = ""; b.appendChild(im); }
+      b.appendChild(document.createTextNode(o[1])); b.addEventListener("click", function(){ pick(o[0]); }); r.appendChild(b);
+    });
+    return r;
+  }
+  function ocField(q, node, note){ var d = el("div"); d.appendChild(el("span", "wz-q", q)); d.appendChild(node); if(note) d.appendChild(el("p", "wz-note", note)); return d; }
+  function ocInput(type, val, ph, set, mode){
+    var i = el(type === "area" ? "textarea" : "input"); if(type !== "area") i.type = type; i.value = val; if(ph) i.placeholder = ph; if(mode) i.inputMode = mode;
+    i.addEventListener("input", function(){ set(i.value); OC.err = ""; var e = $("ocErr"); if(e) e.textContent = ""; });
+    return i;
+  }
+  function drawOc(){
+    var f = $("ocForm"), o = OCC.filter(function(x){ return x.id === OC.occ; })[0]; f.innerHTML = "";
+    $("ocT").textContent = o ? o.t : "Соберём ваш праздник";
+    var occ = ocField("Повод", ocChips(OCC.map(function(x){ return [x.id, x.t, "img/oi-" + x.id + ".png"]; }), OC.occ, function(v){ ocReset(v, OC.name); drawOc(); }));
+    occ.className = "oc-occ"; f.appendChild(occ);
+    if(OC.occ === "bday"){
+      f.appendChild(ocField("Для кого праздник?", ocChips([["adult","Для взрослого"],["kid","Для ребёнка"]], OC.who, function(v){ OC.who = v; OC.err = ""; drawOc(); })));
+      if(OC.who === "kid"){
+        f.appendChild(ocField("Сколько исполняется?", ocInput("text", OC.age, "Например, 8", function(v){ OC.age = v; }, "numeric")));
+        f.appendChild(el("p", "oc-kid", "Детям подойдут Glow Bear (неоновый мишка), PlayStation и релакс-комната с фильмами. В антистресс-комнату — с 14 лет и с согласия родителей."));
+      }
+    }
+    if(OC.occ !== "date" && OC.occ !== "propose") f.appendChild(ocField("Сколько будет гостей?", ocChips(OC_GUESTS.map(function(g){ return [g, g]; }), OC.guests, function(v){ OC.guests = v; OC.err = ""; drawOc(); })));
+    if(OC.occ === "away") f.appendChild(ocField("Где проводим?", ocInput("text", OC.place, "Город, площадка или адрес", function(v){ OC.place = v; })));
+    var bw = el("div"), bi = ocInput("text", OC.budget, "Например, 80 000 ₸", function(v){ OC.budget = v; }, "numeric"); bi.disabled = OC.noBudget; bw.appendChild(bi);
+    var nb = el("button", "chip" + (OC.noBudget ? " on" : ""), "Пока не знаю — подскажите"); nb.type = "button"; nb.style.marginTop = "8px"; nb.setAttribute("aria-pressed", OC.noBudget ? "true" : "false");
+    nb.addEventListener("click", function(){ OC.noBudget = !OC.noBudget; if(OC.noBudget) OC.budget = ""; drawOc(); }); bw.appendChild(nb);
+    f.appendChild(ocField("Бюджет", bw, "Под бюджет менеджер предложит программу и наполнение."));
+    var two = el("div", "oc-two"), di = ocInput("date", OC.date, "", function(v){ OC.date = v; });
+    di.min = new Date(Date.now() - new Date().getTimezoneOffset() * 6e4).toISOString().slice(0, 10); di.setAttribute("aria-label", "Дата");
+    var ts = el("select"); ts.setAttribute("aria-label", "Время");
+    [["","Время"],["10:00"],["11:00"],["12:00"],["13:00"],["14:00"],["15:00"],["16:00"],["17:00"],["18:00"],["19:00"],["20:00"],["21:00"],["обсудим","Обсудим"]].forEach(function(t){ var op = el("option", "", t[1] || t[0]); op.value = t[0]; if(OC.time === t[0]) op.selected = true; ts.appendChild(op); });
+    ts.addEventListener("change", function(){ OC.time = ts.value; });
+    two.appendChild(di); two.appendChild(ts);
+    f.appendChild(ocField("Дата и время", two, "Если дата пока не известна — оставьте пустым."));
+    f.appendChild(ocField("Пожелания", ocInput("area", OC.wish, "Сценарий, торт, музыка, сюрприз — всё, что важно", function(v){ OC.wish = v; })));
+    f.appendChild(ocField("Как к вам обращаться?", ocInput("text", OC.name, "Имя", function(v){ OC.name = v; })));
+    var er = el("p", "oc-err", OC.err); er.id = "ocErr"; er.setAttribute("role", "alert"); f.appendChild(er);
+    var sb = el("button", "btn oc-send", "Отправить заявку в WhatsApp →"); sb.type = "button"; sb.addEventListener("click", ocSend); f.appendChild(sb);
+  }
+  function ocMsg(){
+    var o = OCC.filter(function(x){ return x.id === OC.occ; })[0];
+    var L = ["Здравствуйте! Хочу организовать особый повод.", "", "Повод: " + o.t];
+    if(OC.occ === "bday") L.push("Для кого: " + (OC.who === "kid" ? "для ребёнка" + (OC.age.trim() ? " (исполняется " + OC.age.trim() + ")" : "") : "для взрослого"));
+    L.push("Гостей: " + OC.guests);
+    if(OC.occ === "away") L.push("Где: " + OC.place.trim());
+    L.push("Бюджет: " + (OC.noBudget || !OC.budget.trim() ? "пока не знаю, подскажите" : OC.budget.trim().replace(/\s*₸$/, "") + " ₸"));
+    if(OC.date){ var dd = new Date(OC.date + "T12:00:00"); L.push("Дата: " + dd.toLocaleDateString("ru-RU", { day:"numeric", month:"long", weekday:"short" }) + (OC.time ? ", " + OC.time : "")); }
+    else L.push("Дата: пока не знаю" + (OC.time && OC.time !== "обсудим" ? ", время " + OC.time : ""));
+    if(OC.wish.trim()) L.push("Пожелания: " + OC.wish.trim());
+    if(OC.name.trim()) L.push("Имя: " + OC.name.trim());
+    return L.join("\n");
+  }
+  function ocSend(){
+    var miss = !OC.occ ? "Выберите повод" : (OC.occ === "bday" && !OC.who) ? "Укажите, для кого праздник" : !OC.guests ? "Сколько будет гостей?" : (OC.occ === "away" && !OC.place.trim()) ? "Напишите, где проводим" : "";
+    if(miss){ OC.err = miss; $("ocErr").textContent = miss; $("ocErr").scrollIntoView({ block:"center", behavior: reduce ? "auto" : "smooth" }); return; }
+    window.open(wa(ocMsg()), "_blank", "noopener");
+    ocClose();
+  }
+  OCC.forEach(function(o){
+    var c = el("button", "oc-card"); c.type = "button"; c.setAttribute("aria-label", o.t + " — собрать заявку");
+    var ph = el("div", "ph"), im = el("img"); im.src = IMG("oc-" + o.id, true); im.alt = ""; im.loading = "lazy"; ph.appendChild(im); c.appendChild(ph);
+    var inn = el("div", "in"), ic = el("img", "ic"); ic.src = "img/oi-" + o.id + ".png"; ic.alt = "";
+    inn.appendChild(ic); inn.appendChild(el("h3", "", o.t)); var g = el("span", "go", "→"); g.setAttribute("aria-hidden", "true"); inn.appendChild(g); inn.appendChild(el("p", "", o.d));
+    c.appendChild(inn); c.addEventListener("click", function(){ ocOpen(o.id); }); $("ocGrid").appendChild(c);
+  });
+  $("ocClose").addEventListener("click", ocClose);
+  $("ocm").addEventListener("click", function(e){ if(e.target === this) ocClose(); });
+  addEventListener("keydown", function(e){ if(e.key === "Escape" && $("ocm").classList.contains("on")) ocClose(); });
+
   /* праздники (скрыто: CONFIG.SHOW_EVENTS) */
   var EVENTS = [["День рождения","[пакет готовится]"],["Корпоратив","под ваш бюджет"],["Мальчишник","[пакет готовится]"],["Девичник","[пакет готовится]"]];
 
@@ -1776,7 +1922,7 @@ body.tp-cover main, body.tp-cover .view, body.tp-cover #bearfill, body.tp-cover 
     this.setAttribute("aria-pressed", soundOn ? "true" : "false");
     this.setAttribute("aria-label", "Звук и музыка: " + (soundOn ? "включены" : "выключены"));
     $("sndWave").style.opacity = soundOn ? "1" : ".15";
-    if(soundOn) unlockAudio(); else { bgStop(); if(SIL) SIL.pause(); }
+    if(soundOn) unlockAudio(); else { bgStop(); if(SIL) SIL.pause(); if(mStop) mStop(); }
   });
 
   /* =========================================================
@@ -2154,10 +2300,21 @@ body.tp-cover main, body.tp-cover .view, body.tp-cover #bearfill, body.tp-cover 
     EVENTS.forEach(function(e){ var a = el("a", "room-card"); a.href = wa("Здравствуйте! Интересует пакет: " + e[0] + "."); a.target = "_blank"; a.rel = "noopener"; a.appendChild(el("h3", "", e[0])); a.appendChild(el("p", "", e[1])); $("eventGrid").appendChild(a); });
   }
 
-  /* ---------- музыка: короткие примеры звучания [ЗАГЛУШКА — заменим на ваши плейлисты] ---------- */
+  /* ---------- музыка: 15-секундные фрагменты из плейлистов Antistress Space ---------- */
   var mStop = null;
+  var TRACKS = { pos:"audio/pos.mp3", dyn:"audio/dyn.mp3", "class":"audio/class.mp3" };   /* aggr — ждём файл «Рок», пока синтезатор */
   function playMood(id, btn){
     if(mStop) mStop();
+    if(TRACKS[id]){
+      var au = new Audio(TRACKS[id]), done = false;
+      au.volume = .9;
+      var fin = function(){ if(done) return; done = true; try{ au.pause(); }catch(e){} bgDuck(false); if(btn){ btn.classList.remove("playing"); btn.textContent = "▶"; btn.setAttribute("aria-label", "Послушать пример"); } mStop = null; };
+      au.addEventListener("ended", fin); au.addEventListener("error", fin);
+      var pr = au.play(); if(pr && pr.catch) pr.catch(fin);
+      bgDuck(true);
+      mStop = fin; if(btn){ btn.classList.add("playing"); btn.textContent = "■"; btn.setAttribute("aria-label", "Остановить"); }
+      return;
+    }
     try{ actx = actx || new (window.AudioContext || window.webkitAudioContext)(); if(actx.state === "suspended") actx.resume(); }catch(e){ return; }
     var t0 = actx.currentTime + .05, out = actx.createGain(); out.gain.value = .22; out.connect(actx.destination);
     function osc(type, f, st, du, g, dest){ var o = actx.createOscillator(), e = actx.createGain(); o.type = type; o.frequency.value = f; e.gain.setValueAtTime(0, st); e.gain.linearRampToValueAtTime(g, st + .01); e.gain.exponentialRampToValueAtTime(.001, st + du); o.connect(e); e.connect(dest || out); o.start(st); o.stop(st + du + .05); }
@@ -2266,7 +2423,7 @@ body.tp-cover main, body.tp-cover .view, body.tp-cover #bearfill, body.tp-cover 
     var meta = [];
     if(p.dur) meta.push("⏱ " + p.dur);
     if(p.max) meta.push("👥 до " + p.max + " чел.");
-    if(meta.length) inn.appendChild(el("p", "pmeta", meta.join("   ")));
+    if(meta.length){ var pm = el("p", "pmeta"); meta.forEach(function(x){ pm.appendChild(el("span", "", x.replace(/ /g, "\u00A0"))); }); inn.appendChild(pm); }
     if(p.variants){
       p.variants.forEach(function(v){ var d = el("div", "pvar"); var vb = el("b", "", v.label + " — " + money(v.price) + " · до " + v.max + " чел."); vb.appendChild(el("span", "pv-dur", v.dur.replace("минут", "мин"))); d.appendChild(vb); d.appendChild(itemsBlock(v.items)); inn.appendChild(d); });
     } else if(p.groups){
@@ -2585,7 +2742,7 @@ body.tp-cover main, body.tp-cover .view, body.tp-cover #bearfill, body.tp-cover 
         m.appendChild(row);
       });
       d.appendChild(m);
-      d.appendChild(el("p", "wz-note", "▶ — короткий пример настроения."));
+      d.appendChild(el("p", "wz-note", "▶ — послушать фрагмент плейлиста."));
       b.appendChild(d);
     }
   }
@@ -2753,7 +2910,7 @@ body.tp-cover main, body.tp-cover .view, body.tp-cover #bearfill, body.tp-cover 
     b.appendChild(cd);
     var ag = el("label", "agree"); var cb = el("input"); cb.type = "checkbox"; cb.checked = S.agree;
     cb.addEventListener("change", function(){ S.agree = cb.checked; S.err = ""; updFoot(); });
-    ag.appendChild(cb); ag.appendChild(document.createTextNode("Я ознакомился(-ась) с условиями бронирования")); b.appendChild(ag);
+    ag.appendChild(cb); var agt = el("span"); agt.innerHTML = 'Я ознакомился(-ась) с условиями бронирования, <a href="oferta.html" target="_blank" rel="noopener">публичной офертой</a> и <a href="privacy.html" target="_blank" rel="noopener">политикой конфиденциальности</a>'; ag.appendChild(agt); b.appendChild(ag);
     var pp = el("div", "prepay"); pp.innerHTML = S.gift ? "Сертификат оформляется после <b>100% оплаты</b>. После отправки вас перекинет в WhatsApp — администратор пришлёт реквизиты." : "Для брони нужна <b>предоплата 50% или 100%</b>. После отправки вас перекинет в WhatsApp — администратор подтвердит время и пришлёт реквизиты.";
     b.appendChild(pp);
     var gf = giftFor(S);
