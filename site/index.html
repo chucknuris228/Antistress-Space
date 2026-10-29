@@ -2302,7 +2302,7 @@ body.tp-cover main, body.tp-cover .view, body.tp-cover #bearfill, body.tp-cover 
 
   /* ---------- музыка: 15-секундные фрагменты из плейлистов Antistress Space ---------- */
   var mStop = null;
-  var TRACKS = { pos:"audio/pos.mp3", dyn:"audio/dyn.mp3", "class":"audio/class.mp3" };   /* aggr — ждём файл «Рок», пока синтезатор */
+  var TRACKS = { aggr:"audio/aggr.mp3", pos:"audio/pos.mp3", dyn:"audio/dyn.mp3", "class":"audio/class.mp3" };
   function playMood(id, btn){
     if(mStop) mStop();
     if(TRACKS[id]){
