@@ -1685,7 +1685,7 @@ body.tp-cover main, body.tp-cover .view, body.tp-cover #bearfill, body.tp-cover 
   }
   function ocMsg(){
     var o = OCC.filter(function(x){ return x.id === OC.occ; })[0];
-    var L = ["Здравствуйте! Хочу подобрать программу для мероприятия в Antistress Space.", "Повод: " + o.t];
+    var L = ["Здравствуйте! Хочу подобрать программу для мероприятия в Antistress Space.", "", "Повод: " + o.t];
     if(OC.occ === "bday") L.push("Для кого: " + (OC.who === "kid" ? "для ребёнка" + (OC.age.trim() ? " (исполняется " + OC.age.trim() + ")" : "") : "для взрослого"));
     L.push("Количество гостей: " + OC.guests + (OC.guests === "2" ? " человека" : " человек"));
     if(OC.occ === "away") L.push("Место: " + OC.place.trim());
@@ -1697,6 +1697,7 @@ body.tp-cover main, body.tp-cover .view, body.tp-cover #bearfill, body.tp-cover 
     if(OC.time) L.push("Время: " + OC.time);
     if(OC.wish.trim()) L.push("Пожелания: " + OC.wish.trim());
     if(OC.name.trim()) L.push("Имя: " + OC.name.trim());
+    L.push("");
     L.push(OC.date ? "Пожалуйста, отправьте подходящие пакеты в PDF и уточните доступность даты." : "Пожалуйста, отправьте подходящие пакеты в PDF.");
     return L.join("\n");
   }
