@@ -1663,7 +1663,6 @@ body.tp-cover main, body.tp-cover .view, body.tp-cover #bearfill, body.tp-cover 
       f.appendChild(ocField("Для кого праздник?", ocChips([["adult","Для взрослого"],["kid","Для ребёнка"]], OC.who, function(v){ OC.who = v; OC.err = ""; drawOc(); })));
       if(OC.who === "kid"){
         f.appendChild(ocField("Сколько исполняется?", ocInput("text", OC.age, "Например, 8", function(v){ OC.age = v; }, "numeric")));
-        f.appendChild(el("p", "oc-kid", "Детям подойдут Glow Bear (неоновый мишка), PlayStation и релакс-комната с фильмами. В антистресс-комнату — с 14 лет и с согласия родителей."));
       }
     }
     if(OC.occ !== "date" && OC.occ !== "propose") f.appendChild(ocField("Сколько будет гостей?", ocChips(OC_GUESTS.map(function(g){ return [g, g]; }), OC.guests, function(v){ OC.guests = v; OC.err = ""; drawOc(); })));
@@ -1686,15 +1685,19 @@ body.tp-cover main, body.tp-cover .view, body.tp-cover #bearfill, body.tp-cover 
   }
   function ocMsg(){
     var o = OCC.filter(function(x){ return x.id === OC.occ; })[0];
-    var L = ["Здравствуйте! Хочу организовать особый повод.", "", "Повод: " + o.t];
+    var L = ["Здравствуйте! Хочу подобрать программу для мероприятия в Antistress Space.", "Повод: " + o.t];
     if(OC.occ === "bday") L.push("Для кого: " + (OC.who === "kid" ? "для ребёнка" + (OC.age.trim() ? " (исполняется " + OC.age.trim() + ")" : "") : "для взрослого"));
-    L.push("Гостей: " + OC.guests);
-    if(OC.occ === "away") L.push("Где: " + OC.place.trim());
-    L.push("Бюджет: " + (OC.noBudget || !OC.budget.trim() ? "пока не знаю, подскажите" : OC.budget.trim().replace(/\s*₸$/, "") + " ₸"));
-    if(OC.date){ var dd = new Date(OC.date + "T12:00:00"); L.push("Дата: " + dd.toLocaleDateString("ru-RU", { day:"numeric", month:"long", weekday:"short" }) + (OC.time ? ", " + OC.time : "")); }
-    else L.push("Дата: пока не знаю" + (OC.time && OC.time !== "обсудим" ? ", время " + OC.time : ""));
+    L.push("Количество гостей: " + OC.guests + (OC.guests === "2" ? " человека" : " человек"));
+    if(OC.occ === "away") L.push("Место: " + OC.place.trim());
+    var bud = OC.budget.trim().replace(/\s*(₸|тг\.?|тенге)\s*$/i, ""), digits = bud.replace(/\s/g, "");
+    if(/^\d+$/.test(digits)) bud = digits.replace(/\B(?=(\d{3})+$)/g, " ");
+    L.push("Бюджет: " + (OC.noBudget || !bud ? "пока не знаю, подскажите" : bud + " тенге"));
+    if(OC.date){ var dd = new Date(OC.date + "T12:00:00"); L.push("Дата: " + dd.toLocaleDateString("ru-RU", { day:"numeric", month:"long" }) + " " + dd.getFullYear() + " года"); }
+    else L.push("Дата: пока не знаю");
+    if(OC.time) L.push("Время: " + OC.time);
     if(OC.wish.trim()) L.push("Пожелания: " + OC.wish.trim());
     if(OC.name.trim()) L.push("Имя: " + OC.name.trim());
+    L.push(OC.date ? "Пожалуйста, отправьте подходящие пакеты в PDF и уточните доступность даты." : "Пожалуйста, отправьте подходящие пакеты в PDF.");
     return L.join("\n");
   }
   function ocSend(){
